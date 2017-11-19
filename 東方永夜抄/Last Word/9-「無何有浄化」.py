@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*-
+from CurtainFireMakerPlugin.Entities import *
+from VecMath import *
+import math
+
+RAD = math.pi / 180.0
+
+target = Vector3(80, 80, 80)
+
+vecList = []
+objvertices("ico.obj", lambda v: vecList.append(v))
+
+for vec in vecList:
+	for angle in [RAD, -RAD]:
+		for axis in [Vector3.UnitX, Vector3.UnitZ]:
+			axis = vec ^ (vec ^ axis)
+			parent = Entity(world)
+			
+			rotPosMat = Matrix3.RotationAxis(axis, angle * 6)
+			parent.Pos = vec
+			
+			def rotate(parent = parent, rotPosMat = rotPosMat, angle = angle):
+				parent.Rot = Quaternion.Identity
+				rotQuat = Quaternion.RotationAxis(axis, -angle * 4)
+				
+				def shot_dia():
+					parent.Pos = parent.Pos * rotPosMat
+					parent.Rot = parent.Rot * rotQuat
+					
+					shot = EntityShot(world, "DIA", 0xA00050 if angle < 0 else 0x5000A0)
+					shot.Pos = parent.Pos * 320
+					shot.Velocity = parent.Pos * parent.Rot * -2
+					shot.LivingLimit = 120
+					shot()
+				parent.AddTask(shot_dia, 4, 8, 0)
+			parent.AddTask(rotate, 32, 20, 0)
+			parent()
+
+def world_task():
+	def shot_l(task):
+		vec = +target
+		axis = vec ^ (vec ^ Vector3.UnitY)
+		
+		angle = (task.RunCount - 1) * RAD * 5 * 0.5
+		mat1 = Matrix3.RotationAxis(axis, -RAD * 5)
+		mat2 = Matrix3.RotationAxis(axis, angle)
+		
+		for i in range(task.RunCount):
+			shot = EntityShot(world, "L", 0x4000D0)
+			shot.Velocity = vec * mat2 * 2.5
+			shot()
+			
+			mat2 = mat2 * mat1
+	world.AddTask(shot_l, 5, 4, 0, True)
+world.AddTask(world_task, 90, 8, 90)
