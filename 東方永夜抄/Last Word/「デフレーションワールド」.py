@@ -5,8 +5,6 @@ from vectorutil import randomvec
 from randomutil import random
 import math
 
-RAD = math.pi / 180.0
-
 vecList = []
 objvertices("ico_tru1.obj", lambda v: vecList.append(v))
 
@@ -14,17 +12,17 @@ num_clone = 25
 pause_frame = 56
 move_frame = 110
 """
-owner_centerbone = EntityBone(world, "Sakuya", u"センター")
-owner_r_handbone = EntityBone(world, "Sakuya", u"右手首")
-owner_l_handbone = EntityBone(world, "Sakuya", u"左手首")
+owner_centerbone = EntityBone(WORLD, "Sakuya", u"センター")
+owner_r_handbone = EntityBone(WORLD, "Sakuya", u"右手首")
+owner_l_handbone = EntityBone(WORLD, "Sakuya", u"左手首")
 
-targetbone = EntityBone(world, "Reimu", u"センター")
+targetbone = EntityBone(WORLD, "Reimu", u"センター")
 """
 
 pauseList = []
 
-def world_task_func():
-	target = Entity(world)
+def WORLD_task_func():
+	target = Entity(WORLD)
 	target.Pos = Vector3(100, 0, 50)
 	target.Velocity = Vector3(-1, 1, 0)
 	target.LivingLimit = 120
@@ -40,7 +38,7 @@ def world_task_func():
 		
 		for i in range(way):
 			for j in range(2):
-				shot = EntityShot(world, "KNIFE", 0xFFD700)
+				shot = EntityShot(WORLD, "KNIFE", 0xFFD700)
 				shot.Velocity = vec * (1 + j * 0.5)
 				shot.Pos = shot.Velocity
 				shot.LivingLimit = 600
@@ -48,14 +46,14 @@ def world_task_func():
 				
 				pauseList.append(shot)
 			vec = vec * mat
-	world.AddTask(shot_knife1, 0, 1, 10)
+	WORLD.AddTask(shot_knife1, 0, 1, 10)
 	
 	def shot_knife2(angle, axis):
 		for vec in vecList:
 			vec = vec
 			mat = Matrix3.RotationAxis(vec ^ (vec ^ axis), angle)
 			
-			shot = EntityShot(world, "KNIFE", 0x0000A0)
+			shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 			shot.Velocity = vec * 4.0
 			shot.Pos = shot.Velocity
 			shot.LivingLimit = 200
@@ -68,11 +66,11 @@ def world_task_func():
 			
 			cloneList.append(shot)
 			pauseList.append(shot)
-	world.AddTask(lambda: shot_knife2(RAD * 60, Vector3.UnitZ), 0, 1, 0)
-	world.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitZ), 0, 1, 5)
+	WORLD.AddTask(lambda: shot_knife2(RAD * 60, Vector3.UnitZ), 0, 1, 0)
+	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitZ), 0, 1, 5)
 	
 	def shot_knife3():
-		shot = EntityShot(world, "KNIFE", 0x0000A0)
+		shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 		shot.Velocity = +target.WorldPos * 2.0
 		shot.Pos = shot.Velocity * 4
 		shot.LivingLimit = 200
@@ -80,9 +78,9 @@ def world_task_func():
 		
 		cloneList.append(shot)
 		pauseList.append(shot)
-	world.AddTask(shot_knife3, 3, 12, 10)
+	WORLD.AddTask(shot_knife3, 3, 12, 10)
 
-	get_waiting_frame = lambda frame = world.FrameCount + move_frame: frame - world.FrameCount
+	get_waiting_frame = lambda frame = WORLD.FrameCount + move_frame: frame - WORLD.FrameCount
 	
 	def pause():
 		for shot in pauseList:
@@ -91,13 +89,13 @@ def world_task_func():
 			def move(shot = shot):
 				shot.Velocity = shot.LookAtVec
 			shot.AddTask(move, 0, 1, get_waiting_frame())
-	world.AddTask(pause, 0, 1, pause_frame)
+	WORLD.AddTask(pause, 0, 1, pause_frame)
 	
 	def clone(task):
 		for src in cloneList:
 			interval = +src.LookAtVec * 16
 
-			shot = EntityShot(world, "KNIFE", 0xA0A0A0)
+			shot = EntityShot(WORLD, "KNIFE", 0xA0A0A0)
 			shot.LookAtVec = src.LookAtVec
 			shot.Pos = src.Pos + interval * (-num_clone / 3 + task.RunCount)
 			shot.LivingLimit = 120
@@ -106,5 +104,5 @@ def world_task_func():
 				shot.Velocity = +shot.LookAtVec * 8.0
 			shot.AddTask(move, 0, 1, get_waiting_frame())
 			shot()
-	world.AddTask(clone, 0, num_clone, 60, True)
-world.AddTask(world_task_func, 120, 2, 0)
+	WORLD.AddTask(clone, 0, num_clone, 60, True)
+WORLD.AddTask(WORLD_task_func, 120, 2, 0)

@@ -4,8 +4,6 @@ from VecMath import *
 from vectorutil import randomvec
 import math
 
-RAD = math.pi / 180.0
-
 distance_circle = 512.0
 
 def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_pos, angle_pos, int_shot, num_shot, int_task, num_task, pause_frame_func, restart_frame_func, restart_frame):
@@ -22,12 +20,12 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			prop = propfunc(vec, axis)
 			axis = vec ^ (vec ^ axis)
 			
-			parent = EntityShot(world, "BONE", 0xFFFFFF)
+			parent = EntityShot(WORLD, "BONE", 0xFFFFFF)
 			parent.Recording = Recording.LocalMat
 			parent.Rot = Quaternion.RotationAxis(axis, rot_pos)
 			parent()
 			
-			circle = EntityShot(world, "MAGIC_CIRCLE", 0xFFFFFF, parent)
+			circle = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, parent)
 			circle.Recording = Recording.LocalMat
 			circle.Pos = vec * distance_circle
 			circle.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
@@ -36,7 +34,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 				vert.Pos = Vector3(vert.Pos.x * 3, vert.Pos.y * 3, vert.Pos.z * 3)
 			circle()
 			
-			entity = Entity(world)
+			entity = Entity(WORLD)
 			entity.Rot = Quaternion.RotationAxis(axis, rot_vec)
 			entity()
 			
@@ -47,7 +45,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 				def shot_amulet(task2):
 					count = (task1.RunCount - 1) * num_shot + task2.RunCount - 1
 					
-					shot = EntityShot(world, prop)
+					shot = EntityShot(WORLD, prop)
 					shot.Pos = circle.WorldPos
 					shot.Velocity = +circle.WorldPos * entity.Rot * -speed1
 					shot.Upward = axis
@@ -67,11 +65,11 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			def rotate(entity = entity, circle = circle, parent = parent, prop = prop, rotate_pos = rotate_pos, rotate_vec = rotate_vec):
 				parent.Rot = +parent.Rot * rotate_pos
 				entity.Rot = +entity.Rot * rotate_vec
-			entity.AddTask(rotate, int_shot, world.MaxFrame / int_shot, 1)
+			entity.AddTask(rotate, int_shot, WORLD.MaxFrame / int_shot, 1)
 veclist = []
 objvertices("ico.obj", lambda v: veclist.append(v))
 
-world.AddTask(lambda: task(
+WORLD.AddTask(lambda: task(
 veclist,
 axislist = [Vector3.UnitX, Vector3.UnitZ],
 propfunc = lambda v, a: ShotProperty("AMULET", 0xA00000 if a.x > 0.99 else 0x0000A0),

@@ -3,8 +3,6 @@ from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 import math
 
-RAD = math.pi / 180.0
-
 interval = 4
 
 vecList = []
@@ -13,14 +11,14 @@ objvertices("ico.obj", lambda v: vecList.append(+v))
 angleList = [RAD, -RAD]
 axisList = [Vector3.UnitX, Vector3.UnitZ]
 
-def world_task(axis, angle, range, should_shot_scale):
+def WORLD_task(axis, angle, range, should_shot_scale):
 	for vec in vecList:
 		if (vec ^ axis).Length() < 0.01: continue
 		
 		rotateAngle = 4
 		rotateQuat = Quaternion.RotationAxis(vec ^ (vec ^ axis), angle * rotateAngle)
 		
-		root = EntityShot(world, "BONE", 0xFFFFFF)
+		root = EntityShot(WORLD, "BONE", 0xFFFFFF)
 		root.Recording = Recording.LocalMat
 		root.Rot =  rotateQuat ^ (90 / rotateAngle)
 		
@@ -28,7 +26,7 @@ def world_task(axis, angle, range, should_shot_scale):
 		root.AddTask(rotate_root, interval, 0, 0)
 		root()
 		
-		parent = EntityShot(world, "MAGIC_CIRCLE", 0xFFFFFF, root)
+		parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, root)
 		parent.Recording = Recording.LocalMat
 		parent.Pos = vec * range
 		
@@ -42,7 +40,7 @@ def world_task(axis, angle, range, should_shot_scale):
 		def shot_dia(task, parent = parent, rotateQuat = rotateQuat):
 			parent.Rot *= rotateQuat
 			
-			shot = EntityShot(world, "DIA", 0xFFA0FF)
+			shot = EntityShot(WORLD, "DIA", 0xFFA0FF)
 			shot.Pos = parent.WorldPos
 			shot.Velocity = Vector3.UnitZ * parent.WorldMat * -2.4
 			shot()
@@ -60,14 +58,14 @@ def world_task(axis, angle, range, should_shot_scale):
 				targetPosList = [target - sidevec * 20, target, target + sidevec * 20]
 				
 				for targetPos in targetPosList:
-					shot = EntityShot(world, "SCALE", 0xA00000 if task.RunCount % 2 == 0 else 0xA000A0)
+					shot = EntityShot(WORLD, "SCALE", 0xA00000 if task.RunCount % 2 == 0 else 0xA000A0)
 					shot.Velocity = +(targetPos - parent.WorldPos) * 20
 					shot.Upward = Vector3.UnitY * parent.WorldMat
 					shot.Pos = parent.WorldPos
 					shot()
 			parent.AddTask(shot_scale, interval, int(80 / interval), 220, True)
 		parent()
-world.AddTask(lambda: world_task(Vector3.UnitX, RAD, 512, False), 0, 1, 0)
-world.AddTask(lambda: world_task(Vector3.UnitX, -RAD, 512, False), 0, 1, 0)
-world.AddTask(lambda: world_task(Vector3.UnitZ, RAD, 512, True), 0, 1, 0)
-world.AddTask(lambda: world_task(Vector3.UnitZ, -RAD, 512, True), 0, 1, 0)
+WORLD.AddTask(lambda: WORLD_task(Vector3.UnitX, RAD, 512, False), 0, 1, 0)
+WORLD.AddTask(lambda: WORLD_task(Vector3.UnitX, -RAD, 512, False), 0, 1, 0)
+WORLD.AddTask(lambda: WORLD_task(Vector3.UnitZ, RAD, 512, True), 0, 1, 0)
+WORLD.AddTask(lambda: WORLD_task(Vector3.UnitZ, -RAD, 512, True), 0, 1, 0)

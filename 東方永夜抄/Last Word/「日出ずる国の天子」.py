@@ -3,8 +3,6 @@ from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 import math
 
-RAD = math.pi / 180.0
-
 target = Vector3(0, 0, 80)
 
 wayVerti = 10
@@ -25,14 +23,14 @@ for i in range(wayHoriz):
 	vecList2 = map(lambda v: v * matHoriz, vecList2)
 	vecList1.append(vecList2)
 
-def world_task_func1():
+def WORLD_task_func1():
 	vecStack = vecList1[:]
 	
-	def world_task_func2():
+	def WORLD_task_func2():
 		vecList2 = vecStack.pop()
 		
 		for vec in vecList2:
-			shot = EntityShot(world, "LASER_LINE", 0x0000A0)
+			shot = EntityShot(WORLD, "LASER_LINE", 0x0000A0)
 			
 			if shot.ModelData.OwnerEntities.Count == 1:
 				for vert in shot.ModelData.Vertices:
@@ -49,21 +47,21 @@ def world_task_func1():
 			
 			shot.LivingLimit = 120
 			shot()
-	world.AddTask(world_task_func2, 2, wayHoriz, 0)
-world.AddTask(world_task_func1, 200, 2, 0)
+	WORLD.AddTask(WORLD_task_func2, 2, wayHoriz, 0)
+WORLD.AddTask(WORLD_task_func1, 200, 2, 0)
 
-def world_task_func3():
+def WORLD_task_func3():
 	mat = Matrix3.RotationAxis(Vector3.UnitY, RAD * 180 / wayHoriz)
 	vecStack = vecList1[:]
 	vecStack.reverse()
 	
-	def world_task_func4():
+	def WORLD_task_func4():
 		vecList2 = vecStack.pop()
 		
 		for vec in vecList2:
 			vec = vec * mat
 			
-			shot = EntityShot(world, "LASER_LINE", 0xA00000)
+			shot = EntityShot(WORLD, "LASER_LINE", 0xA00000)
 			
 			if shot.ModelData.OwnerEntities.Count == 1:
 				for vert in shot.ModelData.Vertices:
@@ -80,8 +78,8 @@ def world_task_func3():
 			
 			shot.LivingLimit = 120
 			shot()
-	world.AddTask(world_task_func4, 2, wayHoriz, 0)
-world.AddTask(world_task_func3, 200, 2, 40)
+	WORLD.AddTask(WORLD_task_func4, 2, wayHoriz, 0)
+WORLD.AddTask(WORLD_task_func3, 200, 2, 40)
 
 vecList3 = [+Vector3(-1, 1, 1), +Vector3(1, 1, -1), +Vector3(1, -1, 1), +Vector3(-1, -1, -1)]
 
@@ -94,12 +92,12 @@ for vec in vecList3:
 		pos = posList[i]
 		quat = rotList[i]
 		
-		parentShot1 = EntityShot(world, "BONE", 0xFFFFFF)
+		parentShot1 = EntityShot(WORLD, "BONE", 0xFFFFFF)
 		parentShot1.Pos = pos
 		parentShot1.Recording = Recording.LocalMat
 		parentShot1()
 		
-		parentShot2 = EntityShot(world, "MAGIC_CIRCLE", 0xFFFFFF, parentShot1)
+		parentShot2 = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, parentShot1)
 		parentShot2.Recording = Recording.LocalMat
 		parentShot2.Pos = vec * 12
 		parentShot2.Rot = Quaternion.RotationAxis(Vector3.UnitZ ^ vec, math.acos(vec.z))
@@ -108,12 +106,12 @@ for vec in vecList3:
 		def shot_task_func1(parentShot1 = parentShot1, parentShot2 = parentShot2, quat = quat):
 			parentShot1.Rot *= quat
 			
-			shot = EntityShot(world, "S", 0x0000A0)
+			shot = EntityShot(WORLD, "S", 0x0000A0)
 			shot.Velocity = +(parentShot2.WorldPos - parentShot1.WorldPos) * -1.0
 			shot.Pos = parentShot2.WorldPos
 			shot()
 			
-			shot = EntityShot(world, "S", 0xA00000)
+			shot = EntityShot(WORLD, "S", 0xA00000)
 			shot.Velocity = +(target - parentShot2.WorldPos) * 1.0
 			shot.Pos = parentShot2.WorldPos
 			shot()

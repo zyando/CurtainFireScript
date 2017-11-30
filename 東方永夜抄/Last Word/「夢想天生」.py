@@ -7,7 +7,6 @@ import math
 
 seed(890106)
 
-RAD = math.pi / 180.0
 TARGET = Vector3(0, 0, 140)
 
 veclist = []
@@ -19,10 +18,10 @@ for i in range(num_way):
 	veclist.append(vec)
 	vec  = vec * mat
 
-def world_task(axis, r):
+def WORLD_task(axis, r):
 	rotate = Quaternion.RotationAxis(Vector3.UnitY, RAD * 6)
 	
-	root = EntityShot(world, "BONE", 0xFFFFFF)
+	root = EntityShot(WORLD, "BONE", 0xFFFFFF)
 	root.Recording = Recording.LocalMat
 	root.Rot = Quaternion.RotationAxis(Vector3.UnitY ^ axis, math.acos(Vector3.UnitY * axis))
 	
@@ -33,7 +32,7 @@ def world_task(axis, r):
 	
 	shotlist = []
 	for vec in veclist:
-		shot = EntityShot(world, "M", 0xFFFFFF, root)
+		shot = EntityShot(WORLD, "M", 0xFFFFFF, root)
 		shot.Pos = vec * r
 		shot.Recording = Recording.LocalMat
 		
@@ -55,13 +54,13 @@ def world_task(axis, r):
 		root.AddTask(shot_task_func2, 1 if flag else randint(3, 6), num_way, 0)
 		task.Interval -= 10
 	root.AddTask(shot_task_func1, 90, 4, 10, True)
-world_task(+Vector3(1, 1, -0.5), 30.0)
-world_task(+Vector3(1, -1, 0.5), 40.0)
+WORLD_task(+Vector3(1, 1, -0.5), 30.0)
+WORLD_task(+Vector3(1, -1, 0.5), 40.0)
 
 def shot_amulet(pos, vec, upward):
 	
 	def shot_func1(original):
-		shot = EntityShot(world, "AMULET", 0xFF00FF)
+		shot = EntityShot(WORLD, "AMULET", 0xFF00FF)
 		shot.Pos = original.Pos
 		shot.Velocity = +(TARGET - shot.Pos) * 8.0
 		shot.Upward = original.Upward
@@ -71,7 +70,7 @@ def shot_amulet(pos, vec, upward):
 		shot()
 	
 	def shot_func2(original):
-		shot = EntityShot(world, "S", 0xFF00FF)
+		shot = EntityShot(WORLD, "S", 0xFF00FF)
 		shot.Pos = original.Pos
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func1(s) , 0, 1, 9)
@@ -80,7 +79,7 @@ def shot_amulet(pos, vec, upward):
 		shot()
 	
 	def shot_func3(original):
-		shot = EntityShot(world, "AMULET", 0xFF0000)
+		shot = EntityShot(WORLD, "AMULET", 0xFF0000)
 		shot.Pos = original.Pos
 		shot.Velocity = (TARGET - shot.Pos) * 0.0025
 		shot.Upward = original.Upward
@@ -91,7 +90,7 @@ def shot_amulet(pos, vec, upward):
 		shot()
 	
 	def shot_func4(original):
-		shot = EntityShot(world, "S", 0xFF0000)
+		shot = EntityShot(WORLD, "S", 0xFF0000)
 		shot.Pos = original.Pos
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func3(s) , 0, 1, 9)
@@ -99,7 +98,7 @@ def shot_amulet(pos, vec, upward):
 		shot()
 	
 	for j in range(16):
-		shot = EntityShot(world, "AMULET", 0xFFFFFF)
+		shot = EntityShot(WORLD, "AMULET", 0xFFFFFF)
 		shot.Pos = pos
 		shot.Velocity = vec * (0.5 * j + 2)
 		shot.Upward = upward

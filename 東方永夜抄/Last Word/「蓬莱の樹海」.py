@@ -4,8 +4,6 @@ from VecMath import *
 from vectorutil import *
 import math
 
-RAD = math.pi / 180.0
-
 colorlist = [0xA00000, 0x00A000, 0x0000A0, 0xA0A000, 0xA000A0, 0x00A0A0, 0xFF20A0]
 
 way = 6
@@ -18,7 +16,7 @@ for i in range(way):
 	veclist.append(vec)
 	vec = vec * mat
 
-root = EntityShot(world, "BONE", 0xFFFFFF)
+root = EntityShot(WORLD, "BONE", 0xFFFFFF)
 root.Recording = Recording.LocalMat
 root.Pos = Vector3(0, 0, 160)
 
@@ -34,7 +32,7 @@ colorstack = list(colorlist)
 
 def died_decision1(entity):
 	if abs(entity.Pos.x) > 400 or abs(entity.Pos.y) > 400 or entity.Pos.z > 800 or entity.Pos.z < -300:
-		shot = EntityShot(world, "DIA", 0xFFFFFF)
+		shot = EntityShot(WORLD, "DIA", 0xFFFFFF)
 		shot.Pos = entity.Pos
 		shot.Velocity = -entity.Velocity
 		shot.DiedDecision = died_decision2
@@ -47,7 +45,7 @@ died_decision2 = lambda e: (abs(e.Pos.x) > 400 or abs(e.Pos.y) > 400 or e.Pos.z 
 for vec in veclist:
 	color = colorstack.pop()
 	
-	parent = EntityShot(world, "MAGIC_CIRCLE", 0xA0A0A0, root)
+	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xA0A0A0, root)
 	parent.Recording = Recording.LocalMat
 	parent.Pos = vec * 20
 	
@@ -55,7 +53,7 @@ for vec in veclist:
 		vec = Vector3.UnitX * parent.WorldMat
 		
 		for i in range(2):
-			shot = EntityShot(world, "DIA", color)
+			shot = EntityShot(WORLD, "DIA", color)
 			shot.Pos = parent.WorldPos
 			shot.Velocity = vec * 2.4
 			shot.DiedDecision  = died_decision1
@@ -69,13 +67,13 @@ objvertices("ico.obj", lambda v: veclist.append(v))
 
 for vec in veclist:
 	for axis in [Vector3.UnitX, Vector3.UnitZ]:
-		parent = Entity(world)
+		parent = Entity(WORLD)
 		parent.Pos = vec
 		
 		def shot_s(task, parent = parent, mat = Matrix3.RotationAxis(axis, RAD * 10)):
 			parent.Pos = parent.Pos * mat
 			
-			shot = EntityShot(world, "S", colorlist[task.RunCount % len(colorlist)])
+			shot = EntityShot(WORLD, "S", colorlist[task.RunCount % len(colorlist)])
 			shot.Velocity = parent.Pos * 3.4
 			shot.LivingLimit = 160
 			shot()

@@ -2,8 +2,6 @@
 from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 import math
-
-RAD = math.pi / 180.0
 way = 3
 num_divide = 5
 
@@ -12,12 +10,12 @@ for i in range(num_divide):
 	shotDict[i] = []
 	
 def shot_func(pos, vec, level):
-	shot = EntityShot(world, "M", 0x0000A0)
+	shot = EntityShot(WORLD, "M", 0x0000A0)
 	shot.Pos = pos
 	shot.Velocity = vec * 8
 	shot()
 	
-	laser = EntityShot(world, "LASER_LINE", 0x0000A0)
+	laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0)
 	if laser.ModelData.OwnerEntities.Count == 1:
 		for vert in laser.ModelData.Vertices:
 			vert.Pos = Vector3(vert.Pos.x * 2, vert.Pos.y * 2, vert.Pos.z * 4000) 

@@ -3,8 +3,6 @@ from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 import math
 
-RAD = math.pi / 180.0
-
 target = Vector3(80, 80, 80)
 
 vecList = []
@@ -14,7 +12,7 @@ for vec in vecList:
 	for angle in [RAD, -RAD]:
 		for axis in [Vector3.UnitX, Vector3.UnitZ]:
 			axis = vec ^ (vec ^ axis)
-			parent = Entity(world)
+			parent = Entity(WORLD)
 			
 			rotPosMat = Matrix3.RotationAxis(axis, angle * 6)
 			parent.Pos = vec
@@ -27,7 +25,7 @@ for vec in vecList:
 					parent.Pos = parent.Pos * rotPosMat
 					parent.Rot = parent.Rot * rotQuat
 					
-					shot = EntityShot(world, "DIA", 0xA00050 if angle < 0 else 0x5000A0)
+					shot = EntityShot(WORLD, "DIA", 0xA00050 if angle < 0 else 0x5000A0)
 					shot.Pos = parent.Pos * 320
 					shot.Velocity = parent.Pos * parent.Rot * -2
 					shot.LivingLimit = 120
@@ -36,7 +34,7 @@ for vec in vecList:
 			parent.AddTask(rotate, 32, 20, 0)
 			parent()
 
-def world_task():
+def WORLD_task():
 	def shot_l(task):
 		vec = +target
 		axis = vec ^ (vec ^ Vector3.UnitY)
@@ -46,10 +44,10 @@ def world_task():
 		mat2 = Matrix3.RotationAxis(axis, angle)
 		
 		for i in range(task.RunCount):
-			shot = EntityShot(world, "L", 0x4000D0)
+			shot = EntityShot(WORLD, "L", 0x4000D0)
 			shot.Velocity = vec * mat2 * 2.5
 			shot()
 			
 			mat2 = mat2 * mat1
-	world.AddTask(shot_l, 5, 4, 0, True)
-world.AddTask(world_task, 90, 8, 90)
+	WORLD.AddTask(shot_l, 5, 4, 0, True)
+WORLD.AddTask(WORLD_task, 90, 8, 90)
