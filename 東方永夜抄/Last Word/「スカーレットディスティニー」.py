@@ -22,7 +22,7 @@ def WORLD_task(task):
 			parent.Pos = vec
 			
 			def shot_knife(task, parent = parent, axis = axis, rot = Matrix3.RotationAxis(axis, angle * 12)):
-				shot = EntityShot(WORLD, "KNIFE", 0xA00000)
+				shot = EntityShot(WORLD, KNIFE, 0xA00000)
 				shot.Velocity = parent.Pos * (4.0 + (parent.Pos * Vector3.UnitZ) * 1 + task.RunCount * 0.03)
 				shot.Upward = axis
 				shot.LivingLimit = 120
@@ -33,7 +33,7 @@ def WORLD_task(task):
 			
 			if (angle > 0 if task.RunCount % 2 == 0 else angle < 0):
 				def shot_l(parent = parent):
-					shot = EntityShot(WORLD, "L", 0xFF0000)
+					shot = EntityShot(WORLD, L, 0xFF0000)
 					shot.Velocity = parent.Pos * 2.0
 					shot.LivingLimit = 160
 					shot()

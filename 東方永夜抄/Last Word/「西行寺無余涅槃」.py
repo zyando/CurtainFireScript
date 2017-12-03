@@ -12,7 +12,7 @@ def WORLD_task():
 	def shot_laser():
 		for vec in vectors_list[1]:
 			flag = vec in vectors_list[0]
-			shot = EntityShot(WORLD, "LASER", 0xA000A0 if flag else 0x0000A0)
+			shot = EntityShot(WORLD, LASER, 0xA000A0 if flag else 0x0000A0)
 			
 			if shot.ModelData.OwnerEntities.Count == 1:
 				for vert in shot.ModelData.Vertices:
@@ -38,7 +38,7 @@ def WORLD_task():
 	
 	def shot_l():
 		for vec in vectors_list[0]:
-			shot = EntityShot(WORLD, "L", 0xFF4040)
+			shot = EntityShot(WORLD, L, 0xFF4040)
 			shot.Velocity = vec * 0.8
 			shot.Pos = +shot.Velocity * 20
 			shot.LivingLimit = 400
@@ -59,7 +59,7 @@ def WORLD_task():
 			flag = vec in vectors_list[3]
 			
 			for i in range(3 if flag else 2):
-				shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0 if flag else 0xA000A0)
+				shot = EntityShot(WORLD, BUTTERFLY, 0x0000A0 if flag else 0xA000A0)
 				shot.Velocity = vec * (0.4 + i * 0.2)
 				shot.Pos = +shot.Velocity * 20
 				shot.LivingLimit = 400 - i * 50
@@ -84,7 +84,7 @@ def WORLD_task():
 	#WORLD.AddTask(shot_butterfly_gb, 0, 1, 0)
 	
 	def shot_butterfly_r(task):
-		parentShot = EntityShot(WORLD, "BONE", 0xFFFFFF)
+		parentShot = EntityShot(WORLD, BONE, 0xFFFFFF)
 		parentShot.Recording = Recording.LocalMat
 		quat = Quaternion.RotationAxis(Vector3.UnitY, RAD * 48  * (1 if task.RunCount % 2 == 0 else -1))
 		
@@ -95,7 +95,7 @@ def WORLD_task():
 		
 		for vec in vectors_list[2] + vectors_list[4]:
 			for i in range(2):
-				shot = EntityShot(WORLD, "BUTTERFLY", 0xA00000, parentShot)
+				shot = EntityShot(WORLD, BUTTERFLY, 0xA00000, parentShot)
 				shot.Velocity = vec * (0.4 + i * 0.2)
 				shot.Pos = +shot.Velocity * 20
 				

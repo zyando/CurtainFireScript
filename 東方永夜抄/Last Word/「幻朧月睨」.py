@@ -21,13 +21,13 @@ def WORLD_task():
 			for vec in vecList:
 				vec = vec * mat
 				
-				shot = EntityShot(WORLD, "M", 0x0000A0)
+				shot = EntityShot(WORLD, M, 0x0000A0)
 				shot.Pos = vec * task.RunCount * 20 + pos
 				shot.LivingLimit = 90
 				shot()
 				
 				def move(shot = shot, vec = vec):
-					newShot = EntityShot(WORLD, "M", 0xA00000)
+					newShot = EntityShot(WORLD, M, 0xA00000)
 					newShot.Pos = shot.Pos
 					newShot.Velocity = vec * 2.4
 					newShot()
@@ -44,10 +44,10 @@ def WORLD_task():
 				shot.Velocity = vec * speed
 				shot.LivingLimit = limit
 				shot()
-		WORLD.AddTask(lambda: shot_bullet(ShotProperty("BULLET", 0xA00000), 4.8, 30), 0, 1, 30)
-		WORLD.AddTask(lambda: shot_bullet(ShotProperty("BULLET", 0x0000A0), 4.5, 30), 0, 1, 30)
-		WORLD.AddTask(lambda: shot_bullet(ShotProperty("BULLET", 0xA00000), 4.5, 28), 0, 1, 32)
-		WORLD.AddTask(lambda: shot_bullet(ShotProperty("BULLET", 0x0000A0), 4.2, 28), 0, 1, 32)
-		WORLD.AddTask(lambda: shot_bullet(ShotProperty("BULLET", 0xA00000), 4.2, 24), 0, 1, 36)
+		WORLD.AddTask(lambda: shot_bullet(ShotProperty(BULLET, 0xA00000), 4.8, 30), 0, 1, 30)
+		WORLD.AddTask(lambda: shot_bullet(ShotProperty(BULLET, 0x0000A0), 4.5, 30), 0, 1, 30)
+		WORLD.AddTask(lambda: shot_bullet(ShotProperty(BULLET, 0xA00000), 4.5, 28), 0, 1, 32)
+		WORLD.AddTask(lambda: shot_bullet(ShotProperty(BULLET, 0x0000A0), 4.2, 28), 0, 1, 32)
+		WORLD.AddTask(lambda: shot_bullet(ShotProperty(BULLET, 0xA00000), 4.2, 24), 0, 1, 36)
 	WORLD.AddTask(shot_m_task, 90, 2, 0)
 WORLD.AddTask(WORLD_task, 0, 1, 0)

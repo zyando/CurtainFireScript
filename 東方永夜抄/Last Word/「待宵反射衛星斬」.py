@@ -50,7 +50,7 @@ def shot_task1():
 				vec = axis * mat * 0.1
 				
 				for i in range(2):
-					shot = EntityShot(WORLD, "SCALE", 0xA000A0)
+					shot = EntityShot(WORLD, SCALE, 0xA000A0)
 					shot.Pos = parent2.Pos
 					shot.Upward = upward
 					shot.Velocity = vec * (i * 2 - 1)

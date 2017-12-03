@@ -21,7 +21,7 @@ for i in range(num_way):
 def WORLD_task(axis, r):
 	rotate = Quaternion.RotationAxis(Vector3.UnitY, RAD * 6)
 	
-	root = EntityShot(WORLD, "BONE", 0xFFFFFF)
+	root = EntityShot(WORLD, BONE, 0xFFFFFF)
 	root.Recording = Recording.LocalMat
 	root.Rot = Quaternion.RotationAxis(Vector3.UnitY ^ axis, math.acos(Vector3.UnitY * axis))
 	
@@ -32,7 +32,7 @@ def WORLD_task(axis, r):
 	
 	shotlist = []
 	for vec in veclist:
-		shot = EntityShot(WORLD, "M", 0xFFFFFF, root)
+		shot = EntityShot(WORLD, M, 0xFFFFFF, root)
 		shot.Pos = vec * r
 		shot.Recording = Recording.LocalMat
 		
@@ -60,7 +60,7 @@ WORLD_task(+Vector3(1, -1, 0.5), 40.0)
 def shot_amulet(pos, vec, upward):
 	
 	def shot_func1(original):
-		shot = EntityShot(WORLD, "AMULET", 0xFF00FF)
+		shot = EntityShot(WORLD, AMULET, 0xFF00FF)
 		shot.Pos = original.Pos
 		shot.Velocity = +(TARGET - shot.Pos) * 8.0
 		shot.Upward = original.Upward
@@ -70,7 +70,7 @@ def shot_amulet(pos, vec, upward):
 		shot()
 	
 	def shot_func2(original):
-		shot = EntityShot(WORLD, "S", 0xFF00FF)
+		shot = EntityShot(WORLD, S, 0xFF00FF)
 		shot.Pos = original.Pos
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func1(s) , 0, 1, 9)
@@ -79,7 +79,7 @@ def shot_amulet(pos, vec, upward):
 		shot()
 	
 	def shot_func3(original):
-		shot = EntityShot(WORLD, "AMULET", 0xFF0000)
+		shot = EntityShot(WORLD, AMULET, 0xFF0000)
 		shot.Pos = original.Pos
 		shot.Velocity = (TARGET - shot.Pos) * 0.0025
 		shot.Upward = original.Upward
@@ -90,7 +90,7 @@ def shot_amulet(pos, vec, upward):
 		shot()
 	
 	def shot_func4(original):
-		shot = EntityShot(WORLD, "S", 0xFF0000)
+		shot = EntityShot(WORLD, S, 0xFF0000)
 		shot.Pos = original.Pos
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func3(s) , 0, 1, 9)
@@ -98,7 +98,7 @@ def shot_amulet(pos, vec, upward):
 		shot()
 	
 	for j in range(16):
-		shot = EntityShot(WORLD, "AMULET", 0xFFFFFF)
+		shot = EntityShot(WORLD, AMULET, 0xFFFFFF)
 		shot.Pos = pos
 		shot.Velocity = vec * (0.5 * j + 2)
 		shot.Upward = upward

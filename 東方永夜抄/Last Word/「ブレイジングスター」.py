@@ -17,7 +17,7 @@ def WORLD_task(task):
 	mat = Matrix3.RotationAxis(randomvec(), RAD * 180 * random())
 	
 	for vec in veclist:
-		shot = EntityShot(WORLD, "STAR_M", 0xA00000 if task.RunCount % 2 == 0 else 0x0000A0)
+		shot = EntityShot(WORLD, STAR_M, 0xA00000 if task.RunCount % 2 == 0 else 0x0000A0)
 		shot.Pos = bone.WorldPos
 		shot.Velocity = vec * 1.2 * mat
 		shot.SetMotionInterpolationCurve(Vector2(0.1, 0.9), Vector2(0.1, 0.9), 60)

@@ -25,7 +25,7 @@ for vec in vecList:
 					parent.Pos = parent.Pos * rotPosMat
 					parent.Rot = parent.Rot * rotQuat
 					
-					shot = EntityShot(WORLD, "DIA", 0xA00050 if angle < 0 else 0x5000A0)
+					shot = EntityShot(WORLD, DIA, 0xA00050 if angle < 0 else 0x5000A0)
 					shot.Pos = parent.Pos * 320
 					shot.Velocity = parent.Pos * parent.Rot * -2
 					shot.LivingLimit = 120
@@ -44,7 +44,7 @@ def WORLD_task():
 		mat2 = Matrix3.RotationAxis(axis, angle)
 		
 		for i in range(task.RunCount):
-			shot = EntityShot(WORLD, "L", 0x4000D0)
+			shot = EntityShot(WORLD, L, 0x4000D0)
 			shot.Velocity = vec * mat2 * 2.5
 			shot()
 			

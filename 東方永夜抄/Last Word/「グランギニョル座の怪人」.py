@@ -18,7 +18,7 @@ def WORLD_task(axis, angle, range, should_shot_scale):
 		rotateAngle = 4
 		rotateQuat = Quaternion.RotationAxis(vec ^ (vec ^ axis), angle * rotateAngle)
 		
-		root = EntityShot(WORLD, "BONE", 0xFFFFFF)
+		root = EntityShot(WORLD, BONE, 0xFFFFFF)
 		root.Recording = Recording.LocalMat
 		root.Rot =  rotateQuat ^ (90 / rotateAngle)
 		
@@ -26,7 +26,7 @@ def WORLD_task(axis, angle, range, should_shot_scale):
 		root.AddTask(rotate_root, interval, 0, 0)
 		root()
 		
-		parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, root)
+		parent = EntityShot(WORLD, MAGIC_CIRCLE, 0xFFFFFF, root)
 		parent.Recording = Recording.LocalMat
 		parent.Pos = vec * range
 		
@@ -40,7 +40,7 @@ def WORLD_task(axis, angle, range, should_shot_scale):
 		def shot_dia(task, parent = parent, rotateQuat = rotateQuat):
 			parent.Rot *= rotateQuat
 			
-			shot = EntityShot(WORLD, "DIA", 0xFFA0FF)
+			shot = EntityShot(WORLD, DIA, 0xFFA0FF)
 			shot.Pos = parent.WorldPos
 			shot.Velocity = Vector3.UnitZ * parent.WorldMat * -2.4
 			shot()
@@ -58,7 +58,7 @@ def WORLD_task(axis, angle, range, should_shot_scale):
 				targetPosList = [target - sidevec * 20, target, target + sidevec * 20]
 				
 				for targetPos in targetPosList:
-					shot = EntityShot(WORLD, "SCALE", 0xA00000 if task.RunCount % 2 == 0 else 0xA000A0)
+					shot = EntityShot(WORLD, SCALE, 0xA00000 if task.RunCount % 2 == 0 else 0xA000A0)
 					shot.Velocity = +(targetPos - parent.WorldPos) * 20
 					shot.Upward = Vector3.UnitY * parent.WorldMat
 					shot.Pos = parent.WorldPos

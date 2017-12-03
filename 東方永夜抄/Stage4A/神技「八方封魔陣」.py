@@ -13,7 +13,7 @@ vectors_dict = {path[0:-4] : create_veclist(path) for path in ["ico.obj", "ico_y
 
 def shot_omnidirectinal():
 	for vec in vectors_dict["ico"]:
-		shot = EntityShot(WORLD, "AMULET", 0xA00000)
+		shot = EntityShot(WORLD, AMULET, 0xA00000)
 		shot.Velocity = vec * 4
 		shot.LivingLimit = 150
 		
@@ -25,7 +25,7 @@ def shot_omnidirectinal():
 				dot = vec * src_vec
 				
 				if -0.99 < dot and dot < 0.99:
-					shot = EntityShot(WORLD, "AMULET", 0xA00000 if 0 < dot else 0xFFD700)
+					shot = EntityShot(WORLD, AMULET, 0xA00000 if 0 < dot else 0xFFD700)
 					shot.Pos = src.Pos
 					shot.Velocity = vec * 4
 					shot.Upward = src_vec
@@ -41,7 +41,7 @@ def shot_every_directinal():
 		
 		for vec in vectors_dict["ico_tru2"]:
 			vec  = vec * mat
-			shot = EntityShot(WORLD, "S", 0xFFFFFF)
+			shot = EntityShot(WORLD, S, 0xFFFFFF)
 			shot.Velocity = vec * (3 - task.RunCount * 0.15) 
 			shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
 			shot.LivingLimit = 40
@@ -50,7 +50,7 @@ def shot_every_directinal():
 			shot.AddTask(stop, 0, 1, 30)
 			
 			def shot_red_scale(src = shot, vec = vec):
-				shot = EntityShot(WORLD, "SCALE", 0xA00000)
+				shot = EntityShot(WORLD, SCALE, 0xA00000)
 				shot.Pos = src.Pos
 				shot.LookAtVec = vec
 				shot.LivingLimit = 200

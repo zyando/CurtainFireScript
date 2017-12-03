@@ -32,7 +32,7 @@ def WORLD_task():
 		vec = vec * rot
 		
 		for i in range(2):
-			shot = EntityShot(WORLD, "LASER", 0xA00000)
+			shot = EntityShot(WORLD, LASER, 0xA00000)
 			shot.Recording = Recording.LocalMat
 			shot.Rot = Matrix3.LookAt(vec, front)
 			shot.Pos = vec * 80
@@ -76,7 +76,7 @@ def WORLD_task():
 					def shot_dia():
 						vec = front * parent.WorldMat
 						
-						shot = EntityShot(WORLD, "DIA", 0xA00000)
+						shot = EntityShot(WORLD, DIA, 0xA00000)
 						shot.Pos = parent.WorldPos
 						shot.LookAtVec = vec
 						
@@ -104,7 +104,7 @@ def WORLD_task():
 				for i in range(5):
 					shotvec = shotvec * rot
 					
-					shot = EntityShot(WORLD, "S", 0x0000A0)
+					shot = EntityShot(WORLD, S, 0x0000A0)
 					shot.Velocity = shotvec * 2.0 * (1 + i * 0.2)
 					shot()
 			WORLD.AddTask(shot_s, 15, 20, 30, True)
