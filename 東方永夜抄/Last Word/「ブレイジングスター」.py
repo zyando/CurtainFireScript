@@ -2,7 +2,7 @@
 from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 from vectorutil import *
-from randomutil import *
+from random import random
 import math
 
 num_shot = 80
@@ -13,7 +13,7 @@ objvertices("ico_tru1.obj", lambda v: veclist.append(v))
 
 #bone = EntityBone(WORLD, "Marisa", u"センター")
 
-def WORLD_task(task):
+def world_task(task):
 	mat = Matrix3.RotationAxis(randomvec(), RAD * 180 * random())
 	
 	for vec in veclist:
@@ -30,8 +30,8 @@ def WORLD_task(task):
 			shot.Velocity *= 3.4
 		shot.AddTask(move, 0, 1, 120)
 		shot()
-WORLD.AddTask(WORLD_task, 3, 8, 325, True)
-WORLD.AddTask(WORLD_task, 3, 10, 388, True)
-WORLD.AddTask(WORLD_task, 1, 8, 447, True)
-WORLD.AddTask(WORLD_task, 3, 10, 480, True)
-WORLD.AddTask(WORLD_task, 3, 8, 510, True)
+WORLD.AddTask(world_task, 3, 8, 325, True)
+WORLD.AddTask(world_task, 3, 10, 388, True)
+WORLD.AddTask(world_task, 1, 8, 447, True)
+WORLD.AddTask(world_task, 3, 10, 480, True)
+WORLD.AddTask(world_task, 3, 8, 510, True)

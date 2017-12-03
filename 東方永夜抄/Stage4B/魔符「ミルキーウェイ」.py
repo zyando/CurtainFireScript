@@ -3,7 +3,7 @@ from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 from entities import EntityShotWithParticle
 from vectorutil import *
-from randomutil import random, randint, gaussian
+from random import random, randint, gaussian
 import math
 
 veclist = []

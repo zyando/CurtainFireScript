@@ -23,10 +23,10 @@ for i in range(wayHoriz):
 	vecList2 = map(lambda v: v * matHoriz, vecList2)
 	vecList1.append(vecList2)
 
-def WORLD_task_func1():
+def world_task_func1():
 	vecStack = vecList1[:]
 	
-	def WORLD_task_func2():
+	def world_task_func2():
 		vecList2 = vecStack.pop()
 		
 		for vec in vecList2:
@@ -47,15 +47,15 @@ def WORLD_task_func1():
 			
 			shot.LivingLimit = 120
 			shot()
-	WORLD.AddTask(WORLD_task_func2, 2, wayHoriz, 0)
-WORLD.AddTask(WORLD_task_func1, 200, 2, 0)
+	WORLD.AddTask(world_task_func2, 2, wayHoriz, 0)
+WORLD.AddTask(world_task_func1, 200, 2, 0)
 
-def WORLD_task_func3():
+def world_task_func3():
 	mat = Matrix3.RotationAxis(Vector3.UnitY, RAD * 180 / wayHoriz)
 	vecStack = vecList1[:]
 	vecStack.reverse()
 	
-	def WORLD_task_func4():
+	def world_task_func4():
 		vecList2 = vecStack.pop()
 		
 		for vec in vecList2:
@@ -78,8 +78,8 @@ def WORLD_task_func3():
 			
 			shot.LivingLimit = 120
 			shot()
-	WORLD.AddTask(WORLD_task_func4, 2, wayHoriz, 0)
-WORLD.AddTask(WORLD_task_func3, 200, 2, 40)
+	WORLD.AddTask(world_task_func4, 2, wayHoriz, 0)
+WORLD.AddTask(world_task_func3, 200, 2, 40)
 
 vecList3 = [+Vector3(-1, 1, 1), +Vector3(1, 1, -1), +Vector3(1, -1, 1), +Vector3(-1, -1, -1)]
 

@@ -11,7 +11,7 @@ objvertices("ico.obj", lambda v: vecList.append(+v))
 angleList = [RAD, -RAD]
 axisList = [Vector3.UnitX, Vector3.UnitZ]
 
-def WORLD_task(axis, angle, range, should_shot_scale):
+def world_task(axis, angle, range, should_shot_scale):
 	for vec in vecList:
 		if (vec ^ axis).Length() < 0.01: continue
 		
@@ -65,7 +65,7 @@ def WORLD_task(axis, angle, range, should_shot_scale):
 					shot()
 			parent.AddTask(shot_scale, interval, int(80 / interval), 220, True)
 		parent()
-WORLD.AddTask(lambda: WORLD_task(Vector3.UnitX, RAD, 512, False), 0, 1, 0)
-WORLD.AddTask(lambda: WORLD_task(Vector3.UnitX, -RAD, 512, False), 0, 1, 0)
-WORLD.AddTask(lambda: WORLD_task(Vector3.UnitZ, RAD, 512, True), 0, 1, 0)
-WORLD.AddTask(lambda: WORLD_task(Vector3.UnitZ, -RAD, 512, True), 0, 1, 0)
+WORLD.AddTask(lambda: world_task(Vector3.UnitX, RAD, 512, False), 0, 1, 0)
+WORLD.AddTask(lambda: world_task(Vector3.UnitX, -RAD, 512, False), 0, 1, 0)
+WORLD.AddTask(lambda: world_task(Vector3.UnitZ, RAD, 512, True), 0, 1, 0)
+WORLD.AddTask(lambda: world_task(Vector3.UnitZ, -RAD, 512, True), 0, 1, 0)

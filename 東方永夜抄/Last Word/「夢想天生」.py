@@ -18,7 +18,7 @@ for i in range(num_way):
 	veclist.append(vec)
 	vec  = vec * mat
 
-def WORLD_task(axis, r):
+def world_task(axis, r):
 	rotate = Quaternion.RotationAxis(Vector3.UnitY, RAD * 6)
 	
 	root = EntityShot(WORLD, BONE, 0xFFFFFF)
@@ -54,8 +54,8 @@ def WORLD_task(axis, r):
 		root.AddTask(shot_task_func2, 1 if flag else randint(3, 6), num_way, 0)
 		task.Interval -= 10
 	root.AddTask(shot_task_func1, 90, 4, 10, True)
-WORLD_task(+Vector3(1, 1, -0.5), 30.0)
-WORLD_task(+Vector3(1, -1, 0.5), 40.0)
+world_task(+Vector3(1, 1, -0.5), 30.0)
+world_task(+Vector3(1, -1, 0.5), 40.0)
 
 def shot_amulet(pos, vec, upward):
 	

@@ -13,7 +13,7 @@ for i in range(way):
 	vec = vec * rot
 	veclist.append(vec)
 
-def WORLD_task(task):
+def world_task(task):
 	for vec in veclist:
 		for angle in [RAD, -RAD]:
 			axis = vec ^ (vec ^ Vector3.UnitY)
@@ -39,4 +39,4 @@ def WORLD_task(task):
 					shot()
 				parent.AddTask(shot_l, 2, 12, 4)
 			parent()
-WORLD.AddTask(WORLD_task, 160, 2, 0, True)
+WORLD.AddTask(world_task, 160, 2, 0, True)

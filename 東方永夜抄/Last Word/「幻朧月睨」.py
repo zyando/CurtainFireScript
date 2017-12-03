@@ -2,7 +2,7 @@
 from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 from vectorutil import *
-from randomutil import *
+from random import random
 import math
 
 vecList = []
@@ -10,7 +10,7 @@ objvertices("ico_tru1.obj", lambda v: vecList.append(v))
 
 posList = [Vector3(40, 0, 0), Vector3(0, 40, 20)]
 
-def WORLD_task():
+def world_task():
 	posStack = posList[:]
 	
 	def shot_m_task():
@@ -50,4 +50,4 @@ def WORLD_task():
 		WORLD.AddTask(lambda: shot_bullet(ShotProperty(BULLET, 0x0000A0), 4.2, 28), 0, 1, 32)
 		WORLD.AddTask(lambda: shot_bullet(ShotProperty(BULLET, 0xA00000), 4.2, 24), 0, 1, 36)
 	WORLD.AddTask(shot_m_task, 90, 2, 0)
-WORLD.AddTask(WORLD_task, 0, 1, 0)
+WORLD.AddTask(world_task, 0, 1, 0)

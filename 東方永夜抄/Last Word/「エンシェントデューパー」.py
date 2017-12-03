@@ -22,7 +22,7 @@ for i in range(way):
 	laser_veclist.append(vec)
 	vec = vec * mat
 
-def WORLD_task():
+def world_task():
 	rot = Matrix3.RotationAxis(randomvec(), RAD * 20)
 	
 	for vec in laser_veclist:
@@ -108,5 +108,5 @@ def WORLD_task():
 					shot.Velocity = shotvec * 2.0 * (1 + i * 0.2)
 					shot()
 			WORLD.AddTask(shot_s, 15, 20, 30, True)
-WORLD.AddTask(WORLD_task, 0, 1, 0)
+WORLD.AddTask(world_task, 0, 1, 0)
 

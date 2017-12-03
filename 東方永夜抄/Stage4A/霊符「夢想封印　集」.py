@@ -2,7 +2,7 @@
 from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 from vectorutil import *
-from randomutil import random, randint
+from random import random, randint
 import math
 
 TARGET = Vector3(0, 0, 100)
@@ -18,18 +18,18 @@ def shot_M():
 		shot()
 WORLD.AddTask(shot_M, 30, 10, 10)
 
-def WORLD_task_func2():
+def world_task_func2():
 	entity = Entity(WORLD)
 	entity.Pos = randomvec()
 	entity.Upward = entity.Pos ^ (entity.Pos ^ randomvec())
 	
 	mat = Matrix3.RotationAxis(entity.Upward, RAD * (20.0 + random() * 20.0))
 	
-	def WORLD_task_func3(mat = mat):
+	def world_task_func3(mat = mat):
 		shot_amulet(entity.Pos, entity.Upward)
 		entity.Pos = entity.Pos * mat
-	WORLD.AddTask(WORLD_task_func3, randint(2, 8), 8, 0)
-WORLD.AddTask(WORLD_task_func2, 90, 5, 10)
+	WORLD.AddTask(world_task_func3, randint(2, 8), 8, 0)
+WORLD.AddTask(world_task_func2, 90, 5, 10)
 
 def shot_amulet(vec, upward):
 	mat = Matrix3.RotationAxis(vec ^ (vec ^ Vector3.UnitY), RAD * (4.0 + random() * 6.0))

@@ -2,13 +2,13 @@
 from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 from vectorutil import *
-from randomutil import uniform
+from random import uniform
 import math
 
 veclist = []
 objvertices("ico_tru2.obj", lambda v: veclist.append(+v))
 
-def WORLD_task(task):
+def world_task(task):
 	for vec in veclist:
 		for i in range(5):
 			shot = EntityShot(WORLD, AMULET, 0xFFFFFF)
@@ -33,4 +33,4 @@ def WORLD_task(task):
 			shot.LivingLimit = 200
 			shot()
 	WORLD.AddTask(shot_M, 1, 5, 0)
-WORLD.AddTask(WORLD_task, 90, 4, 0, True)
+WORLD.AddTask(world_task, 90, 4, 0, True)

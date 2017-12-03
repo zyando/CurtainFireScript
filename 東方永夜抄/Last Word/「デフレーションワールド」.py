@@ -2,7 +2,7 @@
 from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 from vectorutil import randomvec
-from randomutil import random
+from random import random
 import math
 
 vecList = []
@@ -21,7 +21,7 @@ targetbone = EntityBone(WORLD, "Reimu", u"センター")
 
 pauseList = []
 
-def WORLD_task_func():
+def world_task_func():
 	target = Entity(WORLD)
 	target.Pos = Vector3(100, 0, 50)
 	target.Velocity = Vector3(-1, 1, 0)
@@ -105,4 +105,4 @@ def WORLD_task_func():
 			shot.AddTask(move, 0, 1, get_waiting_frame())
 			shot()
 	WORLD.AddTask(clone, 0, num_clone, 60, True)
-WORLD.AddTask(WORLD_task_func, 120, 2, 0)
+WORLD.AddTask(world_task_func, 120, 2, 0)

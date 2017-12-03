@@ -8,7 +8,7 @@ def create_veclist(path):
 	objvertices(path, lambda v: veclist.append(+v))
 vectors_list = [create_veclist(path) for path in ["ico.obj", "ico_tru1.obj", "dod.obj", "ico_dod.obj", "snub_cube.obj"]]
 
-def WORLD_task():
+def world_task():
 	def shot_laser():
 		for vec in vectors_list[1]:
 			flag = vec in vectors_list[0]
@@ -120,4 +120,4 @@ def WORLD_task():
 				shot.LivingLimit = 400
 				shot()
 	WORLD.AddTask(shot_butterfly_r, 15, 4, 60, True)
-WORLD.AddTask(WORLD_task, 0, 1, 0)
+WORLD.AddTask(world_task, 0, 1, 0)

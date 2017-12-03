@@ -2,7 +2,7 @@
 from CurtainFireMakerPlugin.Entities import *
 from VecMath import *
 from vectorutil import *
-from randomutil import uniform, random
+from random import uniform, random
 import math
 
 def create_veclist(path):

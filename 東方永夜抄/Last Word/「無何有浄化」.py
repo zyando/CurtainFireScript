@@ -34,7 +34,7 @@ for vec in vecList:
 			parent.AddTask(rotate, 32, 20, 0)
 			parent()
 
-def WORLD_task():
+def world_task():
 	def shot_l(task):
 		vec = +target
 		axis = vec ^ (vec ^ Vector3.UnitY)
@@ -50,4 +50,4 @@ def WORLD_task():
 			
 			mat2 = mat2 * mat1
 	WORLD.AddTask(shot_l, 5, 4, 0, True)
-WORLD.AddTask(WORLD_task, 90, 8, 90)
+WORLD.AddTask(world_task, 90, 8, 90)
