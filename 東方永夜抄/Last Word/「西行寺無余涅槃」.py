@@ -5,8 +5,8 @@ import math
 
 def create_veclist(path):
 	veclist = []
-	objvertices(path, lambda v: veclist.append(+v))
-vectors_list = [create_veclist(path) for path in ["ico.obj", "ico_tru1.obj", "dod.obj", "ico_dod.obj", "snub_cube.obj"]]
+	objvertices(path[0] + ".obj", lambda v: veclist.append(+v), path[1])
+vectors_list = [create_veclist(path) for path in [("ico", 0), ("ico", 1), ("dod", 0), ("ico_dod", 0), ("snub_cube", 0)]]
 
 def world_task():
 	def shot_laser():
@@ -18,7 +18,7 @@ def world_task():
 				for vert in shot.ModelData.Vertices:
 					vert.Pos = Vector3(vert.Pos.x * 80, vert.Pos.y * 80, -vert.Pos.z * 800 - 24)
 			
-			morph = shot.CreateVertexMorph("V_" + shot.MaterialMorph.MorphName, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+			morph = shot.CreateVertexMorph(shot.MaterialMorph.MorphName, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
 			shot.AddMorphKeyFrame(morph, 0, 1)
 			shot.AddMorphKeyFrame(morph, 69, 1)
 			shot.AddMorphKeyFrame(morph, 70, 0)

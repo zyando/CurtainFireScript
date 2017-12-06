@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import *
-import math
 
 colorlist = [0xA00000, 0x00A000, 0x0000A0, 0xA0A000, 0xA000A0, 0x00A0A0, 0xFF20A0]
 

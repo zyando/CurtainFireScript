@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-import math
 
 interval = 4
 

@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import * 
-import math
 
 num_shot = 80
 interval = 5
@@ -49,7 +45,7 @@ def world_task():
 				for vert in shot.ModelData.Vertices:
 					vert.Pos = Vector3(vert.Pos.x * 6, vert.Pos.y * 6, vert.Pos.z * 4000)
 			
-			morph = shot.CreateVertexMorph("V_" + shot.MaterialMorph.MorphName, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+			morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
 			shot.AddVmdMorph(morph, 0, 1)
 			shot.AddVmdMorph(morph, 29, 1)
 			shot.AddVmdMorph(morph, 30, 0)
@@ -90,10 +86,8 @@ def world_task():
 				WORLD.AddTask(lambda t, a = axis, f = front, s = shot: shot_task(t, 85, 90, a, f, s), 30, 3, 70, True)
 				WORLD.AddTask(lambda t, a = axis, f = front, s = shot: shot_task(t, 75, 85, a, f, s), 30, 3, 100, True)
 	
-	axislist = [Vector3.UnitX]
-	
 	for vec in veclist:
-		for axis in axislist:
+		for axis in [Vector3.UnitX]:
 			axis = vec ^ (vec ^ axis)
 			rot = Matrix3.RotationAxis(axis, RAD * 12)
 			

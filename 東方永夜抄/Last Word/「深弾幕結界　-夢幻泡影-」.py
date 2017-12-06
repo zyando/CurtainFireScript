@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import randomvec
-import math
 
-distance_circle = 512.0
+distance_circle = 1024.0
 
 def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_pos, angle_pos, int_shot, num_shot, int_task, num_task, pause_frame_func, restart_frame_func, restart_frame):
 	total_num = num_shot * num_task
@@ -14,7 +10,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 	
 	for vec in veclist:
 		for axis in axislist:
-			if abs(vec.y) > 0.99:
+			if abs(vec * axis) > 0.99:
 				continue
 			
 			prop = propfunc(vec, axis)
@@ -41,7 +37,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			rotate_pos = Quaternion.RotationAxis(axis, angle_pos)
 			rotate_vec = Quaternion.RotationAxis(axis, angle_vec)
 			
-			def add_task(task1, axis = axis, entity = entity, circle = circle, prop = prop, rotate_pos = rotate_pos, rotate_vec = rotate_vec):
+			def add_shot_task(task1, axis = axis, entity = entity, circle = circle, prop = prop, rotate_pos = rotate_pos, rotate_vec = rotate_vec):
 				def shot_amulet(task2):
 					count = (task1.RunCount - 1) * num_shot + task2.RunCount - 1
 					
@@ -50,8 +46,6 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 					shot.Velocity = +circle.WorldPos * entity.Rot * -speed1
 					shot.Upward = axis
 					shot.DiedDecision = lambda e: (e.Pos - parent.Pos).Length > 1024 
-					shot()
-					
 					def pause():
 						shot.Velocity *= 0
 					shot.AddTask(pause, 0, 1, int(frame_num * pause_frame_func(count * total_num_mult)))
@@ -59,22 +53,33 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 					def restart(vec = +shot.Velocity):
 						shot.Velocity = vec * speed2
 					shot.AddTask(restart, 0, 1, int(restart_frame * restart_frame_func(count * total_num_mult)))
+					
+					shot()
 				entity.AddTask(shot_amulet, int_shot, num_shot, 0, True)
-			entity.AddTask(add_task, int_task, num_task, 0, True)
+			entity.AddTask(add_shot_task, int_task, num_task, 0, True)
 			
 			def rotate(entity = entity, circle = circle, parent = parent, prop = prop, rotate_pos = rotate_pos, rotate_vec = rotate_vec):
 				parent.Rot = +parent.Rot * rotate_pos
 				entity.Rot = +entity.Rot * rotate_vec
 			entity.AddTask(rotate, int_shot, WORLD.MaxFrame / int_shot, 1)
+			
+			def shot_amulet_outside(circle = circle, prop = prop):
+				shot = EntityShot(WORLD, prop)
+				shot.Pos = circle.WorldPos
+				shot.Velocity = +circle.WorldPos * 2.0
+				shot.Upward = axis
+				shot.DiedDecision = lambda e: (e.Pos - parent.Pos).Length > 1024
+				shot()
+			circle.AddTask(shot_amulet_outside, 1, int(num_task * int_task * 0.5), 0)
 veclist = []
-objvertices("ico.obj", lambda v: veclist.append(v))
+objvertices("ico.obj", lambda v: veclist.append(v), 1)
 
 WORLD.AddTask(lambda: task(
 veclist,
 axislist = [Vector3.UnitX, Vector3.UnitZ],
 propfunc = lambda v, a: ShotProperty(AMULET, 0xA00000 if a.x > 0.99 else 0x0000A0),
-speed1 = 4.0,
-speed2 = 6.0,
+speed1 = 8.0,
+speed2 = 12.0,
 rot_vec = RAD * -10,
 angle_vec = RAD * 0.1,
 rot_pos = RAD * 0.0,

@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import randomvec
 from random import random
-import math
 
 axis1 = Vector3(1, 0, 0)
 mat = Matrix3.RotationAxis(axis1, RAD * 12)

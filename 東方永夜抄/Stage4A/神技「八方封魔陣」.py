@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import *
 from random import uniform, random
-import math
 
 def create_veclist(path):
 	veclist = []
-	objvertices(path, lambda v: veclist.append(+v))
+	objvertices(path[0] + ".obj", lambda v: veclist.append(+v), path[1])
 	return veclist
-vectors_dict = {path[0:-4] : create_veclist(path) for path in ["ico.obj", "ico_y.obj", "ico_tru1.obj", "ico_tru2.obj", "dod.obj", "ico_dod.obj", "snub_cube.obj"]}
+vectors_dict = {path[0] + "" if path[1] == 0 else str(path[1]) : create_veclist(path) for path in [("ico", 0), ("ico", 2), ("ico_y", 0)]}
 
 def shot_omnidirectinal():
 	for vec in vectors_dict["ico"]:
@@ -39,7 +35,7 @@ def shot_every_directinal():
 	def shot_s(task):
 		mat = Matrix3.RotationAxis(randomvec(), RAD * random() * 20)
 		
-		for vec in vectors_dict["ico_tru2"]:
+		for vec in vectors_dict["ico2"]:
 			vec  = vec * mat
 			shot = EntityShot(WORLD, S, 0xFFFFFF)
 			shot.Velocity = vec * (3 - task.RunCount * 0.15) 

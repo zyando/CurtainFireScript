@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import randomvec
 from random import random
-import math
 
 vecList = []
-objvertices("ico_tru1.obj", lambda v: vecList.append(v))
+objvertices("ico.obj", lambda v: vecList.append(v), 1)
 
 num_clone = 25
 pause_frame = 56

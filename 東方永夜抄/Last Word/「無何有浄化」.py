@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-import math
 
 target = Vector3(80, 80, 80)
 

@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import *
 from random import random, randint, gaussian
-import math
 
 veclist = []
 objvertices("ico.obj", lambda v: veclist.append(v))

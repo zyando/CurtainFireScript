@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import *
 from random import uniform
-import math
 
 veclist = []
-objvertices("ico_tru2.obj", lambda v: veclist.append(+v))
+objvertices("ico.obj", lambda v: veclist.append(+v), 2)
 
 def world_task(task):
 	for vec in veclist:

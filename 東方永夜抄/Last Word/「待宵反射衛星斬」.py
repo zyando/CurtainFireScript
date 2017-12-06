@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import *
 from random import random
-import math
 
 veclist = []
 

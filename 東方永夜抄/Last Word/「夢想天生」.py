@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import randomvec
 from random import seed, random, randint, uniform
-import math
 
 seed(890106)
 

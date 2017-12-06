@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-import math
+
 way = 3
 num_divide = 5
 

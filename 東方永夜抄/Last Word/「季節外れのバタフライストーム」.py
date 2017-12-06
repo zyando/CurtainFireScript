@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-import math
 
 vecList = []
-objvertices("ico_tru1.obj", lambda v: vecList.append(v))
+objvertices("ico.obj", lambda v: vecList.append(v), 1)
 
 for vec in vecList:
 	for axis in [Vector3.UnitX, Vector3.UnitZ]:

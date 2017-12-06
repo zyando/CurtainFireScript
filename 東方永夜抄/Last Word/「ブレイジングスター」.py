@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-from vectorutil import *
 from random import random
-import math
 
 num_shot = 80
 interval = 5
 
 veclist = []
-objvertices("ico_tru1.obj", lambda v: veclist.append(v))
+objvertices("ico.obj", lambda v: veclist.append(v), 1)
 
 #bone = EntityBone(WORLD, "Marisa", u"センター")
 
