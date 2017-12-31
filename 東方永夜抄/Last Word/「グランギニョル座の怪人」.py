@@ -17,6 +17,7 @@ def world_task(axis, angle, range, should_shot_scale):
 		
 		root = EntityShot(WORLD, BONE, 0xFFFFFF)
 		root.Recording = Recording.LocalMat
+		root.Pos = OWNER_BONE.WorldPos
 		root.Rot =  rotateQuat ^ (90 / rotateAngle)
 		
 		def rotate_root(root = root, rotateQuat = rotateQuat): root.Rot *= rotateQuat

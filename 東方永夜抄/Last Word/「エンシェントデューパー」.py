@@ -31,7 +31,7 @@ def world_task():
 			shot = EntityShot(WORLD, LASER, 0xA00000)
 			shot.Recording = Recording.LocalMat
 			shot.Rot = Matrix3.LookAt(vec, front)
-			shot.Pos = vec * 80
+			shot.Pos = OWNER_BONE.WorldPos + vec * 80
 			
 			def add_keyframe(shot = shot):
 				shot.AddBoneKeyframe()
@@ -64,9 +64,8 @@ def world_task():
 					root.AddTask(rotate, 1, numshot, 0)
 					root()
 					
-					parent = Entity(WORLD)
+					parent = Entity(WORLD, root)
 					parent.Pos = front * -r2
-					parent.ParentEntity = root
 					parent.Rot = Quaternion.RotationAxis(axis, RAD * 60)
 					
 					def shot_dia():
@@ -99,6 +98,7 @@ def world_task():
 					shotvec = shotvec * rot
 					
 					shot = EntityShot(WORLD, S, 0x0000A0)
+					shot.Pos = OWNER_BONE.WorldPos
 					shot.Velocity = shotvec * 2.0 * (1 + i * 0.2)
 					shot()
 			WORLD.AddTask(shot_s, 15, 20, 30, True)

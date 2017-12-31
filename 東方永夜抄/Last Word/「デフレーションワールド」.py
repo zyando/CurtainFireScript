@@ -2,7 +2,7 @@
 from random import random
 
 vecList = []
-objvertices("ico.obj", lambda v: vecList.append(v), 1)
+objvertices("ico.obj", lambda v: vecList.append(+v), 1)
 
 num_clone = 25
 pause_frame = 56
@@ -18,12 +18,6 @@ targetbone = EntityBone(WORLD, "Reimu", u"センター")
 pauseList = []
 
 def world_task_func():
-	target = Entity(WORLD)
-	target.Pos = Vector3(100, 0, 50)
-	target.Velocity = Vector3(-1, 1, 0)
-	target.LivingLimit = 120
-	target()
-	
 	cloneList = []
 	
 	def shot_knife1(way = 5):
@@ -36,7 +30,7 @@ def world_task_func():
 			for j in range(2):
 				shot = EntityShot(WORLD, KNIFE, 0xFFD700)
 				shot.Velocity = vec * (1 + j * 0.5)
-				shot.Pos = shot.Velocity
+				shot.Pos = OWNER_BONE.WorldPos + shot.Velocity
 				shot.LivingLimit = 600
 				shot()
 				
@@ -51,7 +45,7 @@ def world_task_func():
 			
 			shot = EntityShot(WORLD, KNIFE, 0x0000A0)
 			shot.Velocity = vec * 4.0
-			shot.Pos = shot.Velocity
+			shot.Pos = OWNER_BONE.WorldPos + shot.Velocity
 			shot.LivingLimit = 200
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
 			
@@ -64,18 +58,20 @@ def world_task_func():
 			pauseList.append(shot)
 	WORLD.AddTask(lambda: shot_knife2(RAD * 60, Vector3.UnitZ), 0, 1, 0)
 	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitZ), 0, 1, 5)
+	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitX), 0, 1, 5)
+	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitX), 0, 1, 5)
 	
 	def shot_knife3():
 		shot = EntityShot(WORLD, KNIFE, 0x0000A0)
-		shot.Velocity = +target.WorldPos * 2.0
-		shot.Pos = shot.Velocity * 4
+		shot.Pos = OWNER_BONE.WorldPos
+		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
 		shot.LivingLimit = 200
 		shot()
 		
 		cloneList.append(shot)
 		pauseList.append(shot)
 	WORLD.AddTask(shot_knife3, 3, 12, 10)
-
+	
 	get_waiting_frame = lambda frame = WORLD.FrameCount + move_frame: frame - WORLD.FrameCount
 	
 	def pause():

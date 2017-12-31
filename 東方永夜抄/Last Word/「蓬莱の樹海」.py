@@ -43,7 +43,7 @@ for vec in veclist:
 	
 	parent = EntityShot(WORLD, MAGIC_CIRCLE, 0xA0A0A0, root)
 	parent.Recording = Recording.LocalMat
-	parent.Pos = vec * 20
+	parent.Pos = OWNER_BONE.WorldPos + vec * 20
 	
 	def shot_dia(parent = parent, color = color):
 		vec = Vector3.UnitX * parent.WorldMat
@@ -70,6 +70,7 @@ for vec in veclist:
 			parent.Pos = parent.Pos * mat
 			
 			shot = EntityShot(WORLD, S, colorlist[task.RunCount % len(colorlist)])
+			shot.Pos = OWNER_BONE.WorldPos
 			shot.Velocity = parent.Pos * 3.4
 			shot.LivingLimit = 160
 			shot()

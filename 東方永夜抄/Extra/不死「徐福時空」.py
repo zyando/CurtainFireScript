@@ -2,12 +2,13 @@
 from random import random, randint, gauss, uniform
 
 veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 1)
+objvertices("ico.obj", lambda v: veclist.append(+v), 2)
 
 def shot_dia():
 	for vec in veclist:
 		if vec.z > -0.8:
 			shot = EntityShot(WORLD, DIA, 0xA00000)
+			shot.Pos = OWNER_BONE.WorldPos
 			shot.Velocity = vec * 4
 			shot.LivingLimit = 200
 			shot()
@@ -44,5 +45,5 @@ def shot_magic_circle(level, pos, vec, color, shot_vec, upward):
 for vec in [(Vector3.UnitX, Vector3.UnitY), (Vector3.UnitY, Vector3.UnitZ)]:
 	for i in range(2):
 		for color in [(0xA00000, Vector3.UnitZ, 50), (0x0000A0, -Vector3.UnitZ, 0)]:
-			def task(vec = vec, i = i, color = color): shot_magic_circle(0, Vector3.Zero, vec[0] * (i * 2 - 1), color[0], color[1], vec[1])
+			def task(vec = vec, i = i, color = color): shot_magic_circle(0, OWNER_BONE.WorldPos, vec[0] * (i * 2 - 1), color[0], color[1], vec[1])
 			WORLD.AddTask(task, 100, 3, color[2])

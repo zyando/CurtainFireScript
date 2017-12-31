@@ -42,4 +42,4 @@ def shot_func(pos, vec, level):
 				shotVec = shotVec * mat2
 		shot.AddTask(shot_task_func, 0, 1, 6)
 		shot.LivingLimit = 7
-shot_func(Vector3.Zero, -Vector3.UnitZ, 0)
+shot_func(OWNER_BONE.WorldPos, -Vector3.UnitZ, 0)

@@ -20,7 +20,7 @@ for vec in [Vector3.UnitZ * mat, Vector3.UnitZ, Vector3.UnitZ * ~mat]:
 for vec in veclist:
 	parent = EntityShot(WORLD, MAGIC_CIRCLE, 0x0000A0)
 	parent.Recording = Recording.LocalMat
-	parent.Pos = vec
+	parent.Pos = OWNER_BONE.WorldPos + vec
 	parent.Rot = Matrix3.LookAt(+vec, Vector3.UnitZ)
 	
 	scale = Vector3(4, 4, 0)
@@ -39,11 +39,11 @@ for vec in veclist:
 			for vert in laser.ModelData.Vertices: vert.Pos = Vector3.Scale(vert.Pos, scale)
 		
 		morph = laser.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
-		laser.AddMorphKeyFrame(morph, 0, 1)
-		laser.AddMorphKeyFrame(morph, 29, 1)
-		laser.AddMorphKeyFrame(morph, 30, 0)
-		laser.AddMorphKeyFrame(morph, 120, 0)
-		laser.AddMorphKeyFrame(morph, 140, 1)
+		laser.AddMorphKeyFrame(morph, 1, 0)
+		laser.AddMorphKeyFrame(morph, 1, 29)
+		laser.AddMorphKeyFrame(morph, 0, 30)
+		laser.AddMorphKeyFrame(morph, 0, 120)
+		laser.AddMorphKeyFrame(morph, 1, 140)
 		laser.LivingLimit = 140
 		
 		laser()
@@ -53,9 +53,9 @@ for vec in veclist:
 	parent()
 
 def shot_star():
-	for i in range(4):
+	for i in range(8):
 		shot = EntityShot(WORLD, STAR_S, 0xA00000)
-		shot.Pos = Vector3(gauss(0, 1) * 600, gauss(0, 1) * 400, gauss(0, 1) * 40)
+		shot.Pos = OWNER_BONE.WorldPos + Vector3(gauss(0, 1) * 600, gauss(0, 1) * 400, gauss(0, 1) * 40)
 		shot.Velocity = Vector3.UnitZ * Matrix3.RotationAxis(Vector3.UnitZ ^ randomvec(), RAD * random() * 60) * uniform(4, 8)
 		shot.LivingLimit = 450
 		shot()

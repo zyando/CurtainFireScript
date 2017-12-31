@@ -3,8 +3,6 @@ from random import seed, random, randint, uniform
 
 seed(890106)
 
-TARGET = Vector3(0, 0, 140)
-
 veclist = []
 num_way = 8
 mat = Matrix3.RotationAxis(Vector3.UnitY, RAD * (360 / num_way))
@@ -19,10 +17,12 @@ def world_task(axis, r):
 	
 	root = EntityShot(WORLD, BONE, 0xFFFFFF)
 	root.Recording = Recording.LocalMat
+	root.Pos = OWNER_BONE.WorldPos
 	root.Rot = Quaternion.RotationAxis(Vector3.UnitY ^ axis, math.acos(Vector3.UnitY * axis))
 	
 	def follow(rotate = Quaternion.RotationAxis(Vector3.UnitY, RAD * 6)):
 		root.Rot = rotate * root.Rot
+		root.Pos = OWNER_BONE.WorldPos
 	root.AddTask(follow, 0, 470, 0)
 	root()
 	
@@ -47,18 +47,17 @@ def world_task(axis, r):
 			
 			vec = +(parentShot.WorldPos - root.WorldPos) * mat
 			shot_amulet(parentShot.WorldPos, vec, upward)
-		root.AddTask(shot_task_func2, 1 if flag else randint(3, 6), num_way, 0)
+		root.AddTask(shot_task_func2, 1 if flag else randint(3, 6), len(shotStack), 0)
 		task.Interval -= 10
 	root.AddTask(shot_task_func1, 90, 4, 10, True)
 world_task(+Vector3(1, 1, -0.5), 30.0)
 world_task(+Vector3(1, -1, 0.5), 40.0)
 
 def shot_amulet(pos, vec, upward):
-	
 	def shot_func1(original):
 		shot = EntityShot(WORLD, AMULET, 0xFF00FF)
 		shot.Pos = original.Pos
-		shot.Velocity = +(TARGET - shot.Pos) * 8.0
+		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 8.0
 		shot.Upward = original.Upward
 		shot.LivingLimit = 100
 		shot.DiedDecision = lambda e: e.LivingLimit != 0 and  e.FrameCount > e.LivingLimit
@@ -77,7 +76,7 @@ def shot_amulet(pos, vec, upward):
 	def shot_func3(original):
 		shot = EntityShot(WORLD, AMULET, 0xFF0000)
 		shot.Pos = original.Pos
-		shot.Velocity = (TARGET - shot.Pos) * 0.0025
+		shot.Velocity = (TARGET_BONE.WorldPos - shot.Pos) * 0.0025
 		shot.Upward = original.Upward
 		shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 40)
 		shot.AddTask(lambda s = shot :shot_func2(s) , 0, 1, 39)
@@ -93,7 +92,7 @@ def shot_amulet(pos, vec, upward):
 		shot.LivingLimit = 10
 		shot()
 	
-	for j in range(16):
+	for j in range(24):
 		shot = EntityShot(WORLD, AMULET, 0xFFFFFF)
 		shot.Pos = pos
 		shot.Velocity = vec * (0.5 * j + 2)

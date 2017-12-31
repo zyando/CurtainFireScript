@@ -18,7 +18,7 @@ def world_task():
 				vec = vec * mat
 				
 				shot = EntityShot(WORLD, M, 0x0000A0)
-				shot.Pos = vec * task.RunCount * 20 + pos
+				shot.Pos = OWNER_BONE.WorldPos + vec * task.RunCount * 20 + pos
 				shot.LivingLimit = 90
 				shot()
 				
@@ -37,6 +37,7 @@ def world_task():
 				vec = vec * mat
 				
 				shot = EntityShot(WORLD, prop)
+				shot.Pos = OWNER_BONE.WorldPos
 				shot.Velocity = vec * speed
 				shot.LivingLimit = limit
 				shot()

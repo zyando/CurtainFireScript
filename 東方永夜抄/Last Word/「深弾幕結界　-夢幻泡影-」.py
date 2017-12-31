@@ -10,14 +10,14 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 	
 	for vec in veclist:
 		for axis in axislist:
-			if abs(vec * axis) > 0.99:
+			if abs(vec * axis) > 0.99: 
 				continue
-			
 			prop = propfunc(vec, axis)
 			axis = vec ^ (vec ^ axis)
 			
 			parent = EntityShot(WORLD, BONE, 0xFFFFFF)
 			parent.Recording = Recording.LocalMat
+			parent.Pos = TARGET_BONE.WorldPos
 			parent.Rot = Quaternion.RotationAxis(axis, rot_pos)
 			parent()
 			
@@ -27,7 +27,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			circle.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 			
 			for vert in circle.ModelData.Vertices:
-				vert.Pos = Vector3(vert.Pos.x * 3, vert.Pos.y * 3, vert.Pos.z * 3)
+				vert.Pos = vert.Pos * 3
 			circle()
 			
 			entity = Entity(WORLD)
@@ -59,7 +59,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			entity.AddTask(add_shot_task, int_task, num_task, 0, True)
 			
 			def rotate(entity = entity, circle = circle, parent = parent, prop = prop, rotate_pos = rotate_pos, rotate_vec = rotate_vec):
-				parent.Rot = +parent.Rot * rotate_pos
+				parent.Rot = parent.Rot * rotate_pos
 				entity.Rot = +entity.Rot * rotate_vec
 			entity.AddTask(rotate, int_shot, WORLD.MaxFrame / int_shot, 1)
 			
@@ -72,7 +72,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 				shot()
 			circle.AddTask(shot_amulet_outside, 1, int(num_task * int_task * 0.5), 0)
 veclist = []
-objvertices("ico.obj", lambda v: veclist.append(v), 1)
+objvertices("ico.obj", lambda v: veclist.append(+v), 1)
 
 WORLD.AddTask(lambda: task(
 veclist,
@@ -83,7 +83,7 @@ speed2 = 12.0,
 rot_vec = RAD * -10,
 angle_vec = RAD * 0.1,
 rot_pos = RAD * 0.0,
-angle_pos = RAD * 3.0,
+angle_pos = RAD * 1.5,
 int_shot = 1,
 num_shot = 50,
 int_task = 110,

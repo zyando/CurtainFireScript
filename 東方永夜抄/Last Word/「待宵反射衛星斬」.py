@@ -16,9 +16,6 @@ num_shot_in_line = 20
 num_line = 10
 interval = 2
 
-#owner_centerbone = EntityBone(WORLD, "Youmu", u"全ての親")
-owner_centerbone = Entity(WORLD)
-
 def shot_task1():
 	axis = -Vector3.UnitZ * owner_centerbone.WorldMat
 	
@@ -35,7 +32,7 @@ def shot_task1():
 		parent1.Velocity = vec * 10
 		parent1()
 		
-		def shot_task2(parent1 = parent1, bonemat = owner_centerbone.WorldMat):
+		def shot_task2(parent1 = parent1, bonemat = OWNER_BONE.WorldMat):
 			parent2 = Entity(WORLD)
 			parent2.Pos = vec4(parent1.WorldPos) * bonemat
 			parent2.Velocity = axis * 20
