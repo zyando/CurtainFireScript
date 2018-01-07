@@ -9,6 +9,7 @@ def shot_M():
 		shot = EntityShot(WORLD, "M", 0xFFFFFF)
 		shot.Pos = OWNER_BONE.WorldPos + v * 12.0
 		shot.Velocity = v * 2.0
+		shot.LivingLimit = 200
 		shot()
 WORLD.AddTask(shot_M, 30, 10, 10)
 
