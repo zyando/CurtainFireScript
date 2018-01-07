@@ -6,7 +6,7 @@ objvertices("ico.obj", lambda v: vecList.append(+v), 1)
 
 def shot_M():
 	for v in vecList:
-		shot = EntityShot(WORLD, M, 0xFFFFFF)
+		shot = EntityShot(WORLD, "M", 0xFFFFFF)
 		shot.Pos = OWNER_BONE.WorldPos + v * 12.0
 		shot.Velocity = v * 2.0
 		shot()
@@ -33,14 +33,14 @@ def shot_amulet(vec, upward):
 	upwardList = [upward * mat, upward, upward * mat]
 	
 	def shot_func1(original):
-		shot = EntityShot(WORLD, AMULET, 0xFF00FF)
+		shot = EntityShot(WORLD, "AMULET", 0xFF00FF)
 		shot.Pos = original.Pos
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
 		shot.Upward = original.Upward
 		shot()
 	
 	def shot_func2(original):
-		shot = EntityShot(WORLD, S, 0xFF00FF)
+		shot = EntityShot(WORLD, "S", 0xFF00FF)
 		shot.Pos = original.Pos
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func1(s) , 0, 1, 19)
@@ -48,7 +48,7 @@ def shot_amulet(vec, upward):
 		shot()
 	
 	def shot_func3(original):
-		shot = EntityShot(WORLD, AMULET, 0xFF0000)
+		shot = EntityShot(WORLD, "AMULET", 0xFF0000)
 		shot.Pos = original.Pos
 		shot.Velocity = (TARGET_BONE.WorldPos - shot.Pos) * 0.02
 		shot.Upward = original.Upward
@@ -58,7 +58,7 @@ def shot_amulet(vec, upward):
 		shot()
 	
 	def shot_func4(original):
-		shot = EntityShot(WORLD, S, 0xFF0000)
+		shot = EntityShot(WORLD, "S", 0xFF0000)
 		shot.Pos = original.Pos
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func3(s) , 0, 1, 19)
@@ -67,7 +67,7 @@ def shot_amulet(vec, upward):
 	
 	for i in range(len(vecList)):
 		for j in range(16):
-			shot = EntityShot(WORLD, AMULET, 0xFFFFFF)
+			shot = EntityShot(WORLD, "AMULET", 0xFFFFFF)
 			shot.Pos = OWNER_BONE.WorldPos
 			shot.Velocity = vecList[i] * (0.25 * j + 1) * 2
 			shot.Upward = upwardList[i]

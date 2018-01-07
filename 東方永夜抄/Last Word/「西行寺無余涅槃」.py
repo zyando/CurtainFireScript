@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from CurtainFireMakerPlugin.Entities import *
-from VecMath import *
-import math
 
 def create_veclist(path):
 	veclist = []
@@ -14,7 +11,7 @@ def world_task():
 	def shot_laser():
 		for vec in vec_dict["ico1"]:
 			flag = vec in vec_dict["ico"]
-			shot = EntityShot(WORLD, LASER, 0xA000A0 if flag else 0x0000A0)
+			shot = EntityShot(WORLD, "LASER", 0xA000A0 if flag else 0x0000A0)
 			
 			if shot.ModelData.OwnerEntities.Count == 1:
 				for vert in shot.ModelData.Vertices:
@@ -41,7 +38,7 @@ def world_task():
 	
 	def shot_l():
 		for vec in vec_dict["beveled_snub_cube"]:
-			shot = EntityShot(WORLD, L, 0xFF4040)
+			shot = EntityShot(WORLD, "L", 0xFF4040)
 			shot.Velocity = vec * 0.8
 			shot.Pos = OWNER_BONE.WorldPos + +shot.Velocity * 20
 			shot.LivingLimit = 400
@@ -62,7 +59,7 @@ def world_task():
 			flag = vec in vec_dict["snub_cube"]
 			
 			for i in range(3 if flag else 2):
-				shot = EntityShot(WORLD, BUTTERFLY, 0x0000A0 if flag else 0xA000A0)
+				shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0 if flag else 0xA000A0)
 				shot.Velocity = vec * (1 + i * 0.6)
 				shot.Pos = OWNER_BONE.WorldPos + +shot.Velocity * 20
 				shot.LivingLimit = 400 - i * 50
@@ -87,7 +84,7 @@ def world_task():
 	#WORLD.AddTask(shot_butterfly_gb, 0, 1, 0)
 	
 	def shot_butterfly_r(task):
-		parentShot = EntityShot(WORLD, BONE, 0xFFFFFF)
+		parentShot = EntityShot(WORLD, "BONE", 0xFFFFFF)
 		parentShot.Recording = Recording.LocalMat
 		parentShot.Pos = OWNER_BONE.WorldPos
 		
@@ -102,7 +99,7 @@ def world_task():
 			if vec in vec_dict["ico1"]: continue
 			
 			for i in range(2):
-				shot = EntityShot(WORLD, BUTTERFLY, 0xA00000, parentShot)
+				shot = EntityShot(WORLD, "BUTTERFLY", 0xA00000, parentShot)
 				shot.Velocity = vec * (1 + i * 0.6)
 				shot.Pos = +shot.Velocity * 20
 				

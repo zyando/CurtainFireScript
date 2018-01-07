@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-target = Vector3(80, 80, 80)
-
 vecList = []
 objvertices("ico.obj", lambda v: vecList.append(v), 2)
 
@@ -22,7 +20,7 @@ for vec in vecList:
 					parent.Pos = parent.Pos * rotPosMat
 					parent.Rot = parent.Rot * rotQuat
 					
-					shot = EntityShot(WORLD, DIA, 0xA00050 if angle < 0 else 0x5000A0)
+					shot = EntityShot(WORLD, "DIA", 0xA00050 if angle < 0 else 0x5000A0)
 					shot.Pos = OWNER_BONE.WorldPos + parent.Pos * 640
 					shot.Velocity = parent.Pos * parent.Rot * -2
 					shot.LivingLimit = 120
@@ -41,7 +39,7 @@ def world_task():
 		mat2 = Matrix3.RotationAxis(axis, angle)
 		
 		for i in range(task.RunCount):
-			shot = EntityShot(WORLD, L, 0x4000D0)
+			shot = EntityShot(WORLD, "L", 0x4000D0)
 			shot.Pos = OWNER_BONE.WorldPos
 			shot.Velocity = vec * mat2 * 2.5
 			shot()

@@ -28,7 +28,7 @@ def world_task_func():
 		
 		for i in range(way):
 			for j in range(2):
-				shot = EntityShot(WORLD, KNIFE, 0xFFD700)
+				shot = EntityShot(WORLD, "KNIFE", 0xFFD700)
 				shot.Velocity = vec * (1 + j * 0.5)
 				shot.Pos = OWNER_BONE.WorldPos + shot.Velocity
 				shot.LivingLimit = 600
@@ -43,7 +43,7 @@ def world_task_func():
 			vec = vec
 			mat = Matrix3.RotationAxis(vec ^ (vec ^ axis), angle)
 			
-			shot = EntityShot(WORLD, KNIFE, 0x0000A0)
+			shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 			shot.Velocity = vec * 4.0
 			shot.Pos = OWNER_BONE.WorldPos + shot.Velocity
 			shot.LivingLimit = 200
@@ -62,7 +62,7 @@ def world_task_func():
 	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitX), 0, 1, 5)
 	
 	def shot_knife3():
-		shot = EntityShot(WORLD, KNIFE, 0x0000A0)
+		shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 		shot.Pos = OWNER_BONE.WorldPos
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
 		shot.LivingLimit = 200
@@ -87,7 +87,7 @@ def world_task_func():
 		for src in cloneList:
 			interval = +src.LookAtVec * 16
 
-			shot = EntityShot(WORLD, KNIFE, 0xA0A0A0)
+			shot = EntityShot(WORLD, "KNIFE", 0xA0A0A0)
 			shot.LookAtVec = src.LookAtVec
 			shot.Pos = src.Pos + interval * (-num_clone / 3 + task.RunCount)
 			shot.LivingLimit = 120

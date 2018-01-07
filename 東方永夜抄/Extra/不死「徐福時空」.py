@@ -7,7 +7,7 @@ objvertices("ico.obj", lambda v: veclist.append(+v), 2)
 def shot_dia():
 	for vec in veclist:
 		if vec.z > -0.8:
-			shot = EntityShot(WORLD, DIA, 0xA00000)
+			shot = EntityShot(WORLD, "DIA", 0xA00000)
 			shot.Pos = OWNER_BONE.WorldPos
 			shot.Velocity = vec * 4
 			shot.LivingLimit = 200
@@ -15,14 +15,14 @@ def shot_dia():
 WORLD.AddTask(shot_dia, 30, 15, 90)
 
 def shot_magic_circle(level, pos, vec, color, shot_vec, upward):
-	parent = EntityShot(WORLD, MAGIC_CIRCLE, color)
+	parent = EntityShot(WORLD, "MAGIC_CIRCLE", color)
 	parent.Pos = pos
 	parent.Velocity = vec * 6
 	parent.LivingLimit = 15 * (level + 1)
 	parent.SetMotionInterpolationCurve(Vector2(0.4, 0.6), Vector2(0.4, 0.6), parent.LivingLimit)
 	
 	def shot_amulet():
-		shot = EntityShot(WORLD, AMULET, color)
+		shot = EntityShot(WORLD, "AMULET", color)
 		shot.Pos = parent.Pos
 		shot.Upward = upward
 		shot.LookAtVec = shot_vec

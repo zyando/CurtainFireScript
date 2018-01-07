@@ -17,13 +17,13 @@ def world_task():
 			for vec in vecList:
 				vec = vec * mat
 				
-				shot = EntityShot(WORLD, M, 0x0000A0)
+				shot = EntityShot(WORLD, "M", 0x0000A0)
 				shot.Pos = OWNER_BONE.WorldPos + vec * task.RunCount * 20 + pos
 				shot.LivingLimit = 90
 				shot()
 				
 				def move(shot = shot, vec = vec):
-					newShot = EntityShot(WORLD, M, 0xA00000)
+					newShot = EntityShot(WORLD, "M", 0xA00000)
 					newShot.Pos = shot.Pos
 					newShot.Velocity = vec * 2.4
 					newShot()

@@ -15,13 +15,13 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			prop = propfunc(vec, axis)
 			axis = vec ^ (vec ^ axis)
 			
-			parent = EntityShot(WORLD, BONE, 0xFFFFFF)
+			parent = EntityShot(WORLD, "BONE", 0xFFFFFF)
 			parent.Recording = Recording.LocalMat
 			parent.Pos = TARGET_BONE.WorldPos
 			parent.Rot = Quaternion.RotationAxis(axis, rot_pos)
 			parent()
 			
-			circle = EntityShot(WORLD, MAGIC_CIRCLE, 0xFFFFFF, parent)
+			circle = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, parent)
 			circle.Recording = Recording.LocalMat
 			circle.Pos = vec * distance_circle
 			circle.Rot = Matrix3.LookAt(vec, Vector3.UnitY)

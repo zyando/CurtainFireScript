@@ -20,9 +20,9 @@ def shot_dia(pos, color, init_speed, spread_time, divergence_time):
 		veclist = veclists[i]
 		
 		for vec in veclist:
-			shot = EntityShot(WORLD, DIA, color)
+			shot = EntityShot(WORLD, "DIA", color)
 			shot.Pos = OWNER_BONE.WorldPos + pos
-			shot.LivingLimit = divergence_time - WORLD.FrameCount + 15
+			shot.LivingLimit = divergence_time - WORLD.FrameCount + 55
 			
 			shot.Velocity = vec * init_speed
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 60)
@@ -58,3 +58,11 @@ WORLD.AddTask(lambda: shot_dia(Vector3(-100, 0, -140), 0x0000A0, 3.0, 680, 750),
 WORLD.AddTask(lambda: shot_dia(Vector3(100, 0, -80), 0xA00000, 3.0, 720, 790), 0, 1, 640)
 WORLD.AddTask(lambda: shot_dia(Vector3(-100, 0, -20), 0x0000A0, 3.0, 760, 830), 0, 1, 680)
 WORLD.AddTask(lambda: shot_dia(Vector3(100, 0, 40), 0xA00000, 3.0, 800, 870), 0, 1, 720)
+
+WORLD.AddTask(lambda: shot_dia(Vector3(0, 0, 0), 0x0000A0, 3.0, 980, 1090), 0, 1, 900)
+WORLD.AddTask(lambda: shot_dia(Vector3(0, 0, 0), 0xA00000, 3.5, 990, 1090), 0, 1, 910)
+WORLD.AddTask(lambda: shot_dia(Vector3(0, 0, 0), 0xA000A0, 4.0, 1000, 1090), 0, 1, 920)
+WORLD.AddTask(lambda: shot_dia(Vector3(0, 0, 0), 0xA00000, 4.5, 1010, 1090), 0, 1, 930)
+WORLD.AddTask(lambda: shot_dia(Vector3(0, 0, 0), 0xA000A0, 5.0, 1020, 1090), 0, 1, 940)
+
+WORLD.MaxFrame = 1200

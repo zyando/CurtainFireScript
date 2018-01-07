@@ -7,7 +7,7 @@ objvertices("ico.obj", lambda v: veclist.append(v))
 colors = 0xA00000, 0x00A000, 0x0000A0, 0xA0A000, 0xA000A0, 0x00A0A0
 
 def shoot_laser_every_direction(color, vec, axis, is_begining_with_vanish):
-    shot = EntityShot(WORLD, LASER, color)
+    shot = EntityShot(WORLD, "LASER", color)
     shot.Recording = Recording.LocalMat
     shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 
