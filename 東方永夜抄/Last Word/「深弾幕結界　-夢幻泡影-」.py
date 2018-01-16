@@ -27,7 +27,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			circle.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 			
 			for vert in circle.ModelData.Vertices:
-				vert.Pos = vert.Pos * 3
+				vert.Pos = vert.Pos * 4
 			circle()
 			
 			entity = Entity(WORLD)
@@ -41,7 +41,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 				def shot_amulet(task2):
 					count = (task1.RunCount - 1) * num_shot + task2.RunCount - 1
 					
-					shot = EntityShot(WORLD, prop)
+					shot = EntityShot(WORLD, *prop)
 					shot.Pos = circle.WorldPos
 					shot.Velocity = +circle.WorldPos * entity.Rot * -speed1
 					shot.Upward = axis
@@ -64,7 +64,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			entity.AddTask(rotate, int_shot, WORLD.MaxFrame / int_shot, 1)
 			
 			def shot_amulet_outside(circle = circle, prop = prop):
-				shot = EntityShot(WORLD, prop)
+				shot = EntityShot(WORLD, *prop)
 				shot.Pos = circle.WorldPos
 				shot.Velocity = +circle.WorldPos * 2.0
 				shot.Upward = axis
@@ -72,12 +72,12 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 				shot()
 			circle.AddTask(shot_amulet_outside, 1, int(num_task * int_task * 0.5), 0)
 veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 1)
+objvertices("ico.obj", lambda v: veclist.append(+v), 0)
 
 WORLD.AddTask(lambda: task(
 veclist,
 axislist = [Vector3.UnitX, Vector3.UnitZ],
-propfunc = lambda v, a: ShotProperty(AMULET, 0xA00000 if a.x > 0.99 else 0x0000A0),
+propfunc = lambda v, a: ("AMULET", 0xA00000 if a.x > 0.99 else 0x0000A0),
 speed1 = 8.0,
 speed2 = 12.0,
 rot_vec = RAD * -10,

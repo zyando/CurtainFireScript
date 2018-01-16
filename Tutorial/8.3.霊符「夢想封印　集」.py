@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from random import random, randint
 
+#白の札弾から自機狙いの赤の札弾へ変化させるタスクを追加
+
 veclist = []
 objvertices("ico.obj", lambda v: veclist.append(+v), 1)
 
@@ -45,6 +47,39 @@ WORLD.AddTask(task1, 90, 5, 10)
 #札弾を発射する関数。
 #第一引数は発射するベクトル
 def shot_amulet(vec):
+	def shot_task1(original):
+		shot = EntityShot(WORLD, "AMULET", 0xFF00FF)
+		shot.Pos = original.Pos
+		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
+		shot.Upward = original.Upward
+		shot()
+	
+	def shot_task2(original):
+		shot = EntityShot(WORLD, "S", 0xFF00FF)
+		shot.Pos = original.Pos
+		shot.Upward = original.Upward
+		shot.AddTask(lambda shot = shot :shot_task1(shot) , 0, 1, 19)
+		shot.LivingLimit = 20
+		shot()
+	
+	def shot_task3(original):
+		shot = EntityShot(WORLD, "AMULET", 0xFF0000)
+		shot.Pos = original.Pos
+		shot.Velocity = (TARGET_BONE.WorldPos - shot.Pos) * 0.02
+		shot.Upward = original.Upward
+		shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 40)
+		shot.AddTask(lambda shot = shot :shot_task2(shot) , 0, 1, 39)
+		shot.LivingLimit = 40
+		shot()
+	
+	def shot_task4(original):
+		shot = EntityShot(WORLD, "S", 0xFF0000)
+		shot.Pos = original.Pos
+		shot.Upward = original.Upward
+		shot.AddTask(lambda shot = shot :shot_task3(shot) , 0, 1, 19)
+		shot.LivingLimit = 20
+		shot()
+	
 	#速度を変えながら16個の弾を発射する
 	for i in range(16):
 		#白の札弾を生成
@@ -53,6 +88,8 @@ def shot_amulet(vec):
 		shot.Velocity = vec * (0.5 * i + 2)
 		#補間曲線を適用
 		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 40)
+		#タスク追加
+		shot.AddTask(lambda shot = shot: shot_task4(shot), 0, 1, 39)
 		#寿命を設定
 		shot.LivingLimit = 40
 		shot()

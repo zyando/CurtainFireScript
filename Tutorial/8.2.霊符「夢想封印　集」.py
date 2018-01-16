@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from random import random, randint
 
+#白の札弾を扇状に発射するタスクを追加
+
 veclist = []
 objvertices("ico.obj", lambda v: veclist.append(+v), 1)
 

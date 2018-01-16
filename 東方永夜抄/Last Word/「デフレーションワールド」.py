@@ -7,13 +7,6 @@ objvertices("ico.obj", lambda v: vecList.append(+v), 1)
 num_clone = 25
 pause_frame = 56
 move_frame = 110
-"""
-owner_centerbone = EntityBone(WORLD, "Sakuya", u"センター")
-owner_r_handbone = EntityBone(WORLD, "Sakuya", u"右手首")
-owner_l_handbone = EntityBone(WORLD, "Sakuya", u"左手首")
-
-targetbone = EntityBone(WORLD, "Reimu", u"センター")
-"""
 
 pauseList = []
 
