@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 2)
+objvertices("ico.obj", lambda v: veclist.append(+v), 1)
 
 def shot_dia_group_task(way = 12):
 	def shot_dia_group(vec, axis, angle, fan_angle, distance, speed, color):
@@ -25,8 +25,8 @@ def shot_dia_group_task(way = 12):
 			velocity = velocity * mat
 		return shotlist
 	
-	shotgroup_list1 = [[shot_dia_group(vec, axis, RAD * -75, RAD * 180, 200, 6, 0x0000A0) for axis in Vector3.UnitX, Vector3.UnitZ if abs(vec * axis) < 0.95] for vec in veclist]
-	shotgroup_list2 = [[shot_dia_group(vec, axis, RAD * 10, RAD * 90, 300, 8, 0xA00000) for axis in Vector3.UnitZ, Vector3.UnitX if abs(vec * axis) < 0.95] for vec in veclist[::-1]]
+	shotgroup_list1 = [[shot_dia_group(vec, axis, RAD * -75, RAD * 180, 200, 6, 0x000040) for axis in Vector3.UnitX, Vector3.UnitZ if abs(vec * axis) < 0.95] for vec in veclist]
+	shotgroup_list2 = [[shot_dia_group(vec, axis, RAD * 10, RAD * 90, 300, 8, 0x400000) for axis in Vector3.UnitZ, Vector3.UnitX if abs(vec * axis) < 0.95] for vec in veclist[::-1]]
 	
 	def extend_lists(lists):
 		x = []
@@ -45,7 +45,7 @@ def shot_dia_group_task(way = 12):
 			for shotgroup in shotgroup_list[i]:
 				old = shotgroup.pop()
 				
-				shot = EntityShot(WORLD, "DIA", 0xA00000 if old.Property.Color == 0x0000A0 else 0x0000A0)
+				shot = EntityShot(WORLD, "DIA", 0xA00000 if old.Property.Color == 0x000040 else 0x0000A0)
 				shot.Pos = old.Pos
 				shot.LookAtVec = -old.LookAtVec
 				
