@@ -50,8 +50,8 @@ def world_task_func():
 			cloneList.append(shot)
 			pauseList.append(shot)
 	WORLD.AddTask(lambda: shot_knife2(RAD * 60, Vector3.UnitZ), 0, 1, 0)
-	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitZ), 0, 1, 5)
-	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitX), 0, 1, 5)
+	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitZ), 0, 1, 0)
+	WORLD.AddTask(lambda: shot_knife2(RAD * 60, Vector3.UnitX), 0, 1, 5)
 	WORLD.AddTask(lambda: shot_knife2(-RAD * 60, Vector3.UnitX), 0, 1, 5)
 	
 	def shot_knife3():

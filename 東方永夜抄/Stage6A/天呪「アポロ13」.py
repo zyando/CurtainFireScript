@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 1)
+objvertices("ico.obj", lambda v: veclist.append(+v), 2)
 
 def shot_dia_group_task(way = 12):
 	def shot_dia_group(vec, axis, angle, fan_angle, distance, speed, color):
@@ -19,6 +19,7 @@ def shot_dia_group_task(way = 12):
 			def pause(shot = shot): shot.Velocity *= 0
 			shot.AddTask(pause, 0, 1, 30)
 			
+			shot.ModelData.Materials[0].Shininess = 130
 			shot()
 			shotlist.append(shot)
 			
@@ -33,8 +34,11 @@ def shot_dia_group_task(way = 12):
 		for l in lists: x.extend(l)
 		return x
 	
-	shotgroup_list = [list1 + list2 for list1, list2 in zip(shotgroup_list1, shotgroup_list2)]
-	shotgroup_list = [extend_lists(lists) for lists in zip(*[iter(shotgroup_list)]*4)]
+	ziped_shotgroup_list = [list1 + list2 for list1, list2 in zip(shotgroup_list1, shotgroup_list2)]
+	shotgroup_list = [extend_lists(lists) for lists in zip(*[iter(ziped_shotgroup_list)]*4)]
+	
+	if len(ziped_shotgroup_list) % 4 != 0:
+		shotgroup_list.append(extend_lists(ziped_shotgroup_list[1 - len(ziped_shotgroup_list) % 4:]))
 	
 	replaced_shotlist = []
 	
@@ -53,11 +57,11 @@ def shot_dia_group_task(way = 12):
 				replaced_shotlist.append(shot)
 				
 				old.OnDeath()
-	WORLD.AddTask(replace_shot, 0, len(shotgroup_list) + way, 60, True)
+	WORLD.AddTask(replace_shot, 0, len(shotgroup_list) + way + 1, 60, True)
 	
 	def move():
 		for shot in replaced_shotlist:
-			shot.LivingLimit = shot.FrameCount + 400
+			shot.LivingLimit = shot.FrameCount + 600
 			shot.Velocity = shot.LookAtVec * 3.0
 	WORLD.AddTask(move, 0, 1,  len(shotgroup_list) + way + 80)
-WORLD.AddTask(shot_dia_group_task, 0, 1, 0)
+WORLD.AddTask(shot_dia_group_task, 480, 2, 10)

@@ -28,7 +28,7 @@ def world_task():
 		vec = vec * rot
 		
 		for i in range(2):
-			shot = EntityShot(WORLD, "LASER", 0xA00000)
+			shot = EntityShot(WORLD, "LASER", 0xA00000, Vector3(6, 6, 4000))
 			shot.Recording = Recording.LocalMat
 			shot.Rot = Matrix3.LookAt(vec, front)
 			shot.Pos = OWNER_BONE.WorldPos + vec * 80
@@ -40,10 +40,6 @@ def world_task():
 			def rotate(shot = shot, shotrot = shotrot):
 				shot.Rot *= shotrot
 			shot.AddTask(rotate, 6, 2, 40)
-			
-			if shot.ModelData.OwnerEntities.Count == 1:
-				for vert in shot.ModelData.Vertices:
-					vert.Pos = Vector3(vert.Pos.x * 6, vert.Pos.y * 6, vert.Pos.z * 4000)
 			
 			morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
 			shot.AddVmdMorph(morph, 0, 1)

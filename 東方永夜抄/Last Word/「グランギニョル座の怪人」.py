@@ -24,12 +24,9 @@ def world_task(axis, angle, range, should_shot_scale):
 		root.AddTask(rotate_root, interval, 0, 0)
 		root()
 		
-		parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, root)
+		parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, 4, root)
 		parent.Recording = Recording.LocalMat
 		parent.Pos = vec * range
-		
-		if parent.ModelData.OwnerEntities.Count == 1:
-			for vert in parent.ModelData.Vertices: vert.Pos *= 4
 		
 		parent.Rot = Quaternion.RotationAxis(Vector3.UnitZ ^ vec, math.acos(vec.z))
 		
