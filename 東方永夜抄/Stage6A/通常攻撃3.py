@@ -53,5 +53,6 @@ def shot_dia(speed, livinglimit):
 		shot = EntityShot(WORLD, "DIA", 0x000040)
 		shot.Velocity = vec * speed
 		shot.LivingLimit = livinglimit
+		shot.ModelData.Materials[0].Shininess = 130
 		shot()
 WORLD.AddTask(lambda: [shot_dia(s, l) for s, l in (4.0, 240), (3.0, 250)], 30, 30, 0)
