@@ -52,7 +52,8 @@ def get_mgcrl_vec(vec, shot_range, min_range = 400, max_range = 600):
 	return +(vec + Vector3.UnitZ * (4 * (shot_range - min_range) / (max_range - min_range)))
 
 mgcrl_poslist = []
-[mgcrl_poslist.extend([(v, r) for v in [get_mgcrl_vec(v, r) for v in veclist] if v.z > d]) for d, r in pos_and_range_list]
+for d, r in pos_and_range_list:
+	mgcrl_poslist.extend([(v, r) for v in [get_mgcrl_vec(v, r) for v in veclist] if v.z > d])
 
 WORLD.AddTask(lambda: [shot_mgcrl(*mgcrl_poslist.pop()) for i in range(7) if len(mgcrl_poslist) > 0], 0, len(mgcrl_poslist) / 7 + 1, 220)
 
