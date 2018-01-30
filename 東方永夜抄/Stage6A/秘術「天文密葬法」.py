@@ -11,11 +11,11 @@ def shot_dia(task, max_idx = 20.0):
 		if vec.z < -0.95: continue
 		
 		shot = EntityShot(WORLD, "DIA", 0x000040)
-		shot.Velocity = (Vector3.UnitZ + (vec - Vector3.UnitZ) * t) * 5.0
-		shot.LivingLimit = 300
+		shot.Velocity = (Vector3.UnitZ + (vec - Vector3.UnitZ) * t) * 12.0
+		shot.LivingLimit = 100
 		shot.ModelData.Materials[0].Shininess = 130
 		shot()
-WORLD.AddTask(shot_dia, 3, 80, 0,True)
+WORLD.AddTask(shot_dia, 5, 48, 0,True)
 
 mgcrl_list = []
 
