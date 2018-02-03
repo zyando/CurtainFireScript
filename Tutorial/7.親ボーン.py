@@ -14,7 +14,7 @@ for i in range(number_of_way):
 	vec = vec * mat
 
 parent = EntityShot(WORLD, "BONE", 0xFFFFFF)
-parent.Recording = Recording.LocalMat
+parent.GetRecordedRot = lambda e: e.Rot
 parent.Velocity = Vector3.UnitZ * 3
 
 def rotate(rot = Quaternion.RotationAxis(Vector3.UnitZ, RAD * 90)):

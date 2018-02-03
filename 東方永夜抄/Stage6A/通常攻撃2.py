@@ -11,17 +11,17 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, init_angle, angle_i
 	if abs(vec * axis) > 0.995 > 0: return lambda: 0
 	
 	axis = vec ^ (vec ^ axis)
-	rot = Matrix3.RotationAxis(axis, angle_interval)
 	
-	frame = Frame(vec * Matrix3.RotationAxis(axis, init_angle), rot)
+	binder = Entity(WORLD)
+	binder.vec = vec * Matrix3.RotationAxis(axis, init_angle)
 	
-	def shot_dia():
+	def shot_dia(rot = Matrix3.RotationAxis(axis, angle_interval)):
 		shot = EntityShot(WORLD, shottype, color)
-		shot.Velocity = frame.vec * speed
+		shot.Velocity = binder.vec * speed
 		shot.LivingLimit = livinglimit
 		shot()
 		
-		frame.vec *= frame.rot
+		binder.vec *= rot
 	return shot_dia
 
 for vec in veclist0:

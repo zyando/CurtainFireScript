@@ -4,9 +4,9 @@
 
 shot = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF)
 
-#通常ではVelocityが変更された時にキーフレームを登録するが、
-#RecordingをLocalMatに変更することでPosまたはRotが変更された時にキーフレームを登録することができる
-shot.Recording = Recording.LocalMat
+#通常ではVelocityから姿勢を算出するが、GetRecordedRotに適切な関数を代入することで
+#姿勢を自由に制御できる
+shot.GetRecordedRot = lambda e: e.Rot
 
 #回転させる関数を定義する。Quaternion.RotationAxisの第一引数は回転軸、第二引数は回転角度をラジアンで指定する
 #RADは math.pi / 180.0 の定数
