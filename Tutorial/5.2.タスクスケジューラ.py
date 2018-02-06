@@ -2,10 +2,8 @@
 
 #発射された10フレーム後に移動方向を反転する弾を30フレームごとに発射するスクリプト
 
-#ベクトルを格納するリスト
-veclist = []
 #objvertices関数でobjファイルの頂点を取得する
-objvertices("ico.obj", lambda v: veclist.append(v))
+veclist = objvertices("ico.obj")
 
 #弾を発射する関数を定義する
 def shot():

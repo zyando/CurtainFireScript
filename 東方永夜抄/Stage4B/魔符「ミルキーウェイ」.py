@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import random, randint, gauss
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(v))
+veclist = objvertices("ico.obj", 0)
 
 def entity_to_shoot(vec, axis):
     axis = vec ^ (vec ^ axis)

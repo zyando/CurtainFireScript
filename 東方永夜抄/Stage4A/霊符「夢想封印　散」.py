@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import uniform
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 2)
+veclist = objvertices("ico.obj", 2)
 
 def world_task(task):
 	for vec in veclist:

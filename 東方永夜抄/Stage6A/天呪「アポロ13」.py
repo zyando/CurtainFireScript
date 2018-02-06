@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 2)
+veclist = objvertices("ico.obj", 2)
 
 def shot_dia_group_task():
 	def shot_dia_group(vec, axis, way, distance, speed, color1, color2):

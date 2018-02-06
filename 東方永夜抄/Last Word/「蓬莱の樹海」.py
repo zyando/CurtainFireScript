@@ -58,8 +58,7 @@ for vec in veclist:
 			vec = -vec
 	parent.AddTask(shot_dia, 3, 120, 0)
 	parent()
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(v))
+veclist = objvertices("ico.obj", 0)
 
 for vec in veclist:
 	for axis in [Vector3.UnitX, Vector3.UnitZ]:

@@ -5,8 +5,7 @@ interval = 5
 
 target = Vector3(0, 0, 80)
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(v))
+veclist = objvertices("ico.obj", 0)
 
 laser_veclist = []
 

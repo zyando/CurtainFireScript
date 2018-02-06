@@ -19,7 +19,7 @@ for vec in [Vector3.UnitZ * mat, Vector3.UnitZ, Vector3.UnitZ * ~mat]:
 
 for vec in veclist:
 	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0x0000A0)
-	parent.Recording = Recording.LocalMat
+	parent.GetRecordedRot = lambda e: e.Rot
 	parent.Pos = OWNER_BONE.WorldPos + vec
 	parent.Rot = Matrix3.LookAt(+vec, Vector3.UnitZ)
 	
@@ -30,7 +30,7 @@ for vec in veclist:
 		if not is_first: vec = vec * Matrix3.RotationAxis(vec ^ randomvec(), RAD * random() * 60)
 		
 		laser = EntityShot(WORLD, "LASER", 0x0000A0)
-		laser.Recording = Recording.LocalMat
+		laser.GetRecordedRot = lambda e: e.Rot
 		laser.Pos = parent.Pos
 		laser.Rot = Matrix3.LookAt(-vec, Vector3.UnitZ)
 		

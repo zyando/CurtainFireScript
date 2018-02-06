@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import random, randint
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 2)
+veclist = objvertices("ico.obj", 2)
 
 def shot_dia(task, max_idx = 20.0):
 	t = min(task.RunCount / max_idx, 1)

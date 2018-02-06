@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 1)
+veclist = objvertices("ico.obj", 1)
 
 #白の中弾を発射する関数
 def shot_m():

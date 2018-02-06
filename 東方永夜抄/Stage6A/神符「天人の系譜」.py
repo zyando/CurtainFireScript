@@ -42,8 +42,7 @@ def task():
 	shot_laser(Vector3.Zero, 0)
 WORLD.AddTask(task, 200, 9, 0)
 
-veclist3 = []
-objvertices("ico.obj", lambda v: veclist3.append(+v), 3)
+veclist3 = objvertices("ico.obj", 3)
 
 def shot_dia():
 	mat = Matrix3.RotationAxis(randomvec(), RAD * random() * 10)

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import random
 
-vecList = []
-objvertices("ico.obj", lambda v: vecList.append(v), 1)
+veclist = objvertices("ico.obj", 1)
 
 posList = [Vector3(40, 0, 0), Vector3(0, 40, 20)]
 
@@ -14,7 +13,7 @@ def world_task():
 		mat = Matrix3.RotationAxis(randomvec(), RAD * 180 * random())
 		
 		def shot_m(task):
-			for vec in vecList:
+			for vec in veclist:
 				vec = vec * mat
 				
 				shot = EntityShot(WORLD, "M", 0x0000A0)
@@ -33,7 +32,7 @@ def world_task():
 		def shot_bullet(prop, speed, limit):
 			mat = Matrix3.RotationAxis(randomvec(), RAD * 180 * random())
 			
-			for vec in vecList:
+			for vec in veclist:
 				vec = vec * mat
 				
 				shot = EntityShot(WORLD, prop)

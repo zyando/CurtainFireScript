@@ -4,8 +4,7 @@ from random import random
 num_shot = 80
 interval = 5
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(v), 1)
+veclist = objvertices("ico.obj", 1)
 
 def world_task(task):
 	mat = Matrix3.RotationAxis(randomvec(), RAD * 180 * random())

@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from random import random, randint
 
-vecList = []
-objvertices("ico.obj", lambda v: vecList.append(+v), 1)
+veclist = objvertices("ico.obj", 1)
 
 def shot_M():
-	for v in vecList:
+	for v in veclist:
 		shot = EntityShot(WORLD, "M", 0xFFFFFF)
 		shot.Pos = OWNER_BONE.WorldPos + v * 12.0
 		shot.Velocity = v * 2.0
@@ -30,7 +29,7 @@ WORLD.AddTask(world_task1, 90, 5, 10, True)
 
 def shot_amulet(vec, upward):
 	mat = Matrix3.RotationAxis(vec ^ (vec ^ Vector3.UnitY), RAD * (4.0 + random() * 6.0))
-	vecList = [vec * mat, vec, vec * ~mat]
+	veclist = [vec * mat, vec, vec * ~mat]
 	upwardList = [upward * mat, upward, upward * mat]
 	
 	def shot_func1(original):
@@ -66,11 +65,11 @@ def shot_amulet(vec, upward):
 		shot.LivingLimit = 20
 		shot()
 	
-	for i in range(len(vecList)):
+	for i in range(len(veclist)):
 		for j in range(16):
 			shot = EntityShot(WORLD, "AMULET", 0xFFFFFF)
 			shot.Pos = OWNER_BONE.WorldPos
-			shot.Velocity = vecList[i] * (0.25 * j + 1) * 2
+			shot.Velocity = veclist[i] * (0.25 * j + 1) * 2
 			shot.Upward = upwardList[i]
 			shot.AddTask(lambda s = shot :shot_func4(s) , 0, 1, 39)
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 40)

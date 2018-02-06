@@ -71,8 +71,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 				shot.DiedDecision = lambda e: (e.Pos - parent.Pos).Length > 1024
 				shot()
 			circle.AddTask(shot_amulet_outside, 1, int(num_task * int_task * 0.5), 0)
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 0)
+veclist = objvertices("ico.obj", 0)
 
 WORLD.AddTask(lambda: task(
 veclist,

@@ -7,8 +7,7 @@ for angle in RAD * 20, RAD * 40:
 	vec = Vector3(0, 0, -1) * Matrix3.RotationAxis(Vector3.UnitX, angle)
 	laser_veclist.extend([vec * Matrix3.RotationAxis(Vector3.UnitZ, RAD * (360.0 / way_of_laser) * i) for i in range(way_of_laser)])
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 2)
+veclist = objvertices("ico.obj", 2)
 
 def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_time = 50):
 	axis = -Vector3.UnitY if task.RunCount % 2 == 0 else Vector3.UnitY
@@ -16,7 +15,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 	root = EntityShot(WORLD, "BONE", 0xFFFFFF)
 	root.LivingLimit = time_to_stop + wait_time
 	root.GetRecordedRot = lambda e: e.Rot
-	root.Pos = Vector3(0, 0, -300)
+	root.Pos = OWNER_BONE.WorldPos + Vector3(0, 0, -300)
 	
 	def record(): root.AddRootBoneKeyFrame()
 	root.AddTask(record, 0, 1, wait_time)
@@ -82,9 +81,9 @@ def shoot_dia_while_rotating(vec, axis):
 				shot.LivingLimit = 200 * (i + 1)
 				shot()
 		vec_[0] *= rot * rot
-	WORLD.AddTask(shot_dia, 2, 600, 0, True)
+	WORLD.AddTask(shot_dia, 2, 600, 60, True)
 axislist = []
-objvertices("ico.obj", lambda v: axislist.append(+v), 0)
+objvertices("ico.obj", lambda v: axislist.append(+v), 1)
 
 for axis in axislist:
 	for vec in [Vector3.UnitZ]:

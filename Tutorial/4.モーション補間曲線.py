@@ -2,8 +2,7 @@
 
 #全方位に弾を発射するスクリプト
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(v))
+veclist = objvertices("ico.obj", 0)
 
 for vec in veclist:
 	shot = EntityShot(WORLD, "S", 0xFF0000)

@@ -2,10 +2,8 @@
 
 #発射された10フレーム後に移動方向を反転する弾を発射するスクリプト
 
-#ベクトルを格納するリスト
-veclist = []
 #objvertices関数でobjファイルの頂点を取得する
-objvertices("ico.obj", lambda v: veclist.append(v))
+veclist = objvertices("ico.obj")
 
 for vec in veclist:
 	shot = EntityShot(WORLD, "S", 0xFF0000)

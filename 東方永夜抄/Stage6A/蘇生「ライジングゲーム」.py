@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 1)
+veclist = objvertices("ico.obj", 1)
 
 def task_to_shoot_while_rotating(vec, axis, shottype, color, specular, angle_interval, speed, livinglimit):
 	if abs(vec * axis) > 0.995 > 0: return lambda: 0

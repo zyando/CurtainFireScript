@@ -2,14 +2,13 @@
 
 interval = 4
 
-vecList = []
-objvertices("ico.obj", lambda v: vecList.append(+v))
+veclist = objvertices("ico.obj", 0)
 
 angleList = [RAD, -RAD]
 axisList = [Vector3.UnitX, Vector3.UnitZ]
 
 def world_task(axis, angle, range, should_shot_scale):
-	for vec in vecList:
+	for vec in veclist:
 		if (vec ^ axis).Length() < 0.01: continue
 		
 		rotateAngle = 4

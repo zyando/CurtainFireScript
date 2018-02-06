@@ -64,8 +64,7 @@ def shot_func(vec, axis):
 			shot()
 		parent2.AddTask(shot_task_func4, 2, 20, 0)
 	parent2.AddTask(shot_task_func3, 40, 4, 90, True)
-vecList = []
-objvertices("ico.obj", lambda v: vecList.append(v), 1)
-for vec in vecList:
+veclist = objvertices("ico.obj", 1)
+for vec in veclist:
 	for axis in Vector3.UnitX, Vector3.UnitZ: 
 		shot_func(vec, axis)

@@ -8,25 +8,25 @@ wayHoriz = 20
 matVerti = Matrix3.RotationAxis(Vector3.UnitX, RAD * (180 / (wayVerti + 2)))
 matHoriz = Matrix3.RotationAxis(Vector3.UnitY, RAD * (360 / wayHoriz))
 
-vecList1 = []
-vecList2 = []
+veclist1 = []
+veclist2 = []
 vec1 = Vector3(0, -1, 0)
 
 for i in range(wayVerti):
 	vec1 = vec1 * matVerti
-	vecList2.append(vec1)
+	veclist2.append(vec1)
 
 for i in range(wayHoriz):
-	vecList2 = map(lambda v: v * matHoriz, vecList2)
-	vecList1.append(vecList2)
+	veclist2 = map(lambda v: v * matHoriz, veclist2)
+	veclist1.append(veclist2)
 
 def world_task_func1():
-	vecStack = vecList1[:]
+	vecStack = veclist1[:]
 	
 	def world_task_func2():
-		vecList2 = vecStack.pop()
+		veclist2 = vecStack.pop()
 		
-		for vec in vecList2:
+		for vec in veclist2:
 			shot = EntityShot(WORLD, "LASER_LINE", 0x0000A0)
 			
 			if shot.ModelData.OwnerEntities.Count == 1:
@@ -50,13 +50,13 @@ WORLD.AddTask(world_task_func1, 200, 2, 0)
 
 def world_task_func3():
 	mat = Matrix3.RotationAxis(Vector3.UnitY, RAD * 180 / wayHoriz)
-	vecStack = vecList1[:]
+	vecStack = veclist1[:]
 	vecStack.reverse()
 	
 	def world_task_func4():
-		vecList2 = vecStack.pop()
+		veclist2 = vecStack.pop()
 		
-		for vec in vecList2:
+		for vec in veclist2:
 			vec = vec * mat
 			
 			shot = EntityShot(WORLD, "LASER_LINE", 0xA00000)
@@ -80,9 +80,9 @@ def world_task_func3():
 	WORLD.AddTask(world_task_func4, 2, wayHoriz, 0)
 WORLD.AddTask(world_task_func3, 200, 2, 40)
 
-vecList3 = [+Vector3(-1, 1, 1), +Vector3(1, 1, -1), +Vector3(1, -1, 1), +Vector3(-1, -1, -1)]
+veclist3 = [+Vector3(-1, 1, 1), +Vector3(1, 1, -1), +Vector3(1, -1, 1), +Vector3(-1, -1, -1)]
 
-for vec in vecList3:
+for vec in veclist3:
 	posList = [Vector3(40, 20, 0), Vector3(-40, 20, 0)]
 	rot = Quaternion.RotationAxis(vec ^ (vec ^ Vector3.UnitY), RAD * 30)
 	rotList = [rot, ~rot]

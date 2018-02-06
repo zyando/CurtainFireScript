@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import random, randint, gaussian
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(v))
+veclist = objvertices("ico.obj", 0)
 
 colors = 0xA00000, 0x00A000, 0x0000A0, 0xA0A000, 0xA000A0, 0x00A0A0
 

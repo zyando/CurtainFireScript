@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import random
 
-vecList = []
-objvertices("ico.obj", lambda v: vecList.append(+v), 1)
+veclist = objvertices("ico.obj", 1)
 
 num_clone = 25
 pause_frame = 56
@@ -32,7 +31,7 @@ def world_task_func():
 	WORLD.AddTask(shot_knife1, 0, 1, 10)
 	
 	def shot_knife2(angle, axis):
-		for vec in vecList:
+		for vec in veclist:
 			vec = vec
 			mat = Matrix3.RotationAxis(vec ^ (vec ^ axis), angle)
 			

@@ -3,8 +3,7 @@ from random import random, randint
 
 #白の札弾を扇状に発射するタスクを追加
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 1)
+veclist = objvertices("ico.obj", 1)
 
 def shot_m():
 	for vec in veclist:

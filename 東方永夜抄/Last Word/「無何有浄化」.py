@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-vecList = []
-objvertices("ico.obj", lambda v: vecList.append(v), 2)
+veclist = objvertices("ico.obj", 2)
 
-for vec in vecList:
+for vec in veclist:
 	for angle in [RAD, -RAD]:
 		for axis in [Vector3.UnitX, Vector3.UnitZ]:
 			axis = vec ^ (vec ^ axis)

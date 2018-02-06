@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import random, randint, gauss, uniform
 
-veclist = []
-objvertices("ico.obj", lambda v: veclist.append(+v), 2)
+veclist = objvertices("ico.obj", 2)
 
 def shot_dia():
 	for vec in veclist:
