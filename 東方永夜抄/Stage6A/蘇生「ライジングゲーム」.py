@@ -30,7 +30,7 @@ def phase0():
 		mgc.LivingLimit = 180
 		mgc.LookAtVec = vec
 		mgc()
-WORLD.AddTask(phase0, 180, 8, 0)
+#WORLD.AddTask(phase0, 180, 8, 0)
 
 
 

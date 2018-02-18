@@ -17,25 +17,21 @@ def phase5():
 
 	print acceleration
 
-	def shot_dia1(task):
+	def shot_dia1():
 		mat = Matrix3.RotationAxis(randomvec(), RAD * 30)
 
 		for vec in veclists[3]:
-			shot = EntityShot(WORLD, "DIA", 0x000040)
-			shot.ModelData.Materials[0].Shininess = 130
+			shot = EntityShot(WORLD, "DIA_BRIGHT", 0x000040)
 			shot.Velocity = vec * mat * 2
 			shot.LivingLimit = 400
 			shot()
-		task.Interval += int(acceleration)
-		task.Interval = max(task.Interval, 5)
-	WORLD.AddTask(shot_dia1, interval, interval / -acceleration + 8, 0, True)
+	WORLD.AddTask(shot_dia1, lambda i: max(5, interval + int(acceleration * i)), interval / -acceleration + 8, 0)
 
 	def shot_dia2():
 		mat = Matrix3.RotationAxis(randomvec(), RAD * 30)
 
 		for vec in veclists[1]:
-			shot = EntityShot(WORLD, "DIA", 0x000040)
-			shot.ModelData.Materials[0].Shininess = 130
+			shot = EntityShot(WORLD, "DIA_BRIGHT", 0x000040)
 			shot.Velocity = vec * mat * (2.0 if vec in veclists[1] else 4.0)
 			shot.LivingLimit = 60 if vec in veclists[1] else 30
 

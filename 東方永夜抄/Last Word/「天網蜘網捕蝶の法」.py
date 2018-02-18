@@ -51,4 +51,4 @@ def shot_func(pos, vec, way, level):
 way_and_level_list = (3, 4), (4, 4), (3, 5), (4, 4), (6, 3), (4, 5)
 def get_way_and_level(i): return way_and_level_list[i % len(way_and_level_list)]
 
-WORLD.AddTask(lambda t: shot_func(OWNER_BONE.WorldPos, -Vector3.UnitZ, *get_way_and_level(t.RunCount)), 150, 6, 10, True)
+WORLD.AddTask(lambda t: shot_func(OWNER_BONE.WorldPos, -Vector3.UnitZ, *get_way_and_level(t.ExecutedCount)), 150, 6, 10, True)

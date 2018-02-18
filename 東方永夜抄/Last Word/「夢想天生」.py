@@ -32,7 +32,7 @@ def world_task(axis, r):
 	shotlist = [create_shot_m(v) for v in veclist]
 	
 	def shot_task_func1(task):
-		flag = task.RunCount == 0
+		flag = task.ExecutedCount == 0
 		
 		upward = Vector3.UnitY * root.WorldMat
 		mat = Matrix3.RotationAxis(upward, RAD * uniform(0, 40))

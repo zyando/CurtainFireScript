@@ -88,7 +88,7 @@ def world_task():
 		parentShot.Recording = Recording.LocalMat
 		parentShot.Pos = OWNER_BONE.WorldPos
 		
-		quat = Quaternion.RotationAxis(Vector3.UnitY, RAD * 60  * (1 if task.RunCount % 2 == 0 else -1))
+		quat = Quaternion.RotationAxis(Vector3.UnitY, RAD * 60  * (1 if task.ExecutedCount % 2 == 0 else -1))
 		
 		def rotate():
 			parentShot.Rot *= quat

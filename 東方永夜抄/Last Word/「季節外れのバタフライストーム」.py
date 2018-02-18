@@ -37,7 +37,7 @@ def shot_func(vec, axis):
 				shot1.LivingLimit = 200
 				shot1()
 				
-				if task.RunCount == 1:
+				if task.ExecutedCount == 1:
 					shot1 = EntityShot(WORLD, "BUTTERFLY", 0x0000A0)
 					shot1.Pos = shot.Pos
 					shot1.Velocity = (+shot.Pos * 3.2) * (matList[1] ^ 2) * matList[2]
@@ -55,9 +55,9 @@ def shot_func(vec, axis):
 	
 	def shot_task_func3(task, parent2 = parent2, mat0 = mat0):
 		def shot_task_func4(task = task, parent2 = parent2, mat0 = mat0):
-			parent2.Pos = parent2.Pos * (mat0 if task.RunCount % 2 == 0 else ~mat0)
+			parent2.Pos = parent2.Pos * (mat0 if task.ExecutedCount % 2 == 0 else ~mat0)
 			
-			shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0 if task.RunCount % 2 == 0 else 0xA00000)
+			shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0 if task.ExecutedCount % 2 == 0 else 0xA00000)
 			shot.Pos = OWNER_BONE.WorldPos + parent2.Pos
 			shot.Velocity = +parent2.Pos * 9
 			shot.LivingLimit = 100

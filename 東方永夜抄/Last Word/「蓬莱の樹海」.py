@@ -68,7 +68,7 @@ for vec in veclist:
 		def shot_s(task, parent = parent, mat = Matrix3.RotationAxis(axis, RAD * 10)):
 			parent.Pos = parent.Pos * mat
 			
-			shot = EntityShot(WORLD, "S", colorlist[task.RunCount % len(colorlist)])
+			shot = EntityShot(WORLD, "S", colorlist[task.ExecutedCount % len(colorlist)])
 			shot.Pos = OWNER_BONE.WorldPos
 			shot.Velocity = parent.Pos * 3.4
 			shot.LivingLimit = 160

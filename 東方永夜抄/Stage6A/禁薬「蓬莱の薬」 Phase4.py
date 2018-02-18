@@ -36,8 +36,7 @@ def phase4():
 			mat = Matrix3.RotationAxis(randomvec(), RAD * 360 * random())
 
 			for vec in veclists[2]:
-				shot = EntityShot(WORLD, "DIA", 0x004000)
-				shot.ModelData.Materials[0].Shininess = 130
+				shot = EntityShot(WORLD, "DIA_BRIGHT", 0x004000)
 				shot.Velocity = vec * mat * 2.0
 				shot.LivingLimit = 60
 

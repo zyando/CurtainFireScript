@@ -16,7 +16,7 @@ def shot_dia(task):
     for vec in veclist:
         for i in range(2):
             shot = EntityShot(WORLD, "DIA", 0xA00000 if i == 0 else 0x0000A0, parent_list[i])
-            shot.Velocity = vec * Quaternion(Vector3.UnitY, RAD * (i * 2 - 1) * task.RunCount * 16) * 8
+            shot.Velocity = vec * Quaternion(Vector3.UnitY, RAD * (i * 2 - 1) * task.ExecutedCount * 16) * 8
             shot.LivingLimit = 160
             shot()
 WORLD.AddTask(shot_dia, 10, 60, 0, True)

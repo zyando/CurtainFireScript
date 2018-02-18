@@ -10,7 +10,7 @@ def entity_to_shoot(vec, axis):
     entity.Rot = Quaternion.RotationAxis(axis, RAD * 12)
 
     def shot_star(task, entity = entity):
-        shot = EntityShot(WORLD, "STAR_M", 0xA00000 if task.RunCount % 2 == 0 else 0x0000A0)
+        shot = EntityShot(WORLD, "STAR_M", 0xA00000 if task.ExecutedCount % 2 == 0 else 0x0000A0)
         shot.Pos = OWNER_BONE.WorldPos
         shot.Velocity = entity.Pos * 4
         shot.LivingLimit = 300

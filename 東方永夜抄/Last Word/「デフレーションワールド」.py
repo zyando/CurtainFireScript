@@ -81,7 +81,7 @@ def world_task_func():
 
 			shot = EntityShot(WORLD, "KNIFE", 0xA0A0A0)
 			shot.LookAtVec = src.LookAtVec
-			shot.Pos = src.Pos + interval * (-num_clone / 3 + task.RunCount)
+			shot.Pos = src.Pos + interval * (-num_clone / 3 + task.ExecutedCount)
 			shot.LivingLimit = 120
 
 			def move(shot = shot):

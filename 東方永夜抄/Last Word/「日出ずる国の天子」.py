@@ -22,97 +22,85 @@ for i in range(wayHoriz):
 
 def world_task_func1():
 	vecStack = veclist1[:]
-	
-	def world_task_func2():
+
+	def shot_laser():
 		veclist2 = vecStack.pop()
-		
+
 		for vec in veclist2:
-			shot = EntityShot(WORLD, "LASER_LINE", 0x0000A0)
-			
-			if shot.ModelData.OwnerEntities.Count == 1:
-				for vert in shot.ModelData.Vertices:
-					vert.Pos = Vector3(vert.Pos.x * 1, vert.Pos.y * 1, vert.Pos.z * 4000)
-			
-			morph = shot.CreateVertexMorph("V_" + shot.MaterialMorph.MorphName, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
-			shot.AddMorphKeyFrame(morph, 0, 1)
-			shot.AddMorphKeyFrame(morph, 59, 1)
-			shot.AddMorphKeyFrame(morph, 60, 0)
-			shot.AddMorphKeyFrame(morph, 120, 0)
-			
-			shot.Recording = Recording.LocalMat
+			shot = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(1, 1, 4000))
+
+			morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+			shot.AddMorphKeyFrame(morph, 1, 0)
+			shot.AddMorphKeyFrame(morph, 1, 59)
+			shot.AddMorphKeyFrame(morph, 0, 60)
+			shot.AddMorphKeyFrame(morph, 0, 120)
+
+			shot.GetRecordedRot = lambda e: e.Rot
 			shot.Pos = OWNER_BONE.WorldPos
 			shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
-			
+
 			shot.LivingLimit = 120
 			shot()
-	WORLD.AddTask(world_task_func2, 2, wayHoriz, 0)
+	WORLD.AddTask(shot_laser, 2, wayHoriz, 0)
 WORLD.AddTask(world_task_func1, 200, 2, 0)
 
 def world_task_func3():
 	mat = Matrix3.RotationAxis(Vector3.UnitY, RAD * 180 / wayHoriz)
 	vecStack = veclist1[:]
 	vecStack.reverse()
-	
-	def world_task_func4():
+
+	def shot_laser():
 		veclist2 = vecStack.pop()
-		
+
 		for vec in veclist2:
 			vec = vec * mat
-			
-			shot = EntityShot(WORLD, "LASER_LINE", 0xA00000)
-			
-			if shot.ModelData.OwnerEntities.Count == 1:
-				for vert in shot.ModelData.Vertices:
-					vert.Pos = Vector3(vert.Pos.x * 1, vert.Pos.y * 1, vert.Pos.z * 4000)
-			
-			morph = shot.CreateVertexMorph("V_" + shot.MaterialMorph.MorphName, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
-			shot.AddMorphKeyFrame(morph, 0, 1)
-			shot.AddMorphKeyFrame(morph, 59, 1)
-			shot.AddMorphKeyFrame(morph, 60, 0)
-			shot.AddMorphKeyFrame(morph, 120, 0)
-			
-			shot.Recording = Recording.LocalMat
+
+			shot = EntityShot(WORLD, "LASER_LINE", 0xA00000, Vector3(1, 1, 4000))
+
+			morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+			shot.AddMorphKeyFrame(morph, 1, 0)
+			shot.AddMorphKeyFrame(morph, 1, 59)
+			shot.AddMorphKeyFrame(morph, 0, 60)
+			shot.AddMorphKeyFrame(morph, 0, 120)
+
+			shot.GetRecordedRot = lambda e: e.Rot
 			shot.Pos = OWNER_BONE.WorldPos
 			shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
-			
+
 			shot.LivingLimit = 120
 			shot()
-	WORLD.AddTask(world_task_func4, 2, wayHoriz, 0)
+	WORLD.AddTask(shot_laser, 2, wayHoriz, 0)
 WORLD.AddTask(world_task_func3, 200, 2, 40)
 
 veclist3 = [+Vector3(-1, 1, 1), +Vector3(1, 1, -1), +Vector3(1, -1, 1), +Vector3(-1, -1, -1)]
 
 for vec in veclist3:
-	posList = [Vector3(40, 20, 0), Vector3(-40, 20, 0)]
+	poslist = [Vector3(40, 40, 0), Vector3(-40, 40, 0), Vector3(40, -40, 0), Vector3(-40, -40, 0)]
 	rot = Quaternion.RotationAxis(vec ^ (vec ^ Vector3.UnitY), RAD * 30)
-	rotList = [rot, ~rot]
-	
-	for i in range(len(posList)):
-		pos = posList[i]
-		quat = rotList[i]
-		
+	rotlist = [rot, ~rot] * 2
+
+	for pos, rot in zip(poslist, rotlist):
 		parentShot1 = EntityShot(WORLD, "BONE", 0xFFFFFF)
 		parentShot1.Pos = OWNER_BONE.WorldPos + pos
-		parentShot1.Recording = Recording.LocalMat
+		parentShot1.GetRecordedRot = lambda e: e.Rot
 		parentShot1()
-		
-		parentShot2 = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, parentShot1)
-		parentShot2.Recording = Recording.LocalMat
-		parentShot2.Pos = vec * 12
-		parentShot2.Rot = Quaternion.RotationAxis(Vector3.UnitZ ^ vec, math.acos(vec.z))
-		parentShot2()
-		
-		def shot_task_func1(parentShot1 = parentShot1, parentShot2 = parentShot2, quat = quat):
-			parentShot1.Rot *= quat
-			
-			shot = EntityShot(WORLD, "S", 0x0000A0)
-			shot.Velocity = +(parentShot2.WorldPos - parentShot1.WorldPos) * -1.0
-			shot.Pos = parentShot2.WorldPos
-			shot()
-			
-			shot = EntityShot(WORLD, "S", 0xA00000)
-			shot.Velocity = +(target - parentShot2.WorldPos) * 1.0
-			shot.Pos = parentShot2.WorldPos
-			shot()
-		parentShot1.AddTask(shot_task_func1, 20, 12, 0)
 
+		parentShot2 = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, parentShot1)
+		parentShot2.GetRecordedRot = lambda e: e.Rot
+		parentShot2.Pos = vec * 12
+		parentShot2.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
+		parentShot2()
+
+		def shot_butterfly(parentShot1 = parentShot1, parentShot2 = parentShot2, rot = rot):
+			parentShot1.Rot *= rot
+
+			shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0)
+			shot.Pos = parentShot2.WorldPos
+			shot.Velocity = +(parentShot2.WorldPos - parentShot1.WorldPos) * -1.0
+			shot()
+
+			shot = EntityShot(WORLD, "BUTTERFLY", 0xA00000)
+			shot.Pos = parentShot2.WorldPos
+			shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 1.0
+			shot()
+		parentShot1.AddTask(shot_butterfly, 10, 30, 0)

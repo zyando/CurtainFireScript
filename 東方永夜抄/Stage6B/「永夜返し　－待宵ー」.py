@@ -14,7 +14,7 @@ WORLD.AddTask(phase0, 240, 3, 0)
 
 def phase1(task):
     shot = EntityShot(WORLD, "M", 0xA00000)
-    shot.Velocity = Vector3.UnitX * (task.RunCount % 2 * 2 - 1) * 3
+    shot.Velocity = Vector3.UnitX * (task.ExecutedCount % 2 * 2 - 1) * 3
     shot.LivingLimit = 300
     shot()
 

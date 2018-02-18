@@ -5,7 +5,7 @@ WORLD.MaxFrame = 3000
 veclist = objvertices("ico.obj", 2)
 
 def shot_dia(task, max_idx = 20.0):
-	t = min(task.RunCount / max_idx, 1)
+	t = min(task.ExecutedCount / max_idx, 1)
 
 	for vec in veclist:
 		if vec.z < -0.95: continue

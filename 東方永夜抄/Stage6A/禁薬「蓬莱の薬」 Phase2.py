@@ -25,8 +25,7 @@ def phase2():
 
 	def shot_dia():
 		for vec in veclists[3]:
-			shot = EntityShot(WORLD, "DIA", 0x400000)
-			shot.ModelData.Materials[0].Shininess = 130
+			shot = EntityShot(WORLD, "DIA_BRIGHT", 0x400000)
 			shot.Velocity = vec * binder.Rot * 10
 			shot.LivingLimit = 100
 			shot()
@@ -37,8 +36,7 @@ def phase2():
 
 		for vec in veclist:
 			for i in range(3):
-				shot = EntityShot(WORLD, "DIA", 0x000040)
-				shot.ModelData.Materials[0].Shininess = 130
+				shot = EntityShot(WORLD, "DIA_BRIGHT", 0x000040)
 				shot.Velocity = vec * mat * (1 + i * 0.5) * 2
 				shot.LivingLimit = 400
 				shot()

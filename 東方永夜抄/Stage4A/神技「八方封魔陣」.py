@@ -41,7 +41,7 @@ def shot_every_directinal():
 		for vec in vectors_dict["ico2"]:
 			vec  = vec * mat
 			shot = EntityShot(WORLD, "S", 0xFFFFFF)
-			shot.Velocity = vec * (12 - task.RunCount * 0.6) 
+			shot.Velocity = vec * (12 - task.ExecutedCount * 0.6) 
 			shot.Pos = OWNER_BONE.WorldPos + +shot.Velocity * 10
 			shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
 			shot.LivingLimit = 40

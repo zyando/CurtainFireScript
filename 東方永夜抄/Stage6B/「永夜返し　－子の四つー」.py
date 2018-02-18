@@ -20,7 +20,7 @@ def phase0():
 
     def shot_dia(task):
         for vec in veclist:
-            shot = EntityShot(WORLD, "DIA", 0x000080, parent_list[task.RunCount % 2])
+            shot = EntityShot(WORLD, "DIA", 0x000080, parent_list[task.ExecutedCount % 2])
             shot.Velocity = vec * ~shot.ParentEntity.Rot * 3
             shot.LivingLimit = 320
             shot()

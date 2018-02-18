@@ -52,7 +52,7 @@ def world_task():
 			if i == 0:
 				def shot_task(task, r1, r2, axis, front, shot, numshot = 30):
 					root = Entity(WORLD)
-					root.Pos = shot.Pos + front * (r1 * (-1 + task.RunCount * 2))
+					root.Pos = shot.Pos + front * (r1 * (-1 + task.ExecutedCount * 2))
 					
 					def rotate(r = Quaternion.RotationAxis(axis, RAD * (180 / numshot))):
 						root.Rot *= r
@@ -86,7 +86,7 @@ def world_task():
 			rot = Matrix3.RotationAxis(axis, RAD * 12)
 			
 			def shot_s(task, vec = vec, rot = rot):
-				rot = rot if task.RunCount % 2 == 0 else ~rot
+				rot = rot if task.ExecutedCount % 2 == 0 else ~rot
 				shotvec = vec
 				
 				for i in range(5):

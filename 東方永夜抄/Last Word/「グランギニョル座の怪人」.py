@@ -39,7 +39,7 @@ def world_task(axis, angle, range, should_shot_scale):
 			shot.Velocity = Vector3.UnitZ * parent.WorldMat * -2.4
 			shot()
 			
-			if task.RunCount % 2 == 0:
+			if task.ExecutedCount % 2 == 0:
 				def reverse(shot = shot, parent = parent):
 					shot.Velocity *= -10
 				shot.AddTask(reverse, 0, 1, 110)
@@ -52,7 +52,7 @@ def world_task(axis, angle, range, should_shot_scale):
 				targetPosList = [target - sidevec * 20, target, target + sidevec * 20]
 				
 				for targetPos in targetPosList:
-					shot = EntityShot(WORLD, "SCALE", 0xA00000 if task.RunCount % 2 == 0 else 0xA000A0)
+					shot = EntityShot(WORLD, "SCALE", 0xA00000 if task.ExecutedCount % 2 == 0 else 0xA000A0)
 					shot.Velocity = +(targetPos - parent.WorldPos) * 20
 					shot.Upward = Vector3.UnitY * parent.WorldMat
 					shot.Pos = parent.WorldPos

@@ -39,7 +39,7 @@ def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_po
 			
 			def add_shot_task(task1, axis = axis, entity = entity, circle = circle, prop = prop, rotate_pos = rotate_pos, rotate_vec = rotate_vec):
 				def shot_amulet(task2):
-					count = (task1.RunCount - 1) * num_shot + task2.RunCount - 1
+					count = (task1.ExecutedCount - 1) * num_shot + task2.ExecutedCount - 1
 					
 					shot = EntityShot(WORLD, *prop)
 					shot.Pos = circle.WorldPos

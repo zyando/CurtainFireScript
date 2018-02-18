@@ -10,7 +10,7 @@ for angle in RAD * 20, RAD * 40:
 veclist = objvertices("ico.obj", 2)
 
 def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_time = 50):
-	axis = Vector3.UnitY if task.RunCount % 2 == 0 else -Vector3.UnitY
+	axis = Vector3.UnitY if task.ExecutedCount % 2 == 0 else -Vector3.UnitY
 
 	root = EntityShot(WORLD, "BONE", 0xFFFFFF)
 	root.LivingLimit = time_to_stop + wait_time
@@ -44,11 +44,10 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 		for vec in veclist:
 			if vec * ignore_vec > 0.75: continue
 
-			shot = EntityShot(WORLD, "DIA", 0x400000)
+			shot = EntityShot(WORLD, "DIA_BRIGHT", 0x400000)
 			shot.Pos = parent.WorldPos
 			shot.Velocity = vec * 12.0
 			shot.LivingLimit = 100
-			shot.ModelData.Materials[0].Shininess = 130
 			shot()
 	parent.AddTask(shot_dia, interval_of_shoot, 0, 0)
 
@@ -74,7 +73,7 @@ def shoot_dia_while_rotating(vec, axis):
 	axis = vec ^ (vec ^ axis)
 
 	def shot_dia(task, vec_ = [vec], rot = Quaternion.RotationAxis(axis, RAD * 2)):
-		if task.RunCount % 6 < 4:
+		if task.ExecutedCount % 6 < 4:
 			for i in range(2):
 				shot = EntityShot(WORLD, "DIA", 0x0000A0)
 				shot.Pos = Vector3(0, 0, 0)

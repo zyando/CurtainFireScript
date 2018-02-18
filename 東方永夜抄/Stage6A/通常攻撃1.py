@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 
+WORLD.FrameCount = 650
+WORLD.MaxFrame = 1010
+
 veclist1 = objvertices("ico.obj", 1)
 veclist2 = objvertices("ico.obj", 2)
 
 def task(task, colors_tuple = ((0x400000, 0xA00000), (0x000040, 0x0000A0))):
-	colors = colors_tuple[task.RunCount % 2]
+	colors = colors_tuple[task.ExecutedCount % 2]
 
 	def shot_dia(pos, vec, angle, color1, color2):
 		vec += pos
 
-		shot = EntityShot(WORLD, "DIA", color1)
-		shot.Pos = pos * 100
+		shot = EntityShot(WORLD, "DIA_BRIGHT", color1)
+		shot.Pos = OWNER_BONE.WorldPos + pos * 100
 		shot.Velocity = vec * 3
 		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
-
-		shot.ModelData.Materials[0].Shininess = 130
 
 		def pause(): shot.Velocity *= 0
 		shot.AddTask(pause, 0, 1, 30)

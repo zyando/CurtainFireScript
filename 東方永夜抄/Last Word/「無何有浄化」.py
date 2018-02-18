@@ -33,11 +33,11 @@ def world_task():
 		vec = +(TARGET_BONE.WorldPos - OWNER_BONE.WorldPos)
 		axis = vec ^ (vec ^ Vector3.UnitY)
 		
-		angle = (task.RunCount - 1) * RAD * 5 * 0.5
+		angle = (task.ExecutedCount - 1) * RAD * 5 * 0.5
 		mat1 = Matrix3.RotationAxis(axis, -RAD * 5)
 		mat2 = Matrix3.RotationAxis(axis, angle)
 		
-		for i in range(task.RunCount):
+		for i in range(task.ExecutedCount):
 			shot = EntityShot(WORLD, "L", 0x4000D0)
 			shot.Pos = OWNER_BONE.WorldPos
 			shot.Velocity = vec * mat2 * 2.5

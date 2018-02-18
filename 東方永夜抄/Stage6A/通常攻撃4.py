@@ -35,9 +35,8 @@ for vec in veclist0:
 
 def shot_dia():
 	for vec in veclist2:
-		shot = EntityShot(WORLD, "DIA", 0x004040)
+		shot = EntityShot(WORLD, "DIA_BRIGHT", 0x004040)
 		shot.Velocity = vec * 3.0
 		shot.LivingLimit = 240
-		shot.ModelData.Materials[0].Shininess = 130
 		shot()
 WORLD.AddTask(shot_dia, 15, 68, 0)

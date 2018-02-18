@@ -10,15 +10,13 @@ def shot_dia_group_task():
 		replace_func_list = []
 
 		for i in range(way):
-			shot = EntityShot(WORLD, "DIA", color1)
+			shot = EntityShot(WORLD, "DIA_BRIGHT", color1)
 			shot.Pos = vec * distance
 			shot.Velocity = velocity * speed
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
 
 			def pause(shot = shot): shot.Velocity *= 0
 			shot.AddTask(pause, 0, 1, 30)
-
-			shot.ModelData.Materials[0].Shininess = 130
 			shot()
 
 			def replace(orgn_shot = shot, mat = Matrix3.RotationAxis(axis, RAD * (i % 2 * 2 - 1) * 30)):

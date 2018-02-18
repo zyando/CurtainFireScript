@@ -14,7 +14,7 @@ def world_task(task):
 			shot()
 	
 	def shot_red_amulet():
-		for i in range(540 + 100 * task.RunCount):
+		for i in range(540 + 100 * task.ExecutedCount):
 			shot = EntityShot(WORLD, "AMULET", 0xA00000)
 			shot.Pos = OWNER_BONE.WorldPos
 			shot.Velocity = randomvec() * uniform(8, 30)
