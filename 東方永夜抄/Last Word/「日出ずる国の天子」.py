@@ -36,7 +36,7 @@ def world_task_func1():
 			shot.AddMorphKeyFrame(morph, 0, 120)
 
 			shot.GetRecordedRot = lambda e: e.Rot
-			shot.Pos = OWNER_BONE.WorldPos
+			shot.Pos = CENTER_BONE.WorldPos
 			shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 
 			shot.LivingLimit = 120
@@ -64,7 +64,7 @@ def world_task_func3():
 			shot.AddMorphKeyFrame(morph, 0, 120)
 
 			shot.GetRecordedRot = lambda e: e.Rot
-			shot.Pos = OWNER_BONE.WorldPos
+			shot.Pos = CENTER_BONE.WorldPos
 			shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 
 			shot.LivingLimit = 120
@@ -81,7 +81,7 @@ for vec in veclist3:
 
 	for pos, rot in zip(poslist, rotlist):
 		parentShot1 = EntityShot(WORLD, "BONE", 0xFFFFFF)
-		parentShot1.Pos = OWNER_BONE.WorldPos + pos
+		parentShot1.Pos = CENTER_BONE.WorldPos + pos
 		parentShot1.GetRecordedRot = lambda e: e.Rot
 		parentShot1()
 

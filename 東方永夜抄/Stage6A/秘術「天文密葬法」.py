@@ -20,11 +20,11 @@ WORLD.AddTask(shot_dia, 5, 48, 0,True)
 mgcrl_list = []
 
 def shot_mgcrl(vec, shot_range):
-	pos = OWNER_BONE.WorldPos - Vector3.UnitZ * 800 + vec * shot_range
+	pos = CENTER_BONE.WorldPos - Vector3.UnitZ * 800 + vec * shot_range
 
 	mgcrl = EntityShot(WORLD, "MAGIC_CIRCLE", 0x300010, 2)
 	mgcrl.GetRecordedRot = lambda e, rot = Matrix3.LookAt(vec, randomvec()): rot
-	mgcrl.Velocity = (pos - OWNER_BONE.WorldPos) * (1.0 / 90)
+	mgcrl.Velocity = (pos - CENTER_BONE.WorldPos) * (1.0 / 90)
 
 	def set_zero(): mgcrl.Velocity *= 0
 	mgcrl.AddTask(set_zero, 0, 1, 90)
@@ -60,7 +60,7 @@ WORLD.AddTask(lambda: [shot_mgcrl(*mgcrl_poslist.pop()) for i in range(7) if len
 def shot_l(vec):
 	shot = EntityShot(WORLD, "L", 0xFF00FF)
 	shot.Velocity = vec * 4.0
-	shot.Pos = OWNER_BONE.WorldPos
+	shot.Pos = CENTER_BONE.WorldPos
 	shot.LivingLimit = 320
 
 	def check_weather_collided(collided_list = [], xy_plane_scale = Matrix3(1, 1, 0)):
@@ -71,6 +71,6 @@ def shot_l(vec):
 	shot()
 
 def get_vecs(v = +Vector3(1, 0, -1.2)):
-	return +(TARGET_BONE.WorldPos - OWNER_BONE.WorldPos), v * Matrix3.RotationAxis(Vector3.UnitZ, RAD * random() * 360)
+	return +(TARGET_BONE.WorldPos - CENTER_BONE.WorldPos), v * Matrix3.RotationAxis(Vector3.UnitZ, RAD * random() * 360)
 
 WORLD.AddTask(lambda: [shot_l(v) for v in get_vecs()], 120, 20, 480)

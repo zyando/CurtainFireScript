@@ -21,7 +21,7 @@ def shot_dia(pos, color, init_speed, spread_time, divergence_time):
 		
 		for vec in veclist:
 			shot = EntityShot(WORLD, "DIA", color)
-			shot.Pos = OWNER_BONE.WorldPos + pos
+			shot.Pos = CENTER_BONE.WorldPos + pos
 			shot.LivingLimit = divergence_time - WORLD.FrameCount + 55
 			
 			shot.Velocity = vec * init_speed

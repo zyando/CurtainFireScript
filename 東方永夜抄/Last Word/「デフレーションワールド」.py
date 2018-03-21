@@ -22,7 +22,7 @@ def world_task_func():
 			for j in range(2):
 				shot = EntityShot(WORLD, "KNIFE", 0xFFD700)
 				shot.Velocity = vec * (1 + j * 0.5)
-				shot.Pos = OWNER_BONE.WorldPos + shot.Velocity
+				shot.Pos = CENTER_BONE.WorldPos + shot.Velocity
 				shot.LivingLimit = 600
 				shot()
 				
@@ -37,7 +37,7 @@ def world_task_func():
 			
 			shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 			shot.Velocity = vec * 4.0
-			shot.Pos = OWNER_BONE.WorldPos + shot.Velocity
+			shot.Pos = CENTER_BONE.WorldPos + shot.Velocity
 			shot.LivingLimit = 200
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
 			
@@ -55,7 +55,7 @@ def world_task_func():
 	
 	def shot_knife3():
 		shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
-		shot.Pos = OWNER_BONE.WorldPos
+		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
 		shot.LivingLimit = 200
 		shot()

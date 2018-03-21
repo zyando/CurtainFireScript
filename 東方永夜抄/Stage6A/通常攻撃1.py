@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-WORLD.FrameCount = 650
-WORLD.MaxFrame = 1010
-
 veclist1 = objvertices("ico.obj", 1)
 veclist2 = objvertices("ico.obj", 2)
 
@@ -13,7 +10,7 @@ def task(task, colors_tuple = ((0x400000, 0xA00000), (0x000040, 0x0000A0))):
 		vec += pos
 
 		shot = EntityShot(WORLD, "DIA_BRIGHT", color1)
-		shot.Pos = OWNER_BONE.WorldPos + pos * 100
+		shot.Pos = HAND_BONE.WorldPos + pos * 100
 		shot.Velocity = vec * 3
 		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
 
@@ -36,7 +33,7 @@ def task(task, colors_tuple = ((0x400000, 0xA00000), (0x000040, 0x0000A0))):
 
 			def move():
 				shot.Velocity = vec * -2.0
-				shot.LivingLimit = shot.FrameCount + 380
+				shot.LivingLimit = shot.FrameCount + 420
 			return move
 		shot()
 
@@ -58,4 +55,4 @@ def task(task, colors_tuple = ((0x400000, 0xA00000), (0x000040, 0x0000A0))):
 
 	WORLD.AddTask(lambda: move_func_list.extend([f() for f in ziped_replace_func_list.pop()]), 0, len(ziped_replace_func_list), 40)
 	WORLD.AddTask(lambda: [f() for f in move_func_list], 0, 1, len(ziped_replace_func_list) + 40)
-WORLD.AddTask(task, 240, 5, 0, True)
+WORLD.AddTask(task, 240, 4, 0, True)

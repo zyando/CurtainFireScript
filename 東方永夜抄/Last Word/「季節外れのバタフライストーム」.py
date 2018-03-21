@@ -18,7 +18,7 @@ def shot_func(vec, axis):
 			matList[2] = matList[3] *  matList[2]
 			
 			shot = EntityShot(WORLD, "S", 0xFFFFFF)
-			shot.Pos = OWNER_BONE.WorldPos + parent1.Pos
+			shot.Pos = CENTER_BONE.WorldPos + parent1.Pos
 			shot.Velocity = +shot.Pos * 1.6
 			shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 60)
 			shot.LivingLimit = 60
@@ -58,7 +58,7 @@ def shot_func(vec, axis):
 			parent2.Pos = parent2.Pos * (mat0 if task.ExecutedCount % 2 == 0 else ~mat0)
 			
 			shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0 if task.ExecutedCount % 2 == 0 else 0xA00000)
-			shot.Pos = OWNER_BONE.WorldPos + parent2.Pos
+			shot.Pos = CENTER_BONE.WorldPos + parent2.Pos
 			shot.Velocity = +parent2.Pos * 9
 			shot.LivingLimit = 100
 			shot()

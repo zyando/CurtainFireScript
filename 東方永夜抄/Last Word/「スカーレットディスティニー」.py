@@ -19,7 +19,7 @@ def world_task(task):
 			
 			def shot_knife(task, parent = parent, axis = axis, frame = frame):
 				shot = EntityShot(WORLD, "KNIFE", 0xA00000)
-				shot.Pos = OWNER_BONE.WorldPos
+				shot.Pos = CENTER_BONE.WorldPos
 				shot.Velocity = frame.vec * (4.0 + (frame.vec * Vector3.UnitZ) * 1 + task.ExecutedCount * 0.03)
 				shot.Upward = axis
 				shot.LivingLimit = 120
@@ -31,7 +31,7 @@ def world_task(task):
 			if (angle > 0 if task.ExecutedCount % 2 == 0 else angle < 0):
 				def shot_l(frame = frame):
 					shot = EntityShot(WORLD, "L", 0xFF0000)
-					shot.Pos = OWNER_BONE.WorldPos
+					shot.Pos = CENTER_BONE.WorldPos
 					shot.Velocity = parent.Pos * 2.0
 					shot.LivingLimit = 160
 					shot()

@@ -6,6 +6,7 @@ def phase0():
     def shot_dia():
         for vec in veclist:
             shot = EntityShot(WORLD, "DIA", 0x000080)
+            shot.Pos = CENTER_BONE.WorldPos
             shot.Velocity = vec * 3
             shot.LivingLimit = 320
             shot()
@@ -14,6 +15,7 @@ WORLD.AddTask(phase0, 240, 3, 0)
 
 def phase1(task):
     shot = EntityShot(WORLD, "M", 0xA00000)
+    shot.Pos = CENTER_BONE.WorldPos
     shot.Velocity = Vector3.UnitX * (task.ExecutedCount % 2 * 2 - 1) * 3
     shot.LivingLimit = 300
     shot()

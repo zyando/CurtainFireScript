@@ -20,7 +20,7 @@ for vec in veclist:
 					parent.Rot = parent.Rot * rotQuat
 					
 					shot = EntityShot(WORLD, "DIA", 0xA00050 if angle < 0 else 0x5000A0)
-					shot.Pos = OWNER_BONE.WorldPos + parent.Pos * 640
+					shot.Pos = CENTER_BONE.WorldPos + parent.Pos * 640
 					shot.Velocity = parent.Pos * parent.Rot * -2
 					shot.LivingLimit = 120
 					shot()
@@ -30,7 +30,7 @@ for vec in veclist:
 
 def world_task():
 	def shot_l(task):
-		vec = +(TARGET_BONE.WorldPos - OWNER_BONE.WorldPos)
+		vec = +(TARGET_BONE.WorldPos - CENTER_BONE.WorldPos)
 		axis = vec ^ (vec ^ Vector3.UnitY)
 		
 		angle = (task.ExecutedCount - 1) * RAD * 5 * 0.5
@@ -39,7 +39,7 @@ def world_task():
 		
 		for i in range(task.ExecutedCount):
 			shot = EntityShot(WORLD, "L", 0x4000D0)
-			shot.Pos = OWNER_BONE.WorldPos
+			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * mat2 * 2.5
 			shot()
 			

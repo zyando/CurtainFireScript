@@ -19,7 +19,7 @@ def world_task(color, angle, angle_offset, axis, matlist, way = 14):
 			for i in range(8):
 				shot = EntityShot(WORLD, "SCALE", color)
 				shot.Velocity = frame.vec * mat * (1 + i * 0.1) * 3.4
-				shot.Pos = OWNER_BONE.WorldPos
+				shot.Pos = CENTER_BONE.WorldPos
 				shot()
 		frame.vec = frame.vec * frame.rot
 	WORLD.AddTask(shot_scale, 2, way, 0)

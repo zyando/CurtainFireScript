@@ -15,7 +15,7 @@ for i in range(num_way):
 def world_task(axis, r):
 	root = EntityShot(WORLD, "BONE", 0xFFFFFF)
 	root.Recording = Recording.LocalMat
-	root.Pos = OWNER_BONE.WorldPos
+	root.Pos = CENTER_BONE.WorldPos
 	root.Rot = Quaternion.RotationAxis(Vector3.UnitY ^ axis, math.acos(Vector3.UnitY * axis))
 	
 	def follow(rotate = Quaternion.RotationAxis(Vector3.UnitY, RAD * 6)):

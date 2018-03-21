@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-veclist0 = objvertices("ico.obj", 0)
+veclist0 = objvertices("ico.obj", 1)
 veclist2 = objvertices("ico.obj", 2)
 
 def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, livinglimit):
@@ -16,7 +16,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, livinglimit)
 		parent.LivingLimit = livinglimit
 		parent()
 
-		shot = EntityShot(WORLD, shottype, color, 4, parent)
+		shot = EntityShot(WORLD, shottype, color, parent)
 		shot.Velocity = frame.vec * speed
 		shot.LivingLimit = livinglimit
 		shot()
@@ -31,7 +31,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, livinglimit)
 
 for vec in veclist0:
 	for axis, color in (Vector3.UnitZ, 0x0000A0), (-Vector3.UnitZ, 0x00A000):
-		WORLD.AddTask(task_to_shoot_while_rotating(vec, axis, "RICE_M", color, 3.0, 600), 4, 250, 0)
+		WORLD.AddTask(task_to_shoot_while_rotating(vec, axis, "RICE_M", color, 3.0, 600), 4, 120, 0)
 
 def shot_dia():
 	for vec in veclist2:
@@ -39,4 +39,4 @@ def shot_dia():
 		shot.Velocity = vec * 3.0
 		shot.LivingLimit = 240
 		shot()
-WORLD.AddTask(shot_dia, 15, 68, 0)
+WORLD.AddTask(shot_dia, 15, 30, 0)

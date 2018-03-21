@@ -22,7 +22,7 @@ def phase0():
 				vec = (next_pos - pos) * struct_scale
 				distance = vec.Length()
 
-				laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(5, 5, distance))
+				laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(5, 5, distance * 0.5))
 				laser.Pos = pos * mat * struct_scale
 				laser.LookAtVec = +vec * mat
 				laser.LivingLimit = 20

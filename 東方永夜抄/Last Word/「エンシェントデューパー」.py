@@ -30,7 +30,7 @@ def world_task():
 			shot = EntityShot(WORLD, "LASER", 0xA00000, Vector3(6, 6, 4000))
 			shot.Recording = Recording.LocalMat
 			shot.Rot = Matrix3.LookAt(vec, front)
-			shot.Pos = OWNER_BONE.WorldPos + vec * 80
+			shot.Pos = CENTER_BONE.WorldPos + vec * 80
 			
 			def add_keyframe(shot = shot):
 				shot.AddBoneKeyframe()
@@ -93,7 +93,7 @@ def world_task():
 					shotvec = shotvec * rot
 					
 					shot = EntityShot(WORLD, "S", 0x0000A0)
-					shot.Pos = OWNER_BONE.WorldPos
+					shot.Pos = CENTER_BONE.WorldPos
 					shot.Velocity = shotvec * 2.0 * (1 + i * 0.2)
 					shot()
 			WORLD.AddTask(shot_s, 15, 20, 30, True)

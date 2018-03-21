@@ -11,7 +11,7 @@ vectors_dict = {path[0] + str(path[1]) : create_veclist(path) for path in pathli
 def shot_omnidirectinal():
 	for vec in vectors_dict["ico0"]:
 		shot = EntityShot(WORLD, "AMULET", 0xA00000)
-		shot.Pos = OWNER_BONE.WorldPos
+		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * 6
 		shot.Pos = +shot.Velocity * 20
 		shot.LivingLimit = 130
@@ -42,7 +42,7 @@ def shot_every_directinal():
 			vec  = vec * mat
 			shot = EntityShot(WORLD, "S", 0xFFFFFF)
 			shot.Velocity = vec * (12 - task.ExecutedCount * 0.6) 
-			shot.Pos = OWNER_BONE.WorldPos + +shot.Velocity * 10
+			shot.Pos = CENTER_BONE.WorldPos + +shot.Velocity * 10
 			shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
 			shot.LivingLimit = 40
 			

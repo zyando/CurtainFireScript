@@ -11,7 +11,7 @@ def shot_dia_group_task():
 
 		for i in range(way):
 			shot = EntityShot(WORLD, "DIA_BRIGHT", color1)
-			shot.Pos = vec * distance
+			shot.Pos = HAND_BONE.WorldPos + vec * distance
 			shot.Velocity = velocity * speed
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
 
@@ -48,7 +48,7 @@ def shot_dia_group_task():
 	replace_func_list = [extend_lists(lists) for lists in zip(*[iter(ziped_replace_func_list)] * 8)]
 
 	if len(ziped_replace_func_list) % 8 != 0:
-		replace_func_list.append(ziped_replace_func_list[1 - len(ziped_replace_func_list) % 8:])
+		replace_func_list.extend(ziped_replace_func_list[-len(ziped_replace_func_list) % 8:])
 
 	move_func_list = []
 
@@ -57,4 +57,4 @@ def shot_dia_group_task():
 	WORLD.AddTask(replace_shot, 0, len(replace_func_list), 60)
 
 	WORLD.AddTask(lambda: [move() for move in move_func_list], 0, 1,  len(replace_func_list) + 80)
-WORLD.AddTask(shot_dia_group_task, 480, 2, 10)
+WORLD.AddTask(shot_dia_group_task, 480, 2, 0)

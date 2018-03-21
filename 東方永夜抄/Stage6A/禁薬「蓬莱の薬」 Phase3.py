@@ -2,7 +2,7 @@
 
 veclists = [objvertices("ico.obj", i) for i in range(3)]
 
-phase_start_frame = 2414
+phase_start_frame = 2414 + WORLD.FrameCount
 phase_finish_frame = 3427 - 120
 phase_length = phase_finish_frame - phase_start_frame
 

@@ -26,7 +26,7 @@ def world_task():
 			shot.LivingLimit = 200
 			
 			shot.Recording = Recording.LocalMat
-			shot.Pos = OWNER_BONE.WorldPos
+			shot.Pos = CENTER_BONE.WorldPos
 			
 			rot = Matrix3.LookAt(vec, Vector3.UnitY)
 			shot.Rot = rot * Matrix3.RotationAxis(vec ^ (vec ^ Vector3.UnitY), RAD * (170 if flag else -170))
@@ -40,7 +40,7 @@ def world_task():
 		for vec in vec_dict["beveled_snub_cube"]:
 			shot = EntityShot(WORLD, "L", 0xFF4040)
 			shot.Velocity = vec * 0.8
-			shot.Pos = OWNER_BONE.WorldPos + +shot.Velocity * 20
+			shot.Pos = CENTER_BONE.WorldPos + +shot.Velocity * 20
 			shot.LivingLimit = 400
 			
 			def divide_shot(shot = shot):
@@ -61,7 +61,7 @@ def world_task():
 			for i in range(3 if flag else 2):
 				shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0 if flag else 0xA000A0)
 				shot.Velocity = vec * (1 + i * 0.6)
-				shot.Pos = OWNER_BONE.WorldPos + +shot.Velocity * 20
+				shot.Pos = CENTER_BONE.WorldPos + +shot.Velocity * 20
 				shot.LivingLimit = 400 - i * 50
 				
 				def divide_shot(shot = shot):
@@ -86,7 +86,7 @@ def world_task():
 	def shot_butterfly_r(task):
 		parentShot = EntityShot(WORLD, "BONE", 0xFFFFFF)
 		parentShot.Recording = Recording.LocalMat
-		parentShot.Pos = OWNER_BONE.WorldPos
+		parentShot.Pos = CENTER_BONE.WorldPos
 		
 		quat = Quaternion.RotationAxis(Vector3.UnitY, RAD * 60  * (1 if task.ExecutedCount % 2 == 0 else -1))
 		

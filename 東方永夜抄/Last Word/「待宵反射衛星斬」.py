@@ -32,7 +32,7 @@ def shot_task1():
 		parent1.Velocity = vec * 10
 		parent1()
 		
-		def shot_task2(parent1 = parent1, bonemat = OWNER_BONE.WorldMat):
+		def shot_task2(parent1 = parent1, bonemat = CENTER_BONE.WorldMat):
 			parent2 = Entity(WORLD)
 			parent2.Pos = vec4(parent1.WorldPos) * bonemat
 			parent2.Velocity = axis * 20

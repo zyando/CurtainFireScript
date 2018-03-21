@@ -2,7 +2,7 @@
 
 veclists = [objvertices("ico.obj", i) for i in range(4)]
 
-phase_start_frame = 1021
+phase_start_frame = 1021 + WORLD.FrameCount
 phase_finish_frame = 2413
 phase_length = phase_finish_frame - phase_start_frame
 
@@ -32,7 +32,7 @@ def phase2():
 	WORLD.AddTask(shot_dia, 40, phase_length / 40, 0)
 
 	def shot_dia_to_target(veclist = [v for v in veclists[1] if v.z < -0.8]):
-		mat = Matrix3.LookAt(TARGET_BONE.WorldPos - OWNER_BONE.WorldPos, Vector3.UnitY)
+		mat = Matrix3.LookAt(TARGET_BONE.WorldPos - CENTER_BONE.WorldPos, Vector3.UnitY)
 
 		for vec in veclist:
 			for i in range(3):

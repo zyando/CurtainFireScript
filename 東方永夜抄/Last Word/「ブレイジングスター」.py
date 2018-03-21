@@ -10,7 +10,7 @@ def world_task(task):
 
 	for vec in veclist:
 		shot = EntityShot(WORLD, "STAR_M", 0xA00000 if task.ExecutedCount % 2 == 0 else 0x0000A0)
-		shot.Pos = OWNER_BONE.WorldPos
+		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * 1.2 * mat
 		shot.SetMotionInterpolationCurve(Vector2(0.1, 0.9), Vector2(0.1, 0.9), 60)
 
