@@ -21,10 +21,12 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, init_angle, angle_i
 		binder.vec *= rot
 	return shot_dia
 
+mat = Matrix3.RotationAxis(randomvec(), RAD * 30)
+
 for vec in veclist0:
 	for axis in Vector3.UnitX, Vector3.UnitZ:
 		for i in range(4):
-			WORLD.AddTask(task_to_shoot_while_rotating(vec, axis, "DIA", 0xA00000, RAD * i * 20, RAD * 4, 1 + i * 0.5, (4 - i) * 100), 2, 210, 60)
+			WORLD.AddTask(task_to_shoot_while_rotating(vec * mat, axis * mat, "DIA", 0xA00000, RAD * i * 20, RAD * 4, 1 + i * 0.5, (4 - i) * 200), 2, 210, 60)
 
 def task_to_shoot_mgc():
 	mat = Matrix3.RotationAxis(randomvec(), RAD * random() * 90)

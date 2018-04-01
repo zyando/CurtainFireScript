@@ -31,12 +31,12 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, livinglimit)
 
 for vec in veclist0:
 	for axis, color in (Vector3.UnitZ, 0x0000A0), (-Vector3.UnitZ, 0x00A000):
-		WORLD.AddTask(task_to_shoot_while_rotating(vec, axis, "RICE_M", color, 3.0, 600), 4, 100, 0)
+		WORLD.AddTask(task_to_shoot_while_rotating(vec, axis, "RICE_M", color, 3.0, 720), 4, 100, 0)
 
 def shot_dia():
 	for vec in veclist2:
 		shot = EntityShot(WORLD, "DIA_BRIGHT", 0x004040)
 		shot.Velocity = vec * 3.0
-		shot.LivingLimit = 240
+		shot.LivingLimit = 400
 		shot()
 WORLD.AddTask(shot_dia, 15, 26, 0)

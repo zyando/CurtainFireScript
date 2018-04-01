@@ -29,7 +29,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 	parent.LivingLimit = root.LivingLimit
 	parent.GetRecordedRot = lambda e: e.Rot
 	parent.Rot = Quaternion.RotationAxis(Vector3.UnitY, RAD * 180)
-	parent.Velocity = Vector3(0, 0, -0.25)
+	parent.Velocity = Vector3(0.4, 0, 0)
 
 	def record(): parent.AddRootBoneKeyFrame()
 	parent.AddTask(record, 0, 1, wait_time)

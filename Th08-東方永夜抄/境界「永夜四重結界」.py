@@ -12,6 +12,10 @@ def task(color, scale):
     border.GetRecordedRot = lambda e: e.Rot
     border.LivingLimit = 240
 
+    morph = border.CreateVertexMorph(lambda v: -v * 0.9)
+    border.AddMorphKeyFrame(morph, 1, 0)
+    border.AddMorphKeyFrame(morph, 0, 15)
+
     def rotate(rot = Quaternion.RotationAxis(randomvec(), RAD * 90)): border.Rot *= rot
     border.AddTask(rotate, 30, 0, 0)
 
