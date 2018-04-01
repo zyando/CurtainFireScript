@@ -10,11 +10,13 @@ def task(color, scale):
     border = EntityShot(WORLD, "CUBE_BORDER", color, scale)
     border.Pos = CENTER_BONE.WorldPos
     border.GetRecordedRot = lambda e: e.Rot
-    border.LivingLimit = 240
+    border.LivingLimit = 195
 
     morph = border.CreateVertexMorph(lambda v: -v * 0.9)
     border.AddMorphKeyFrame(morph, 1, 0)
     border.AddMorphKeyFrame(morph, 0, 15)
+    border.AddMorphKeyFrame(morph, 0, border.LivingLimit - 15)
+    border.AddMorphKeyFrame(morph, 1, border.LivingLimit)
 
     def rotate(rot = Quaternion.RotationAxis(randomvec(), RAD * 90)): border.Rot *= rot
     border.AddTask(rotate, 30, 0, 0)
