@@ -11,7 +11,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, spe
 	binder.vec = vec
 
 	def shot_dia(rot = Matrix3.RotationAxis(axis, angle_interval)):
-		shot = EntityShot(WORLD, shottype, color)
+		shot = EntityShotStraight(WORLD, shottype, color)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = binder.vec * speed
 		shot.LivingLimit = livinglimit

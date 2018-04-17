@@ -2,15 +2,17 @@
 
 veclists = [objvertices("ico.obj", i) for i in range(4)]
 
-phase_start_frame = 467 + WORLD.FrameCount
-phase_finish_frame = 1020
+#phase_start_frame = 467 + WORLD.FrameCount
+#phase_finish_frame = 1020
+phase_start_frame = 150
+phase_finish_frame = 510
 phase_length = phase_finish_frame - phase_start_frame
 
-WORLD.FrameCount = phase_start_frame - 322
+WORLD.FrameCount = phase_start_frame #- 322
 WORLD.MaxFrame = phase_length
 
 def phase1():
-	def shot_dia(task):
+	def shot_dia():
 		mat = Matrix3.RotationAxis(randomvec(), RAD * 30)
 
 		for vec in veclists[2]:
@@ -26,7 +28,5 @@ def phase1():
 				shot()
 			shot.AddTask(replace, 0, 1, shot.LivingLimit)
 			shot()
-		task.Interval -= 1
-		task.Interval = max(task.Interval, 5)
-	WORLD.AddTask(shot_dia, 20, (phase_length - 110) / 5 + 15, 0, True)
+	WORLD.AddTask(shot_dia, lambda i: max(20 - i, 5), (phase_length - 110) / 5 + 15, 0)
 WORLD.AddTask(phase1, 0, 1, 0)

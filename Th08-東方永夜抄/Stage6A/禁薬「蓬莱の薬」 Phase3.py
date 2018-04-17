@@ -2,11 +2,13 @@
 
 veclists = [objvertices("ico.obj", i) for i in range(3)]
 
-phase_start_frame = 2414 + WORLD.FrameCount
-phase_finish_frame = 3427 - 120
+#phase_start_frame = 2414 + WORLD.FrameCount
+#phase_finish_frame = 3427 - 120
+phase_start_frame = 1440
+phase_finish_frame = 1800
 phase_length = phase_finish_frame - phase_start_frame
 
-WORLD.FrameCount = phase_start_frame - 322
+WORLD.FrameCount = phase_start_frame #- 322
 WORLD.MaxFrame = phase_length + 400
 
 def phase3():

@@ -42,6 +42,6 @@ def task_to_shoot_mgc():
 			shot.Pos = mgc.Pos + randomvec() * (random() * 50)
 			shot.LivingLimit = 120
 			shot()
-		mgc.AddTask(shot_s, 0, 120, 0)
+		mgc.AddTask(shot_s, 0, 120, 10)
 		mgc()
 WORLD.AddTask(task_to_shoot_mgc, 180, 3, 2)

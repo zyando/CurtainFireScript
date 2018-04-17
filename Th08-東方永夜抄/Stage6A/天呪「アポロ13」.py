@@ -2,6 +2,8 @@
 
 veclist = objvertices("ico.obj", 2)
 
+shot_list = []
+
 def shot_dia_group_task():
 	def shot_dia_group(vec, axis, way, distance, speed, color1, color2):
 		axis = vec ^ (vec ^ axis)
@@ -11,7 +13,7 @@ def shot_dia_group_task():
 
 		for i in range(way):
 			shot = EntityShot(WORLD, "DIA_BRIGHT", color1)
-			shot.Pos = HAND_BONE.WorldPos + vec * distance
+			shot.Pos = CENTER_BONE.WorldPos + vec * distance
 			shot.Velocity = velocity * speed
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
 
@@ -25,7 +27,9 @@ def shot_dia_group_task():
 				shot.LookAtVec = -orgn_shot.LookAtVec
 				shot()
 
-				orgn_shot.OnDeath()
+				shot_list.append(shot)
+
+				orgn_shot.Remove()
 
 				def move():
 					shot.AddRootBoneKeyFrame()
@@ -60,3 +64,19 @@ def shot_dia_group_task():
 
 	WORLD.AddTask(lambda: [move() for move in move_func_list], 0, 1,  len(replace_func_list) + 80)
 WORLD.AddTask(shot_dia_group_task, 480, 2, 0)
+
+if 'REMOVE_FRAME' in globals():
+	def remove_shot(num = 512):
+		count = 0
+
+		while count < num:
+			if len(shot_list) == 0: return True
+
+			orgn = shot_list.pop()
+
+			if orgn.IsDeath: continue
+
+			orgn.Remove()
+
+			count += 1
+	WORLD.AddTask(remove_shot, 0, 0, REMOVE_FRAME - WORLD.FrameCount)

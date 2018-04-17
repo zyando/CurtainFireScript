@@ -38,14 +38,14 @@ def task_to_shoot_mgc_crcl(task, axis):
 		def shot_l(mgc = mgc, parent = parent, vec = vec):
 			shot = EntityShot(WORLD, "L", 0xA00000 if task.ExecutedCount % 2 == 0 else 0x0000A0)
 			shot.Pos = mgc.WorldPos + randomvec() * random() * 200
-			shot.LivingLimit = 400
+			shot.LivingLimit = 600
 			shot()
 
 			def move(velocity = vec * parent.Rot):
 				shot.Velocity = velocity * 2
 			return move
 
-		mgc.AddTask(lambda shot_l = shot_l: move_func_list.extend([shot_l() for i in range(3)]), 2, 30, 30)
+		mgc.AddTask(lambda shot_l = shot_l: move_func_list.extend([shot_l() for i in range(2)]), 2, 30, 30)
 		mgc()
 WORLD.AddTask(lambda t: [task_to_shoot_mgc_crcl(t, a) for a in Vector3.UnitX, Vector3.UnitZ], 90, 7, 0, True)
 

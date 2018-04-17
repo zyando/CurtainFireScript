@@ -5,73 +5,69 @@ distance_circle = 1024.0
 def task(veclist, axislist, propfunc, speed1, speed2, rot_vec, angle_vec, rot_pos, angle_pos, int_shot, num_shot, int_task, num_task, pause_frame_func, restart_frame_func, restart_frame):
 	total_num = num_shot * num_task
 	total_num_mult = 1.0 / total_num
-	
+
 	frame_num = distance_circle / speed1
-	
+
 	for vec in veclist:
 		for axis in axislist:
-			if abs(vec * axis) > 0.99: 
+			if abs(vec * axis) > 0.99:
 				continue
 			prop = propfunc(vec, axis)
 			axis = vec ^ (vec ^ axis)
-			
+
 			parent = EntityShot(WORLD, "BONE", 0xFFFFFF)
-			parent.Recording = Recording.LocalMat
-			parent.Pos = TARGET_BONE.WorldPos
+			parent.GetRecordedRot = lambda e: e.Rot
 			parent.Rot = Quaternion.RotationAxis(axis, rot_pos)
 			parent()
-			
-			circle = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, parent)
-			circle.Recording = Recording.LocalMat
+
+			circle = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, 4, parent)
+			circle.GetRecordedRot = lambda e: e.Rot
 			circle.Pos = vec * distance_circle
 			circle.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
-			
-			for vert in circle.ModelData.Vertices:
-				vert.Pos = vert.Pos * 4
 			circle()
-			
+
 			entity = Entity(WORLD)
 			entity.Rot = Quaternion.RotationAxis(axis, rot_vec)
 			entity()
-			
+
 			rotate_pos = Quaternion.RotationAxis(axis, angle_pos)
 			rotate_vec = Quaternion.RotationAxis(axis, angle_vec)
-			
+
 			def add_shot_task(task1, axis = axis, entity = entity, circle = circle, prop = prop, rotate_pos = rotate_pos, rotate_vec = rotate_vec):
 				def shot_amulet(task2):
 					count = (task1.ExecutedCount - 1) * num_shot + task2.ExecutedCount - 1
-					
+
 					shot = EntityShot(WORLD, *prop)
 					shot.Pos = circle.WorldPos
 					shot.Velocity = +circle.WorldPos * entity.Rot * -speed1
 					shot.Upward = axis
-					shot.DiedDecision = lambda e: (e.Pos - parent.Pos).Length > 1024 
+					shot.LivingLimit = 1000
 					def pause():
 						shot.Velocity *= 0
 					shot.AddTask(pause, 0, 1, int(frame_num * pause_frame_func(count * total_num_mult)))
-					
+
 					def restart(vec = +shot.Velocity):
 						shot.Velocity = vec * speed2
 					shot.AddTask(restart, 0, 1, int(restart_frame * restart_frame_func(count * total_num_mult)))
-					
+
 					shot()
-				entity.AddTask(shot_amulet, int_shot, num_shot, 0, True)
-			entity.AddTask(add_shot_task, int_task, num_task, 0, True)
-			
+				WORLD.AddTask(shot_amulet, int_shot, num_shot, 0, True)
+			WORLD.AddTask(add_shot_task, int_task, num_task, 0, True)
+
 			def rotate(entity = entity, circle = circle, parent = parent, prop = prop, rotate_pos = rotate_pos, rotate_vec = rotate_vec):
 				parent.Rot = parent.Rot * rotate_pos
 				entity.Rot = +entity.Rot * rotate_vec
-			entity.AddTask(rotate, int_shot, WORLD.MaxFrame / int_shot, 1)
-			
+			WORLD.AddTask(rotate, int_shot, WORLD.MaxFrame / int_shot, 1)
+
 			def shot_amulet_outside(circle = circle, prop = prop):
 				shot = EntityShot(WORLD, *prop)
 				shot.Pos = circle.WorldPos
 				shot.Velocity = +circle.WorldPos * 2.0
 				shot.Upward = axis
-				shot.DiedDecision = lambda e: (e.Pos - parent.Pos).Length > 1024
+				shot.LivingLimit = 1000
 				shot()
 			circle.AddTask(shot_amulet_outside, 1, int(num_task * int_task * 0.5), 0)
-veclist = objvertices("ico.obj", 0)
+veclist = objvertices("ico.obj", 2)
 
 WORLD.AddTask(lambda: task(
 veclist,

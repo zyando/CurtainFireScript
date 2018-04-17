@@ -2,11 +2,13 @@
 
 veclists = [objvertices("ico.obj", i) for i in range(4)]
 
-phase_start_frame = 1021 + WORLD.FrameCount
-phase_finish_frame = 2413
+#phase_start_frame = 1021 + WORLD.FrameCount
+#phase_finish_frame = 2413
+phase_start_frame = 510
+phase_finish_frame = 1440
 phase_length = phase_finish_frame - phase_start_frame
 
-WORLD.FrameCount = phase_start_frame - 322
+WORLD.FrameCount = phase_start_frame #- 322
 WORLD.MaxFrame = phase_length
 
 def phase2():
@@ -17,7 +19,7 @@ def phase2():
 
 	def shot_rice():
 		for vec in veclists[2]:
-			shot = EntityShot(WORLD, "RICE_M", 0xA00000, 4)
+			shot = EntityShot(WORLD, "RICE_M", 0xA00000)
 			shot.Velocity = vec * binder.Rot * 10
 			shot.LivingLimit = 100
 			shot()
