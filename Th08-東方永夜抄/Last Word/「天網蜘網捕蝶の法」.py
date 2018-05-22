@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 def shot_func(pos, vec, way, level):
-	shot = EntityShot(WORLD, "S", 0x0000A0, 3)
+	shot = EntityShot(WORLD, "M", 0x0000A0)
 	shot.Pos = pos
 	shot.Velocity = vec * 100
 	shot.LivingLimit = 50
@@ -35,20 +35,14 @@ def shot_func(pos, vec, way, level):
 	shot.AddTask(shot_task_func, 0, 1, 6)
 	shot.LivingLimit = 10
 	
-	fixed_shot = EntityShot(WORLD, "M", 0x0000A0)
-	fixed_shot.Pos = pos
-	fixed_shot.LivingLimit = laser.LivingLimit
-	
 	def shot_m():
 		for i in range(2):
-			shot = EntityShot(WORLD, "M", 0x0000A0)
+			shot = EntityShotStraight(WORLD, "M", 0x0000A0)
 			shot.Pos = pos
 			shot.LivingLimit = 500
 			shot.Velocity = Vector3.UnitZ  * (i * 2 - 1) * 4
 			shot()
-	fixed_shot.AddTask(shot_m, 0, 1, 50)
-	fixed_shot()
-way_and_level_list = (3, 4), (4, 4), (3, 5), (4, 4), (6, 3), (4, 5)
-def get_way_and_level(i): return way_and_level_list[i % len(way_and_level_list)]
+	WORLD.AddTask(shot_m, 0, 1, 50)
+way_and_level_list = list(reversed([(3, 5), (4, 5), (3, 6), (4, 5), (5, 4), (6, 4)]))
 
-WORLD.AddTask(lambda t: shot_func(CENTER_BONE.WorldPos, -Vector3.UnitZ, *get_way_and_level(t.ExecutedCount)), 150, 6, 10, True)
+WORLD.AddTask(lambda: shot_func(CENTER_BONE.WorldPos, -Vector3.UnitZ, *way_and_level_list.pop()), 150, 6, 10)

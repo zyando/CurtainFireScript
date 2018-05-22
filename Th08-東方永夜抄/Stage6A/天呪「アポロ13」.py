@@ -4,6 +4,8 @@ veclist = objvertices("ico.obj", 2)
 
 shot_list = []
 
+test = "test"
+
 def shot_dia_group_task():
 	def shot_dia_group(vec, axis, way, distance, speed, color1, color2):
 		axis = vec ^ (vec ^ axis)
@@ -74,7 +76,7 @@ if 'REMOVE_FRAME' in globals():
 
 			orgn = shot_list.pop()
 
-			if orgn.IsDeath: continue
+			if orgn.IsRemoved: continue
 
 			orgn.Remove()
 

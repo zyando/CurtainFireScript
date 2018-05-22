@@ -7,17 +7,18 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, livinglimit)
 	if abs(vec * axis) > 0.995 > 0: return lambda: 0
 
 	axis = vec ^ (vec ^ axis)
-	frame = Frame(vec, Matrix3.RotationAxis(axis, RAD * 5))
+	rot = Matrix3.RotationAxis(axis, RAD * 5)
+	binder = [vec]
 
 	def shot_func():
 		parent = EntityShot(WORLD, "BONE", 0xFFFFFF)
-		parent.Velocity = frame.vec * speed
+		parent.Velocity = binder[0] * speed
 		parent.GetRecordedRot = lambda e: e.Rot
 		parent.LivingLimit = livinglimit
 		parent()
 
 		shot = EntityShot(WORLD, shottype, color, parent)
-		shot.Velocity = frame.vec * speed
+		shot.Velocity = binder[0] * speed
 		shot.LivingLimit = livinglimit
 		shot()
 
@@ -26,7 +27,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, livinglimit)
 			parent.Velocity *= 0
 		parent.AddTask(rotate, 0, 1, 120)
 
-		frame.vec *= frame.rot
+		binder[0] *= rot
 	return shot_func
 
 for vec in veclist0:

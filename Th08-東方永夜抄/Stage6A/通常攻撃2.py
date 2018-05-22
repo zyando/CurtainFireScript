@@ -8,17 +8,16 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, init_angle, angle_i
 
 	axis = vec ^ (vec ^ axis)
 
-	binder = Entity(WORLD)
-	binder.vec = vec * Matrix3.RotationAxis(axis, init_angle)
+	binder = [vec * Matrix3.RotationAxis(axis, init_angle)]
 
 	def shot_dia(rot = Matrix3.RotationAxis(axis, angle_interval)):
 		shot = EntityShot(WORLD, shottype, color)
 		shot.Pos = CENTER_BONE.WorldPos
-		shot.Velocity = binder.vec * speed
+		shot.Velocity = binder[0] * speed
 		shot.LivingLimit = livinglimit
 		shot()
 
-		binder.vec *= rot
+		binder[0] *= rot
 	return shot_dia
 
 mat = Matrix3.RotationAxis(randomvec(), RAD * 30)

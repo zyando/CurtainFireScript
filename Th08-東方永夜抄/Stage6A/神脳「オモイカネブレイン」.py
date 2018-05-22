@@ -42,7 +42,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 		for vec in veclist:
 			if vec * ignore_vec < -0.75: continue
 
-			shot = EntityShot(WORLD, "DIA_BRIGHT", 0x400000)
+			shot = EntityShotStraight(WORLD, "DIA_BRIGHT", 0x400000)
 			shot.Pos = parent.WorldPos
 			shot.Velocity = vec * parent.WorldRot * 12.0
 			shot.LivingLimit = 100
@@ -75,7 +75,7 @@ def shoot_dia_while_rotating(vec, axis):
 	def shot_dia(task, vec_ = [vec], rot = Quaternion.RotationAxis(axis, RAD * 2)):
 		if task.ExecutedCount % 6 < 4:
 			for i in range(2):
-				shot = EntityShot(WORLD, "DIA", 0x0000A0)
+				shot = EntityShotStraight(WORLD, "DIA", 0x0000A0)
 				shot.Pos = Vector3(0, 0, 0)
 				shot.Velocity = vec_[0] * (i + 1) * 2.0
 				shot.LivingLimit = 200 * (i + 1)

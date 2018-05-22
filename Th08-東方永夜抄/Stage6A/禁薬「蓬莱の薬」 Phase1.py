@@ -1,32 +1,22 @@
 # -*- coding: utf-8 -*-
 
-veclists = [objvertices("ico.obj", i) for i in range(4)]
+veclists = [objvertices("ico.obj", i) for i in range(3)]
 
-#phase_start_frame = 467 + WORLD.FrameCount
-#phase_finish_frame = 1020
-phase_start_frame = 150
-phase_finish_frame = 510
-phase_length = phase_finish_frame - phase_start_frame
+def shot_dia():
+	mat = Matrix3.RotationAxis(randomvec(), RAD * 30)
 
-WORLD.FrameCount = phase_start_frame #- 322
-WORLD.MaxFrame = phase_length
+	for vec in veclists[2]:
+		shot = EntityShot(WORLD, "DIA_BRIGHT", 0x000040)
+		shot.Pos = CENTER_BONE.WorldPos
+		shot.Velocity = vec * mat * (2.0 if vec in veclists[1] else 4.0)
+		shot.LivingLimit = 90 if vec in veclists[1] else 45
 
-def phase1():
-	def shot_dia():
-		mat = Matrix3.RotationAxis(randomvec(), RAD * 30)
-
-		for vec in veclists[2]:
-			shot = EntityShot(WORLD, "DIA_BRIGHT", 0x000040)
-			shot.Velocity = vec * mat * (2.0 if vec in veclists[1] else 4.0)
-			shot.LivingLimit = 60 if vec in veclists[1] else 30
-
-			def replace(orgn = shot):
-				shot = EntityShot(WORLD, "DIA", 0x0000A0)
-				shot.Pos = orgn.Pos
-				shot.Velocity = orgn.Velocity
-				shot.LivingLimit = orgn.LivingLimit * 8
-				shot()
-			shot.AddTask(replace, 0, 1, shot.LivingLimit)
+		def replace(orgn = shot):
+			shot = EntityShot(WORLD, "DIA", 0x0000A0)
+			shot.Pos = orgn.Pos
+			shot.Velocity = orgn.Velocity
+			shot.LivingLimit = orgn.LivingLimit * 8
 			shot()
-	WORLD.AddTask(shot_dia, lambda i: max(20 - i, 5), (phase_length - 110) / 5 + 15, 0)
-WORLD.AddTask(phase1, 0, 1, 0)
+		shot.AddTask(replace, 0, 1, shot.LivingLimit)
+		shot()
+WORLD.AddTask(shot_dia, lambda i: int(max(20 - i * 0.5, 5)), 0, 0)
