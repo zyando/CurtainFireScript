@@ -8,7 +8,7 @@ interval = 8
 
 def shot_laser(mat):
 	ignore_pos_lines = []
-	struct_scale = 120
+	struct_scale = 160
 
 	def shot_next_laser(pos):
 		if pos not in connected_vtx_dict: return
@@ -21,7 +21,7 @@ def shot_laser(mat):
 			vec = (next_pos - pos) * struct_scale
 			distance = vec.Length()
 
-			laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(6, 6, distance))
+			laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(8, 8, distance))
 			laser.Pos = CENTER_BONE.WorldPos + pos * mat * struct_scale
 			laser.LookAtVec = +vec * mat
 			laser.LivingLimit = interval * 2
