@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
 def create_veclist(path):
-	veclist = []
-	objvertices(path[0] + ".obj", lambda v: veclist.append(+v), path[1])
-	return veclist
+	return objvertices(path[0] + ".obj", path[1])
 path_list = ("ico", 0), ("ico", 1), ("ico", 2), ("dod", 0), ("ico_dod", 0), ("snub_cube", 0), ("beveled_snub_cube", 0)
 vec_dict = {path[0] + ("" if path[1] == 0 else str(path[1])) : create_veclist(path) for path in path_list}
 
@@ -11,13 +9,9 @@ def world_task():
 	def shot_laser():
 		for vec in vec_dict["ico1"]:
 			flag = vec in vec_dict["ico"]
-			shot = EntityShot(WORLD, "LASER", 0xA000A0 if flag else 0x0000A0)
+			shot = EntityShot(WORLD, "LASER", 0xA000A0 if flag else 0x0000A0, Matrix4(Matrix3(80, 80, 1000), Vector3(0, 0, -24)))
 			
-			if shot.ModelData.OwnerEntities.Count == 1:
-				for vert in shot.ModelData.Vertices:
-					vert.Pos = Vector3(vert.Pos.x * 80, vert.Pos.y * 80, -vert.Pos.z * 1000 - 24)
-			
-			morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+			morph = shot.CreateVertexMorph(0, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
 			shot.AddMorphKeyFrame(morph, 1, 0)
 			shot.AddMorphKeyFrame(morph, 1, 69)
 			shot.AddMorphKeyFrame(morph, 0, 70)
@@ -25,7 +19,7 @@ def world_task():
 			shot.AddMorphKeyFrame(morph, 1, 200)
 			shot.LivingLimit = 200
 			
-			shot.Recording = Recording.LocalMat
+			shot.GetRecordedRot = lambda e: e.Rot
 			shot.Pos = CENTER_BONE.WorldPos
 			
 			rot = Matrix3.LookAt(vec, Vector3.UnitY)
@@ -39,20 +33,20 @@ def world_task():
 	def shot_l():
 		for vec in vec_dict["beveled_snub_cube"]:
 			shot = EntityShot(WORLD, "L", 0xFF4040)
-			shot.Velocity = vec * 0.8
+			shot.Velocity = vec * 2
 			shot.Pos = CENTER_BONE.WorldPos + +shot.Velocity * 20
 			shot.LivingLimit = 400
 			
 			def divide_shot(shot = shot):
 				for i in range(3):
 					new_shot = EntityShot(WORLD, shot.Property)
-					new_shot.Velocity = shot.Velocity * (1 + i) * 1.5
+					new_shot.Velocity = shot.Velocity * (1 + i) * 3
 					new_shot.Pos = shot.Pos
 					new_shot.LivingLimit = 200
 					new_shot()
 			shot.AddTask(divide_shot, 0, 1, 40)
 			shot()
-	#WORLD.AddTask(shot_l, 0, 1, 200)
+	WORLD.AddTask(shot_l, 0, 1, 200)
 	
 	def shot_butterfly_gb():
 		for vec in vec_dict["beveled_snub_cube"] +  vec_dict["snub_cube"]:
@@ -67,7 +61,7 @@ def world_task():
 				def divide_shot(shot = shot):
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)
-						new_shot.Velocity = shot.Velocity * -(1 + i * 0.4) * 2
+						new_shot.Velocity = shot.Velocity * -(1 + i * 0.4) * 3
 						new_shot.Pos = shot.WorldPos
 						new_shot.SetMotionInterpolationCurve(Vector2(0.2, 0.5), Vector2(0.9, 0.045), 200)
 						new_shot.LivingLimit = 300
@@ -75,17 +69,17 @@ def world_task():
 					
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)
-						new_shot.Velocity = shot.Velocity * (1 + i) * 2
+						new_shot.Velocity = shot.Velocity * (1 + i) * 3
 						new_shot.Pos = shot.WorldPos
 						new_shot.LivingLimit = 300
 						new_shot()
 				shot.AddTask(divide_shot, 0, 1, 60 - i * 5)
 				shot()
-	#WORLD.AddTask(shot_butterfly_gb, 0, 1, 0)
+	WORLD.AddTask(shot_butterfly_gb, 0, 1, 0)
 	
 	def shot_butterfly_r(task):
 		parentShot = EntityShot(WORLD, "BONE", 0xFFFFFF)
-		parentShot.Recording = Recording.LocalMat
+		parentShot.GetRecordedRot = lambda e: e.Rot
 		parentShot.Pos = CENTER_BONE.WorldPos
 		
 		quat = Quaternion.RotationAxis(Vector3.UnitY, RAD * 60  * (1 if task.ExecutedCount % 2 == 0 else -1))
@@ -110,7 +104,7 @@ def world_task():
 					
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)
-						new_shot.Velocity = shotVec * -(1 + i * 0.4) * 2
+						new_shot.Velocity = shotVec * -(1 + i * 0.4) * 3
 						new_shot.Pos = shot.WorldPos
 						new_shot.SetMotionInterpolationCurve(Vector2(0.2, 0.5), Vector2(0.9, 0.045), 200)
 						new_shot.LivingLimit = 400
@@ -118,7 +112,7 @@ def world_task():
 					
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)
-						new_shot.Velocity = shotVec * (1 + i) * 2
+						new_shot.Velocity = shotVec * (1 + i) * 3
 						new_shot.Pos = shot.WorldPos
 						new_shot.LivingLimit = 200
 						new_shot()

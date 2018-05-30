@@ -8,6 +8,11 @@ move_frame = 110
 
 pauseList = []
 
+TARGET_BONE = EntityShot(WORLD, "BONE", 0)
+TARGET_BONE.Pos = Vector3(300, 300, 400)
+TARGET_BONE.Velocity = Vector3(-20, -20, 0)
+TARGET_BONE()
+
 def world_task_func():
 	cloneList = []
 
@@ -33,7 +38,7 @@ def world_task_func():
 		for vec in veclist:
 			vec = vec
 			mat = Matrix3.RotationAxis(vec ^ (vec ^ axis), angle)
-
+			
 			shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 			shot.Velocity = vec * 4.0
 			shot.Pos = CENTER_BONE.WorldPos + shot.Velocity
