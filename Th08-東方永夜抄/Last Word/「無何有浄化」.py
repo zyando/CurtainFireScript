@@ -1,32 +1,30 @@
 # -*- coding: utf-8 -*-
 
-veclist = objvertices("ico.obj", 2)
+veclist = objvertices("ico.obj", 1)
 
 for vec in veclist:
 	for angle in [RAD, -RAD]:
 		for axis in [Vector3.UnitX, Vector3.UnitZ]:
 			axis = vec ^ (vec ^ axis)
-			parent = Entity(WORLD)
 			
 			rotPosMat = Matrix3.RotationAxis(axis, angle * 6)
-			parent.Pos = vec
+			binder = [vec, Quaternion.Identity]
 			
-			def rotate(parent = parent, rotPosMat = rotPosMat, angle = angle):
-				parent.Rot = Quaternion.Identity
+			def rotate(binder = binder, rotPosMat = rotPosMat, angle = angle):
+				binder[1] = Quaternion.Identity
 				rotQuat = Quaternion.RotationAxis(axis, -angle * 4)
 				
 				def shot_dia():
-					parent.Pos = parent.Pos * rotPosMat
-					parent.Rot = parent.Rot * rotQuat
+					binder[0] *= rotPosMat
+					binder[1] *= rotQuat
 					
 					shot = EntityShot(WORLD, "DIA", 0xA00050 if angle < 0 else 0x5000A0)
-					shot.Pos = CENTER_BONE.WorldPos + parent.Pos * 640
-					shot.Velocity = parent.Pos * parent.Rot * -2
-					shot.LivingLimit = 120
+					shot.Pos = CENTER_BONE.WorldPos + binder[0] * 640
+					shot.Velocity = binder[0] * binder[1] * -6
+					shot.LivingLimit = 110
 					shot()
-				parent.AddTask(shot_dia, 4, 8, 0)
-			parent.AddTask(rotate, 32, 20, 0)
-			parent()
+				WORLD.AddTask(shot_dia, 4, 8, 0)
+			WORLD.AddTask(rotate, 32, 20, 0)
 
 def world_task():
 	def shot_l(task):
@@ -40,7 +38,7 @@ def world_task():
 		for i in range(task.ExecutedCount):
 			shot = EntityShot(WORLD, "L", 0x4000D0)
 			shot.Pos = CENTER_BONE.WorldPos
-			shot.Velocity = vec * mat2 * 2.5
+			shot.Velocity = vec * mat2 * 8
 			shot()
 			
 			mat2 = mat2 * mat1

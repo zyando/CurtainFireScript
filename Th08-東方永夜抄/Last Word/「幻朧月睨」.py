@@ -11,38 +11,39 @@ def world_task():
 	def shot_m_task():
 		pos = randomvec() * 40
 		mat = Matrix3.RotationAxis(randomvec(), RAD * 180 * random())
-
+		
 		def shot_m(task):
 			for vec in veclist1:
 				vec = vec * mat
-
+				
 				shot = EntityShot(WORLD, "M", 0x0000A0)
 				shot.Pos = CENTER_BONE.WorldPos + vec * task.ExecutedCount * 20 + pos
 				shot.LivingLimit = 90
 				shot()
-
+				
 				def move(shot = shot, vec = vec):
-					newShot = EntityShot(WORLD, "M", 0xA00000)
+					newShot = EntityShotStraight(WORLD, "M", 0xA00000)
 					newShot.Pos = shot.Pos
-					newShot.Velocity = vec * 2.4
+					newShot.Velocity = vec * 4
+					newShot.LivingLimit = 200
 					newShot()
 				shot.AddTask(move, 0, 1, shot.LivingLimit)
 		WORLD.AddTask(shot_m, 2, 20, 30, True)
-
+		
 		def shot_bullet(prop, speed, limit, respaen_frame = 60):
 			mat = Matrix3.RotationAxis(randomvec(), RAD * 180 * random())
 
 			for vec in veclist2:
 				vec = vec * mat
 
-				shot = EntityShot(WORLD, *prop)
+				shot = EntityShotStraight(WORLD, *prop)
 				shot.Pos = CENTER_BONE.WorldPos
 				shot.Velocity = vec * speed
 				shot.LivingLimit = limit
 				shot()
 
 				def respawn(pos = shot.Pos, vec = vec):
-					shot = EntityShot(WORLD, *prop)
+					shot = EntityShotStraight(WORLD, *prop)
 					shot.Pos = pos + vec * speed * respaen_frame
 					shot.Velocity = vec * speed
 					shot.LivingLimit = limit

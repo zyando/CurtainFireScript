@@ -1,65 +1,54 @@
 # -*- coding: utf-8 -*-
 
-interval = 4
-
-veclist = objvertices("ico.obj", 0)
-
-angleList = [RAD, -RAD]
-axisList = [Vector3.UnitX, Vector3.UnitZ]
-
-def world_task(axis, angle, range, should_shot_scale):
-	for vec in veclist:
-		if (vec ^ axis).Length() < 0.01: continue
+def world_task(vec, axis, angle1, angle2, range, should_shot_scale):
+	root = EntityShot(WORLD, "BONE", 0)
+	root.GetRecordedRot = lambda e: e.Rot
+	root.Pos = CENTER_BONE.WorldPos
+	root()
+	
+	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, root)
+	parent.GetRecordedRot = lambda e: e.Rot
+	parent.Pos = vec * range
+	parent.Rot = Matrix3.LookAt(vec, randomvec())
+	parent()
+	
+	rot1 = Quaternion.RotationAxis(axis, angle1)
+	rot2 = Quaternion.RotationAxis(axis, angle2)
+	
+	def shot_dia(task):
+		root.Rot *= rot1
+		parent.Rot *= rot2
 		
-		rotateAngle = 4
-		rotateQuat = Quaternion.RotationAxis(vec ^ (vec ^ axis), angle * rotateAngle)
+		shot = EntityShot(WORLD, "DIA", 0xA0A0A0)
+		shot.Pos = parent.WorldPos
+		shot.Velocity = -Vector3.UnitZ * parent.WorldMat * 2
+		shot.LivingLimit = 400
+		shot()
 		
-		root = EntityShot(WORLD, "BONE", 0xFFFFFF)
-		root.Recording = Recording.LocalMat
-		root.Pos = CENTER_BONE.WorldPos
-		root.Rot =  rotateQuat ^ (90 / rotateAngle)
-		
-		def rotate_root(root = root, rotateQuat = rotateQuat): root.Rot *= rotateQuat
-		root.AddTask(rotate_root, interval, 0, 0)
-		root()
-		
-		parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, 4, root)
-		parent.Recording = Recording.LocalMat
-		parent.Pos = vec * range
-		
-		parent.Rot = Quaternion.RotationAxis(Vector3.UnitZ ^ vec, math.acos(vec.z))
-		
-		rotateQuat = rotateQuat ^ 2
-		
-		def shot_dia(task, parent = parent, rotateQuat = rotateQuat):
-			parent.Rot *= rotateQuat
+		if task.ExecutedCount % 2 == 0:
+			def pause(): shot.Velocity *= 0
+			shot.AddTask(pause, 0, 1, 120)
 			
-			shot = EntityShot(WORLD, "DIA", 0xFFA0FF)
-			shot.Pos = parent.WorldPos
-			shot.Velocity = Vector3.UnitZ * parent.WorldMat * -2.4
-			shot()
+			def turn(): shot.Velocity = shot.LookAtVec * (rot2 ^ 8) * -8
+			shot.AddTask(turn, 0, 1, 180)
 			
-			if task.ExecutedCount % 2 == 0:
-				def reverse(shot = shot, parent = parent):
-					shot.Velocity *= -10
-				shot.AddTask(reverse, 0, 1, 110)
-		parent.AddTask(shot_dia, interval, int(300 / interval), 0, True)
+	root.AddTask(shot_dia, 2, 400, 0, True)
+	
+	if should_shot_scale:
+		poslist = [Vector3(20, 0, 0), Vector3.Zero, Vector3(-20, 0, 0)]
 		
-		if should_shot_scale:
-			def shot_scale(task, root = root, parent = parent, mat = Matrix3.RotationAxis(Vector3.UnitY, RAD * 90)):
-				target = Vector3(0, 0, 1024)
-				sidevec = +(target - root.WorldPos) * mat
-				targetPosList = [target - sidevec * 20, target, target + sidevec * 20]
-				
-				for targetPos in targetPosList:
-					shot = EntityShot(WORLD, "SCALE", 0xA00000 if task.ExecutedCount % 2 == 0 else 0xA000A0)
-					shot.Velocity = +(targetPos - parent.WorldPos) * 20
-					shot.Upward = Vector3.UnitY * parent.WorldMat
-					shot.Pos = parent.WorldPos
-					shot()
-			parent.AddTask(shot_scale, interval, int(80 / interval), 220, True)
-		parent()
-WORLD.AddTask(lambda: world_task(Vector3.UnitX, RAD, 512, False), 0, 1, 0)
-WORLD.AddTask(lambda: world_task(Vector3.UnitX, -RAD, 512, False), 0, 1, 0)
-WORLD.AddTask(lambda: world_task(Vector3.UnitZ, RAD, 512, True), 0, 1, 0)
-WORLD.AddTask(lambda: world_task(Vector3.UnitZ, -RAD, 512, True), 0, 1, 0)
+		def shot_scale(task):
+			for pos in poslist:
+				shot = EntityShotStraight(WORLD, "SCALE", 0xA00000 if task.ExecutedCount % 2 == 0 else 0xA000A0)
+				shot.Pos = parent.WorldPos
+				shot.Velocity = +(vec3(vec4(pos) * TARGET_BONE.WorldMat) - shot.Pos) * 12
+				shot.LivingLimit = 80
+				shot()
+		root.AddTask(shot_scale, 2, 50, 240, True)
+
+for vec in objvertices("ico.obj", 0):
+	for axis in Vector3.UnitX, Vector3.UnitZ:
+		if vec * axis > 0.95: continue
+		
+		for i in 1, -1:
+			world_task(vec, vec ^ (vec ^ axis) * i, RAD * 1, RAD * 4, 128, axis.z == i)

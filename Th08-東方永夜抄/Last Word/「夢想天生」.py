@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from random import seed, random, randint, uniform
-
-seed(890106)
 
 veclist = []
 num_way = 8
@@ -14,19 +11,18 @@ for i in range(num_way):
 
 def world_task(axis, r):
 	root = EntityShot(WORLD, "BONE", 0xFFFFFF)
-	root.Recording = Recording.LocalMat
+	root.GetRecordedRot = lambda e: e.Rot
 	root.Pos = CENTER_BONE.WorldPos
 	root.Rot = Quaternion.RotationAxis(Vector3.UnitY ^ axis, math.acos(Vector3.UnitY * axis))
 	
-	def follow(rotate = Quaternion.RotationAxis(Vector3.UnitY, RAD * 6)):
+	def follow(rotate = Quaternion.RotationAxis(Vector3.UnitY, RAD * 8)):
 		root.Rot = rotate * root.Rot
 	root.AddTask(follow, 0, 470, 0)
 	root()
 	
 	def create_shot_m(vec):
-		shot = EntityShot(WORLD, "M", 0xFFFFFF, root)
+		shot = EntityShot(WORLD, "M_ICO", 0xFFFFFF, root)
 		shot.Pos = vec * r
-		shot.Recording = Recording.LocalMat
 		shot()
 		return shot
 	shotlist = [create_shot_m(v) for v in veclist]
@@ -43,19 +39,18 @@ def world_task(axis, r):
 			vec = +(parentShot.WorldPos - root.WorldPos) * mat
 			shot_amulet(parentShot.WorldPos, vec, upward)
 		root.AddTask(shot_task_func2, 1 if flag else randint(3, 6), len(shotStack), 0)
-		task.Interval -= 10
+		task.ExecutingInterval -= 10
 	root.AddTask(shot_task_func1, 90, 4, 10, True)
-world_task(+Vector3(1, 1, -0.5), 30.0)
-world_task(+Vector3(1, -1, 0.5), 40.0)
+world_task(+Vector3(1, 1, -0.5), 100.0)
+world_task(+Vector3(1, -1, 0.5), 140.0)
 
 def shot_amulet(pos, vec, upward):
 	def shot_func1(original):
 		shot = EntityShot(WORLD, "AMULET", 0xFF00FF)
 		shot.Pos = original.Pos
-		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 8.0
+		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 24.0
 		shot.Upward = original.Upward
 		shot.LivingLimit = 100
-		shot.DiedDecision = lambda e: e.LivingLimit != 0 and  e.FrameCount > e.LivingLimit
 		
 		shot()
 	
@@ -90,9 +85,9 @@ def shot_amulet(pos, vec, upward):
 	for j in range(24):
 		shot = EntityShot(WORLD, "AMULET", 0xFFFFFF)
 		shot.Pos = pos
-		shot.Velocity = vec * (0.5 * j + 2)
+		shot.Velocity = vec * (1 * j + 4)
 		shot.Upward = upward
 		shot.AddTask(lambda s = shot: shot_func4(s) , 0, 1, 30)
-		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
+		shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
 		shot.LivingLimit = 30
 		shot()

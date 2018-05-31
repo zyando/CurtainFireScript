@@ -12,7 +12,7 @@ def shot_func(pos, vec, way, level):
 	laser.Pos = pos
 	laser.LookAtVec = vec
 	
-	morph = laser.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+	morph = laser.CreateVertexMorph(0, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
 	laser.AddMorphKeyFrame(morph, 1, 0)
 	laser.AddMorphKeyFrame(morph, 1, 29)
 	laser.AddMorphKeyFrame(morph, 0, 30)

@@ -5,7 +5,7 @@ interval = 5
 
 target = Vector3(0, 0, 80)
 
-veclist = objvertices("ico.obj", 0)
+veclist = objvertices("ico.obj", 1)
 
 laser_veclist = []
 
@@ -27,24 +27,24 @@ def world_task():
 		vec = vec * rot
 		
 		for i in range(2):
-			shot = EntityShot(WORLD, "LASER", 0xA00000, Vector3(6, 6, 4000))
-			shot.Recording = Recording.LocalMat
+			shot = EntityShot(WORLD, "LASER_LINE", 0xA00000, Vector3(6, 6, 4000))
+			shot.GetRecordedRot = lambda e: e.Rot
 			shot.Rot = Matrix3.LookAt(vec, front)
 			shot.Pos = CENTER_BONE.WorldPos + vec * 80
 			
 			def add_keyframe(shot = shot):
-				shot.AddBoneKeyframe()
+				shot.AddRootBoneKeyFrame()
 			shot.AddTask(add_keyframe, 0, 1, 39)
 			
 			def rotate(shot = shot, shotrot = shotrot):
 				shot.Rot *= shotrot
 			shot.AddTask(rotate, 6, 2, 40)
 			
-			morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
-			shot.AddVmdMorph(morph, 0, 1)
-			shot.AddVmdMorph(morph, 29, 1)
-			shot.AddVmdMorph(morph, 30, 0)
-			shot.AddVmdMorph(morph, 120, 0)
+			morph = shot.CreateVertexMorph(0, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+			shot.AddMorphKeyFrame(morph, 1, 0)
+			shot.AddMorphKeyFrame(morph, 1, 20)
+			shot.AddMorphKeyFrame(morph, 0, 30)
+			shot.AddMorphKeyFrame(morph, 0, 120)
 			shot()
 			
 			shotrot = ~shotrot
@@ -53,15 +53,16 @@ def world_task():
 				def shot_task(task, r1, r2, axis, front, shot, numshot = 30):
 					root = Entity(WORLD)
 					root.Pos = shot.Pos + front * (r1 * (-1 + task.ExecutedCount * 2))
+					root()
 					
 					def rotate(r = Quaternion.RotationAxis(axis, RAD * (180 / numshot))):
 						root.Rot *= r
-					root.AddTask(rotate, 1, numshot, 0)
-					root()
+					WORLD.AddTask(rotate, 1, numshot, 0)
 					
 					parent = Entity(WORLD, root)
 					parent.Pos = front * -r2
 					parent.Rot = Quaternion.RotationAxis(axis, RAD * 60)
+					parent()
 					
 					def shot_dia():
 						vec = front * parent.WorldMat
@@ -74,8 +75,7 @@ def world_task():
 							shot.Velocity = vec * 2.4
 						shot.AddTask(move, 0, 1, 100)
 						shot()
-					parent.AddTask(shot_dia, 1, numshot, 0)
-					parent()
+					WORLD.AddTask(shot_dia, 1, numshot, 0)
 				WORLD.AddTask(lambda t, a = axis, f = front, s = shot: shot_task(t, 80, 80, a, f, s), 30, 3, 40, True)
 				WORLD.AddTask(lambda t, a = axis, f = front, s = shot: shot_task(t, 85, 90, a, f, s), 30, 3, 70, True)
 				WORLD.AddTask(lambda t, a = axis, f = front, s = shot: shot_task(t, 75, 85, a, f, s), 30, 3, 100, True)
@@ -94,8 +94,8 @@ def world_task():
 					
 					shot = EntityShot(WORLD, "S", 0x0000A0)
 					shot.Pos = CENTER_BONE.WorldPos
-					shot.Velocity = shotvec * 2.0 * (1 + i * 0.2)
+					shot.Velocity = shotvec * 3.0 * (1 + i * 0.2) * 2
+					shot.LivingLimit = 100
 					shot()
-			WORLD.AddTask(shot_s, 15, 20, 30, True)
+			WORLD.AddTask(shot_s, 10, 30, 30, True)
 WORLD.AddTask(world_task, 0, 1, 0)
-

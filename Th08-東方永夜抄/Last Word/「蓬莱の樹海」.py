@@ -13,7 +13,7 @@ for i in range(way):
 	vec = vec * mat
 
 root = EntityShot(WORLD, "BONE", 0xFFFFFF)
-root.Recording = Recording.LocalMat
+root.GetRecordedRot = lambda e: e.Rot
 root.Pos = Vector3(0, 0, 160)
 
 rot1 = Quaternion.RotationAxis(Vector3.UnitZ, RAD * 5)
@@ -31,7 +31,7 @@ def died_decision1(entity):
 		shot = EntityShot(WORLD, "DIA", 0xFFFFFF)
 		shot.Pos = entity.Pos
 		shot.Velocity = -entity.Velocity
-		shot.DiedDecision = died_decision2
+		shot.ShouldRemove = died_decision2
 		shot()
 		return True
 	return False
@@ -42,7 +42,7 @@ for vec in veclist:
 	color = colorstack.pop()
 	
 	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xA0A0A0, root)
-	parent.Recording = Recording.LocalMat
+	parent.GetRecordedRot = lambda e: e.Rot
 	parent.Pos = CENTER_BONE.WorldPos + vec * 20
 	
 	def shot_dia(parent = parent, color = color):
@@ -52,27 +52,24 @@ for vec in veclist:
 			shot = EntityShot(WORLD, "DIA", color)
 			shot.Pos = parent.WorldPos
 			shot.Velocity = vec * 2.4
-			shot.DiedDecision  = died_decision1
+			shot.ShouldRemove  = died_decision1
 			shot()
 			
 			vec = -vec
 	parent.AddTask(shot_dia, 3, 120, 0)
 	parent()
-veclist = objvertices("ico.obj", 0)
 
-for vec in veclist:
+for vec in objvertices("ico.obj", 1):
 	for axis in [Vector3.UnitX, Vector3.UnitZ]:
-		parent = Entity(WORLD)
-		parent.Pos = vec
+		binder = [vec]
 		
-		def shot_s(task, parent = parent, mat = Matrix3.RotationAxis(axis, RAD * 10)):
-			parent.Pos = parent.Pos * mat
+		def shot_s(task, binder = binder, mat = Matrix3.RotationAxis(axis, RAD * 10)):
+			binder[0] *= mat
 			
-			shot = EntityShot(WORLD, "S", colorlist[task.ExecutedCount % len(colorlist)])
+			shot = EntityShotStraight(WORLD, "S", colorlist[task.ExecutedCount % len(colorlist)])
 			shot.Pos = CENTER_BONE.WorldPos
-			shot.Velocity = parent.Pos * 3.4
+			shot.Velocity = binder[0] * 3.4
 			shot.LivingLimit = 160
 			shot()
-		parent.AddTask(shot_s, 10, 40, 0, True)
-		parent()
+		WORLD.AddTask(shot_s, 10, 40, 0, True)
 		

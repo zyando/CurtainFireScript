@@ -29,7 +29,7 @@ def world_task_func1():
 		for vec in veclist2:
 			shot = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(1, 1, 4000))
 
-			morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+			morph = shot.CreateVertexMorph(0, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
 			shot.AddMorphKeyFrame(morph, 1, 0)
 			shot.AddMorphKeyFrame(morph, 1, 59)
 			shot.AddMorphKeyFrame(morph, 0, 60)
@@ -57,7 +57,7 @@ def world_task_func3():
 
 			shot = EntityShot(WORLD, "LASER_LINE", 0xA00000, Vector3(1, 1, 4000))
 
-			morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
+			morph = shot.CreateVertexMorph(0, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
 			shot.AddMorphKeyFrame(morph, 1, 0)
 			shot.AddMorphKeyFrame(morph, 1, 59)
 			shot.AddMorphKeyFrame(morph, 0, 60)
@@ -70,7 +70,7 @@ def world_task_func3():
 			shot.LivingLimit = 120
 			shot()
 	WORLD.AddTask(shot_laser, 2, wayHoriz, 0)
-WORLD.AddTask(world_task_func3, 200, 2, 40)
+WORLD.AddTask(world_task_func3, 200, 3, 40)
 
 veclist3 = [+Vector3(-1, 1, 1), +Vector3(1, 1, -1), +Vector3(1, -1, 1), +Vector3(-1, -1, -1)]
 
@@ -103,4 +103,4 @@ for vec in veclist3:
 			shot.Pos = parentShot2.WorldPos
 			shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 1.0
 			shot()
-		parentShot1.AddTask(shot_butterfly, 10, 30, 0)
+		parentShot1.AddTask(shot_butterfly, 10, 60, 0)
