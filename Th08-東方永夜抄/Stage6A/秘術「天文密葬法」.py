@@ -4,6 +4,7 @@ WORLD_REIMU_BOMB = CreateWorld(u"霊符「夢想妙珠」")
 
 veclist = objvertices("ico.obj", 2)
 octree = OctantNode(AABoundingBox(Vector3(1, 1, 1) * -4000, Vector3(1, 1, 1) * 4000), 128)
+octree_keeping = OctantNode(AABoundingBox(Vector3(1, 1, 1) * -4000, Vector3(1, 1, 1) * 4000), 128)
 
 class EntityMagicCircle(EntityShot):
 	def __init__(self, world, shottype, color, scale):
@@ -26,7 +27,7 @@ class EntityMagicCircle(EntityShot):
 				particle.LivingLimit = 10
 				particle()
 	
-	def Hit(self):
+	def Hit(self, color):
 		if self.IsRemoved: return
 		
 		self.AddBoneKeyFrame(self.RootBone, self.Pos, self.Rot, CubicBezierCurve.Line, 0)
@@ -40,8 +41,6 @@ class EntityMagicCircle(EntityShot):
 			if self.IsRemoved: return
 			
 			self.AddBoneKeyFrame(self.RootBone, self.mgc_pos, self.Rot, CubicBezierCurve.Line, 0)
-			
-			color = (0x000040 if abs(self.Pos.x) < 50 else (0x400000 if self.Pos.x > 50 else 0x400040))
 			
 			for i in range(40 + WORLD.FrameCount / 100):
 				velocity = -self.mgc_vec * 0.5 + randomvec() * uniform(1, 2)
@@ -71,7 +70,7 @@ WORLD.AddTask(shot_dia, 5, 32, 0, True)
 def shot_mgc(vec, shot_range):
 	pos = HAND_BONE.WorldPos - Vector3.UnitZ * 1000 + vec * shot_range
 	
-	mgc = EntityMagicCircle(WORLD, "MAGIC_CIRCLE", 0x300010, 3)
+	mgc = EntityMagicCircle(WORLD, "MAGIC_CIRCLE", 0x200001, 3)
 	mgc.GetRecordedRot = lambda e: e.Rot
 	mgc.Rot = Matrix3.LookAt(vec, randomvec())
 	mgc.Pos = HAND_BONE.WorldPos
@@ -83,11 +82,11 @@ def shot_mgc(vec, shot_range):
 	def set_zero():
 		mgc.Velocity *= 0
 		octree.AddEntity(mgc)
+		octree_keeping.AddEntity(mgc)
 	mgc.AddTask(set_zero, 0, 1, 90)
 	
 	def on_remove(sender, e):
-		if not e.IsFinalize and REIMU_BOMB_FRAME2 < WORLD.FrameCount:
-			octree.RemoveEntity(mgc)
+		octree.RemoveEntity(mgc)
 	mgc.RemoveEvent += on_remove
 	
 	mgc()
@@ -100,7 +99,7 @@ mgc_poslist = [(v, r) for d, r in pos_and_range_list for v in [get_mgc_vec(v, r)
 
 WORLD.AddTask(lambda: [shot_mgc(*mgc_poslist.pop()) for i in range(7) if len(mgc_poslist) > 0], 0, len(mgc_poslist) / 7 + 1, 140)
 
-def shot_l(vec):
+def shot_l(vec, color):
 	shot = EntityShot(WORLD, "L", 0xFF00FF)
 	shot.Velocity = vec * 4.0
 	shot.Pos = HAND_BONE.WorldPos
@@ -111,7 +110,7 @@ def shot_l(vec):
 	def check_whether_collided():
 		for entity, time in octree.TimeToCollide(shot.Pos, shot.Velocity, 100):
 			if time <= time_to_turn:
-				shot.AddTask(lambda e = entity: e.Hit(), 0, 1, time)
+				shot.AddTask(lambda e = entity: e.Hit(color), 0, 1, time)
 	check_whether_collided()
 	
 	if time_to_turn < 5000:
@@ -122,10 +121,15 @@ def shot_l(vec):
 	
 	shot()
 
-def get_vecs(v = +Vector3(1, 0, -1.2)):
-	return +(TARGET_BONE.WorldPos - HAND_BONE.WorldPos), v * Matrix3.RotationAxis(Vector3.UnitZ, RAD * random() * 360)
+def bool_iter(bool_value = True):
+	while True:
+		yield bool_value
+		bool_value = not bool_value
 
-WORLD.AddTask(lambda: [shot_l(v) for v in get_vecs()], 120, 11, 400)
+def get_vecs(v = +Vector3(1, 0, -1.2), gen = bool_iter()):
+	return (+(TARGET_BONE.WorldPos - HAND_BONE.WorldPos), 0x400040), (v * Matrix3.RotationAxis(Vector3.UnitZ, RAD * random() * 360), 0x400000 if next(gen) else 0x000040)
+
+WORLD.AddTask(lambda: [shot_l(*v) for v in get_vecs()], 120, 11, 400)
 
 """マインドアミュレット"""
 
@@ -208,7 +212,7 @@ def shot_reimu_bomb(speed = 16, veclist = objvertices("ico.obj", 0)):
 		shot.Velocity = vec * REIMU_HAND_BONE.WorldMat * speed
 		
 		def homing(task, shot = shot):
-			entity = octree.Nearest(shot.Pos)
+			entity = octree_keeping.Nearest(shot.Pos)
 			pos = entity.Pos
 			
 			vec = +shot.Velocity

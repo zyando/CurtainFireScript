@@ -19,4 +19,4 @@ def shot_dia():
 			shot()
 		WORLD.AddTask(replace, 0, 1, shot.LivingLimit)
 		shot()
-WORLD.AddTask(shot_dia, 20, 15, 0)
+WORLD.AddTask(shot_dia, 20, 13, 0)

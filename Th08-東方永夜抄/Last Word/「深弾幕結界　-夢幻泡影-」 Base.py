@@ -13,9 +13,9 @@ def spell(
 	get_restart_frame
 	):
 	
-	start_frame = WORLD.FrameCount
+	start_frame = WORLD.FrameCount + wait_time
 	
-	total_num = num_shot * num_task
+	total_num = interval_task * num_task
 	total_num_inv = 1.0 / total_num
 	
 	distance_inv = 1.0 / distance
@@ -38,14 +38,14 @@ def spell(
 	circle.AddTask(go_out, 0, 1, wait_time + interval_task * num_task)
 	circle()
 	
-	def add_shot_task(task1):
-		def shot_amulet(task2):
-			count = ((task1.ExecutedCount - 1) * num_shot + task2.ExecutedCount - 1) * total_num_inv
+	def add_shot_task():
+		def shot_amulet():
+			count = (WORLD.FrameCount - start_frame) * total_num_inv
 			speed = get_speed1(count)
 			
 			shot = EntityShot(WORLD, *prop)
 			shot.Pos = circle.WorldPos
-			shot.Velocity = circle.WorldPos * distance_inv * get_vec_rot(count) * -speed
+			shot.Velocity = shot.Pos * distance_inv * get_vec_rot(count) * -speed
 			shot.Upward = axis
 			shot.LivingLimit = 1000
 			
@@ -57,12 +57,12 @@ def spell(
 				shot.Velocity = vec * get_speed2(count)
 			shot.AddTask(restart, 0, 1, int(get_restart_frame(count)))
 			shot()
-		WORLD.AddTask(shot_amulet, interval_shot, num_shot, 0, True)
-	WORLD.AddTask(add_shot_task, interval_task, num_task, wait_time, True)
+		WORLD.AddTask(shot_amulet, interval_shot, num_shot, 0)
+	WORLD.AddTask(add_shot_task, interval_task, num_task, wait_time)
 	
 	def rotate(rotate_pos = Quaternion.RotationAxis(axis, interval_pos)):
 		parent.Rot = parent.Rot * rotate_pos
-	WORLD.AddTask(rotate, interval_shot, 1200, 1)
+	WORLD.AddTask(rotate, 0, 1200, 1)
 	
 	def shot_amulet_outside():
 		shot = EntityShot(WORLD, *prop)
@@ -71,4 +71,4 @@ def spell(
 		shot.Upward = axis
 		shot.LivingLimit = 1000
 		shot()
-	circle.AddTask(shot_amulet_outside, 1, int(num_task * interval_task * 0.8), wait_time)
+	circle.AddTask(shot_amulet_outside, 0, int(num_task * interval_task * 0.8), wait_time)

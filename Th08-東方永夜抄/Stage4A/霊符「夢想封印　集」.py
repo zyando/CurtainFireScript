@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from random import random, randint
 
 veclist = objvertices("ico.obj", 1)
 

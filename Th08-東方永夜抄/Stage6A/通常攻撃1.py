@@ -24,7 +24,7 @@ def task(task, colors_tuple = ((0x400000, 0xA00000), (0x000040, 0x0000A0))):
 		shot.AddTask(lambda: shot.AddRootBoneKeyFrame(), 0, 2, 39)
 
 		def replace(old_shot = shot):
-			old_shot.OnDeath()
+			old_shot.Remove()
 
 			shot = EntityShot(WORLD, "DIA", color2)
 			shot.Pos = old_shot.Pos

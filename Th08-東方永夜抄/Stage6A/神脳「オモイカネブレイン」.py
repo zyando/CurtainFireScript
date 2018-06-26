@@ -56,7 +56,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 			laser.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 			laser.LivingLimit = time_to_stop + wait_time - 30
 
-			morph = laser.CreateVertexMorph(lambda v: Vector3(v.x * -0.99, v.y * -0.99, 0))
+			morph = laser.CreateVertexMorph(0, lambda v: Vector3(v.x * -0.99, v.y * -0.99, 0))
 			laser.AddMorphKeyFrame(morph, 1, 0)
 			laser.AddMorphKeyFrame(morph, 1, 20)
 			laser.AddMorphKeyFrame(morph, 0, 50)

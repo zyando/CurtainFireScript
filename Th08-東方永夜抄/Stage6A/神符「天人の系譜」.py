@@ -35,7 +35,7 @@ def task():
 			laser.Rot = Matrix3.LookAt(+(vec * mat), Vector3.UnitY)
 			laser.LivingLimit = 100
 
-			morph = laser.CreateVertexMorph(lambda v: Vector3(v.x * -0.95, v.y * -0.95, 0))
+			morph = laser.CreateVertexMorph(0, lambda v: Vector3(v.x * -0.95, v.y * -0.95, 0))
 			laser.AddMorphKeyFrame(morph, 1, 0)
 			laser.AddMorphKeyFrame(morph, 0, 5)
 			laser.AddMorphKeyFrame(morph, 0, 95)

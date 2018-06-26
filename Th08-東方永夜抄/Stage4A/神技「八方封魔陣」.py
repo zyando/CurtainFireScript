@@ -1,30 +1,29 @@
 # -*- coding: utf-8 -*-
 
-def create_veclist(path):
-	return objvertices(path[0] + ".obj", path[1])
-pathlist =  [("ico", 0), ("ico", 2), ("ico_y", 0)]
-vectors_dict = {path[0] + str(path[1]) : create_veclist(path) for path in pathlist}
+veclist_ico0 = objvertices("ico.obj", 0)
+veclist_ico2 = objvertices("ico.obj", 2)
+veclist_ico_y = objvertices("ico.obj", 0)
 
 def shot_omnidirectinal():
-	for vec in vectors_dict["ico0"]:
+	for vec in veclist_ico0:
 		shot = EntityShot(WORLD, "AMULET", 0xA00000)
 		shot.Velocity = vec * 6
 		shot.Pos = +shot.Velocity * 20
-		shot.LivingLimit = 130
+		shot.LivingLimit = 270
 
 		mat = Matrix3(1, 0, 0, 0, 0, 1, 0, 1, 0) * Matrix3.LookAt(+vec, Vector3.UnitY)
 
 		def divide(src = shot, src_vec = vec, mat = mat):
-			for vec in vectors_dict["ico_y0"]:
+			for vec in veclist_ico_y:
 				vec = vec * mat
 				dot = vec * src_vec
 
-				if -0.99 < dot and dot < 0.99:
-					shot = EntityShot(WORLD, "AMULET", 0xA00000 if 0 < dot else 0xFFD700)
+				if -0.99 < dot < 0.99:
+					shot = EntityShotStraight(WORLD, "AMULET", 0xA00000 if 0 < dot else 0xFFD700)
 					shot.Pos = src.Pos
-					shot.Velocity = vec * 6
+					shot.Velocity = +vec * 6
 					shot.Upward = src_vec
-					shot.LivingLimit = 80
+					shot.LivingLimit = 240
 					shot()
 		shot.AddTask(divide, 0, 1, 50)
 		shot()
@@ -34,7 +33,7 @@ def shot_every_directinal():
 	def shot_s(task):
 		mat = Matrix3.RotationAxis(randomvec(), RAD * random() * 20)
 
-		for vec in vectors_dict["ico2"]:
+		for vec in veclist_ico2:
 			vec  = vec * mat
 			shot = EntityShot(WORLD, "S", 0xFFFFFF)
 			shot.Velocity = vec * (12 - task.ExecutedCount * 0.6)

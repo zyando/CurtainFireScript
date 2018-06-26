@@ -26,12 +26,12 @@ def shot_homing_amulet(speed = 5):
 				impact_effect(shot.Pos)
 		shot.AddTask(homing, 0, 0, 0)
 		shot()
-WORLD.AddTask(shot_homing_amulet, 0, 0, REIMU_BOMB_FRAME)
+WORLD.AddTask(shot_homing_amulet, 0, 1, REIMU_BOMB_FRAME)
 
 def impact_effect(pos):
 	for i in range(512):
-		shot = EntityShot(WORLD, "DIA", 0xFF0000, Vector3(1, 1, 12))
+		shot = EntityShot(WORLD, "DIA", 0xFFFFFF, Vector3(1, 1, 12))
 		shot.Pos = pos
 		shot.Velocity = randomvec() * uniform(60, 100)
-		shot.LivingLimit = randint(5, 10)
+		shot.LivingLimit = 45
 		shot()
