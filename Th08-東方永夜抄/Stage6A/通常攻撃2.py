@@ -14,7 +14,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, init_angle, angle_i
 		shot = EntityShot(WORLD, shottype, color)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = binder[0] * speed
-		shot.LivingLimit = livinglimit
+		shot.LivingLimit = livinglimit if livinglimit + WORLD.FrameCount < WORLD.EndFrame else WORLD.EndFrame - WORLD.FrameCount - randint(0, 15)
 		shot()
 
 		binder[0] *= rot
@@ -25,7 +25,7 @@ mat = Matrix3.RotationAxis(randomvec(), RAD * 30)
 for vec in veclist0:
 	for axis in Vector3.UnitX, Vector3.UnitZ:
 		for i in range(4):
-			WORLD.AddTask(task_to_shoot_while_rotating(vec * mat, axis * mat, "DIA", 0xA00000, RAD * i * 20, RAD * 4, 1 + i * 0.5, (4 - i) * 200), 2, 210, 60)
+			WORLD.AddTask(task_to_shoot_while_rotating(vec * mat, axis * mat, "DIA", 0xA00000, RAD * i * 20, RAD * 4, 1 + i * 0.5, (4 - i) * 200), 2, 190, 60)
 
 def task_to_shoot_mgc():
 	mat = Matrix3.RotationAxis(randomvec(), RAD * random() * 90)

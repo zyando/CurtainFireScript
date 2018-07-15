@@ -4,18 +4,22 @@ veclist_ico0 = objvertices("ico.obj", 0)
 veclist_ico2 = objvertices("ico.obj", 2)
 veclist_ico_y = objvertices("ico.obj", 0)
 
-def shot_omnidirectinal():
+def shot_omnidirectinal(binder = [0, 0]):
+	mat = Matrix3.RotationY(RAD * sin(binder[1] * RAD) * 45)
+	if binder[0] > 20: binder[1] += 2
+	binder[0] += 1
+	
 	for vec in veclist_ico0:
 		shot = EntityShot(WORLD, "AMULET", 0xA00000)
-		shot.Velocity = vec * 6
+		shot.Velocity = vec * mat * 6
 		shot.Pos = +shot.Velocity * 20
 		shot.LivingLimit = 270
 
-		mat = Matrix3(1, 0, 0, 0, 0, 1, 0, 1, 0) * Matrix3.LookAt(+vec, Vector3.UnitY)
+		trans_mat = Matrix3(1, 0, 0, 0, 0, 1, 0, 1, 0) * Matrix3.LookAt(+vec, Vector3.UnitY)
 
-		def divide(src = shot, src_vec = vec, mat = mat):
+		def divide(src = shot, src_vec = +shot.Velocity, trans_mat = trans_mat):
 			for vec in veclist_ico_y:
-				vec = vec * mat
+				vec = vec * trans_mat
 				dot = vec * src_vec
 
 				if -0.99 < dot < 0.99:

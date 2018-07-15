@@ -60,7 +60,9 @@ def shot_dia():
 		shot.LivingLimit = 400
 
 		shot()
-WORLD.AddTask(shot_dia, 8, 100, 2)
+		
+		VANISHABLE_SHOTLIST.append(shot)
+WORLD.AddTask(shot_dia, 8, 110, 2)
 
 veclist2 = objvertices("ico.obj", 2)
 
@@ -74,4 +76,5 @@ def shot_l():
 		shot.LivingLimit = 800
 
 		shot()
-WORLD.AddTask(shot_l, 30, 28, 2)
+		VANISHABLE_SHOTLIST.append(shot)
+WORLD.AddTask(shot_l, 30, 32, 2)

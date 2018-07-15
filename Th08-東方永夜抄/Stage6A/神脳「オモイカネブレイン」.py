@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+WORLD_SUB = CreateWorld(PRESET_FILENAME + "_Sub")
+
 way_of_laser = 60
 laser_veclist = []
 
@@ -72,17 +74,17 @@ def shoot_dia_while_rotating(vec, axis):
 
 	axis = vec ^ (vec ^ axis)
 
-	def shot_dia(task, vec_ = [vec], rot = Quaternion.RotationAxis(axis, RAD * 2)):
-		if task.ExecutedCount % 6 < 4:
+	def shot_dia(task, vec_ = [vec], rot = Quaternion.RotationAxis(axis, RAD * 0.6)):
+		if task.ExecutedCount % 8 < 4:
 			for i in range(2):
-				shot = EntityShotStraight(WORLD, "DIA", 0x0000A0)
+				shot = EntityShotStraight(WORLD_SUB, "DIA", 0x0000A0)
 				shot.Pos = Vector3(0, 0, 0)
 				shot.Velocity = vec_[0] * (i + 1) * 2.0
-				shot.LivingLimit = 200 * (i + 1)
+				shot.LivingLimit = 240 * (2 - i)
 				shot()
 		vec_[0] *= rot * rot
-	WORLD.AddTask(shot_dia, 3, 320, 60, True)
+	WORLD.AddTask(shot_dia, 1, 960, 60, True)
 
-for axis in objvertices("ico.obj", 1):
-	for vec in Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ:
-		shoot_dia_while_rotating(axis, vec)
+for vec in objvertices("ico.obj", 1):
+	for axis in Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ:
+		shoot_dia_while_rotating(vec, -axis)
