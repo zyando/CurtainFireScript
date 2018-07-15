@@ -61,7 +61,7 @@ def shot_butterfly(vec, color, homing):
 				shot.LivingLimit = 45
 				
 				def divide(org = shot):
-					velocity = +((TARGET_BONE.WorldPos - shot.Pos) if homing else (org.Velocity * axis_bone.WorldRot))
+					velocity = +((TARGET_BONE.WorldPos - org.Pos) if False else (org.Velocity * axis_bone.WorldRot))
 					
 					for i in range(4):
 						shot = EntityShot(WORLD, "BUTTERFLY", color)
