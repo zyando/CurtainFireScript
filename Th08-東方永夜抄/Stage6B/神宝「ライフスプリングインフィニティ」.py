@@ -39,7 +39,7 @@ def task():
 		mgc.AddMorphKeyFrame(morph, 0, 15)
 		mgc()
 	
-	def shot_laser(face, veclist = [Vector3.UnitY * Matrix3.RotationZ(math.pi * 2 / 16 * i) for i in range(16)]):
+	def shot_laser(face, veclist = [Vector3.UnitY * Matrix3.RotationZ(math.pi * 2 / 16 * i) for i in range(32)]):
 		center = (face[0] + face[1] + face[2]) * (1.0 / 3)
 		
 		for vtx in face:
@@ -73,4 +73,4 @@ def task():
 				shot()
 		WORLD.AddTask(shot_star, 0, 1, 30)
 	WORLD.AddTask(lambda: [shot_laser(face) for face in facelist], 0, 1, 30)
-WORLD.AddTask(task, 150, 2, 0)
+WORLD.AddTask(task, 150, 4, 0)
