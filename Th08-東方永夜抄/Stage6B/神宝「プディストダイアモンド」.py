@@ -50,4 +50,4 @@ def shot_star():
 		shot.Velocity = Vector3.UnitZ * Matrix3.RotationAxis(Vector3.UnitZ ^ randomvec(), RAD * random() * 60) * uniform(4, 8)
 		shot.LivingLimit = 450
 		shot()
-WORLD.AddTask(shot_star, 0, 400, 0)
+WORLD.AddTask(shot_star, 0, 400, 30)

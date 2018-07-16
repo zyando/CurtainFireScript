@@ -6,7 +6,7 @@ WORLD.FrameCount = 480
 
 def shot_randomvec(shottype, color, speed):
     shot = EntityShot(WORLD, shottype, color)
-    shot.Velocity = randomvec() * speed
+    shot.Velocity = randomvec() * speed * gauss(1, 0.3)
     shot.Upward = randomvec()
     shot.LivingLimit = shot_range / speed
     shot()

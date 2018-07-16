@@ -24,5 +24,15 @@ def shot_dia(vec, axis, color1, color2):
 			shot()
 		shot.AddTask(replace_shot, 0, 1, shot.LivingLimit)
 		shot()
-WORLD.AddTask(lambda: [shot_dia(randomvec(), choice(Vector3.Units), 0x000040, 0x0000A0) for i in range(2)], 0, 600, 0)
-WORLD.AddTask(lambda: [shot_dia(randomvec(), -choice(Vector3.Units), 0x400000, 0xA00000) for i in range(2)], 0, 600, 0)
+WORLD.AddTask(lambda: [shot_dia(randomvec(), choice(Vector3.Units), 0x000040, 0x0000A0) for i in range(3)], 0, 600, 0)
+WORLD.AddTask(lambda: [shot_dia(randomvec(), -choice(Vector3.Units), 0x400000, 0xA00000) for i in range(3)], 0, 600, 0)
+
+def shot_rice():
+	vec_to_target = +(TARGET_BONE.WorldPos - CENTER_BONE.WorldPos + randomvec() * gauss(0, 100))
+	
+	for i in range(10):
+		shot = EntityShot(WORLD, "RICE_M", 0xA00000)
+		shot.Velocity = vec_to_target * (4 + i * 1)
+		shot.LivingLimit = 200
+		shot()
+WORLD.AddTask(shot_rice, 60, 20, 0)

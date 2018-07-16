@@ -7,7 +7,7 @@ ico0_veclist = objvertices("ico.obj", 0)
 ico4_veclist = objvertices("ico.obj", 4)
 
 def task():
-	vec_to_target = TARGET_BONE.WorldPos - CENTER_BONE.WorldPos
+	vec_to_target = TARGET_BONE.WorldPos - CENTER_BONE.WorldPos + randomvec() * gauss(0, 200)
 	
 	for vec in ico4_veclist:
 		if vec * +vec_to_target > 0.7: continue

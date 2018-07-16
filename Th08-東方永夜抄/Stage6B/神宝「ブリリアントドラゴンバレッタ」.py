@@ -42,6 +42,5 @@ def s_task():
 
 for vec, axis in vec_axis_list:
 	for i in 1, -1:
-		WORLD.AddTask(lambda v = vec, a = axis * i: laser_task(v, a), 100, 3, 0)
-
-WORLD.AddTask(s_task, 100, 3, 0)
+		WORLD.AddTask(lambda v = vec, a = axis * i: laser_task(v, a), 100, 6, 0)
+WORLD.AddTask(s_task, 100, 6, 0)

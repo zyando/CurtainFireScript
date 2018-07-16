@@ -5,7 +5,7 @@ veclist = objvertices("ico.obj", 3)
 def phase0():
     def shot_dia():
         for vec in veclist:
-            shot = EntityShot(WORLD, "DIA", 0x0000A0)
+            shot = EntityShot(WORLD, "DIA", 0x4040A0)
             shot.Velocity = vec * 10
             shot.LivingLimit = 150
 
