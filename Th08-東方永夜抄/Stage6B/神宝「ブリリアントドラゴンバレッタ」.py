@@ -30,7 +30,7 @@ def laser_task(vec, axis):
 
 def s_task():
 	def shot_s():
-		shot = EntityShot(WORLD, "S", COLORS[randint(0, len(COLORS) - 1)])
+		shot = EntityShot(WORLD, "S", COLORS[randint(0, len(COLORS))])
 		shot.Pos = randomvec() * 200 * gauss()
 		shot.Velocity = Vector3.UnitZ * Quaternion.RotationAxis(randomvec(), RAD * gauss(20)) * 5
 		shot.LivingLimit = 300
@@ -38,9 +38,9 @@ def s_task():
 		def acc(a = Vector3(0, 0, -shot.Velocity.Length() / 30 * 2)): shot.Velocity += a
 		shot.AddTask(acc, 0, 30, 0)
 		shot()
-	WORLD.AddTask(lambda: [shot_s() for i in range(24)], 0, 60, 0)
+	WORLD.AddTask(lambda: [shot_s() for i in range(16)], 0, 60, 0)
 
 for vec, axis in vec_axis_list:
 	for i in 1, -1:
-		WORLD.AddTask(lambda v = vec, a = axis * i: laser_task(v, a), 100, 6, 0)
-WORLD.AddTask(s_task, 100, 6, 0)
+		WORLD.AddTask(lambda v = vec, a = axis * i: laser_task(v, a), 100, 3, 0)
+WORLD.AddTask(s_task, 100, 3, 0)
