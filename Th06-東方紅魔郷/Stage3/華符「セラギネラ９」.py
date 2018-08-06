@@ -3,7 +3,7 @@
 veclist0 = objvertices("ico.obj", 0)
 veclist2 = objvertices("ico.obj", 2)
 
-def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, speed, livinglimit):
+def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, speed, lifespan):
 	if abs(vec * axis) > 0.995 > 0: return lambda: 0
 
 	binder = Entity(WORLD)
@@ -12,7 +12,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, spe
 	def shot_dia(rot = Matrix3.RotationAxis(vec ^ (vec ^ axis), angle_interval)):
 		shot = EntityShot(WORLD, shottype, color)
 		shot.Velocity = binder.vec * speed
-		shot.LivingLimit = livinglimit
+		shot.LifeSpan = lifespan
 
 		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 43, False)
 
@@ -42,6 +42,6 @@ def shot_dia():
 	for vec in veclist2:
 		shot = EntityShot(WORLD, "DIA", 0xA00000)
 		shot.Velocity = vec * 6
-		shot.LivingLimit = 140
+		shot.LifeSpan = 140
 		shot()
 WORLD.AddTask(shot_dia, 30, 10, 30)

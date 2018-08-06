@@ -13,7 +13,7 @@ def shot_omnidirectinal(binder = [0, 0]):
 		shot = EntityShot(WORLD, "AMULET", 0xA00000)
 		shot.Velocity = vec * mat * 6
 		shot.Pos = +shot.Velocity * 20
-		shot.LivingLimit = 270
+		shot.LifeSpan = 270
 
 		trans_mat = Matrix3(1, 0, 0, 0, 0, 1, 0, 1, 0) * Matrix3.LookAt(+vec, Vector3.UnitY)
 
@@ -27,7 +27,7 @@ def shot_omnidirectinal(binder = [0, 0]):
 					shot.Pos = src.Pos
 					shot.Velocity = +vec * 6
 					shot.Upward = src_vec
-					shot.LivingLimit = 240
+					shot.LifeSpan = 240
 					shot()
 		shot.AddTask(divide, 0, 1, 50)
 		shot()
@@ -43,7 +43,7 @@ def shot_every_directinal():
 			shot.Velocity = vec * (12 - task.ExecutedCount * 0.6)
 			shot.Pos = +shot.Velocity * 10
 			shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
-			shot.LivingLimit = 40
+			shot.LifeSpan = 40
 
 			def stop(shot = shot, vec = vec): shot.Velocity *= 0
 			shot.AddTask(stop, 0, 1, 30)
@@ -52,7 +52,7 @@ def shot_every_directinal():
 				shot = EntityShot(WORLD, "SCALE", 0xA00000)
 				shot.Pos = src.Pos
 				shot.LookAtVec = vec
-				shot.LivingLimit = 100
+				shot.LifeSpan = 100
 
 				def move(shot = shot): shot.Velocity = vec * 6
 				shot.AddTask(move, 0, 1, 20)

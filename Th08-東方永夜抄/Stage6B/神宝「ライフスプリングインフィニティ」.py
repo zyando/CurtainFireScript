@@ -16,13 +16,13 @@ def task():
 			shot = EntityShot(WORLD, "S", 0xA00000)
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * speed
-			shot.LivingLimit =  200
+			shot.LifeSpan =  200
 			shot()
 	
 	parent = EntityShot(WORLD, "BONE", 0)
 	parent.Pos = CENTER_BONE.WorldPos
 	parent.Velocity = +vec_to_target * 12
-	parent.LivingLimit = 75
+	parent.LifeSpan = 75
 	parent.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
 	
 	def stop(): parent.Velocity *= 0
@@ -31,7 +31,7 @@ def task():
 	
 	for vec in ico0_veclist:
 		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x200050, 10, parent)
-		mgc.LivingLimit = parent.LivingLimit
+		mgc.LifeSpan = parent.LifeSpan
 		mgc.LookAtVec = vec
 		
 		morph = mgc.CreateVertexMorph(0, lambda v: -v)
@@ -47,7 +47,7 @@ def task():
 				shot = EntityShot(WORLD, "LASER_LINE", 0xA000A0 if i > 0 else 0x00A0A0, Vector3(2, 2, 4000))
 				shot.Pos = parent.Pos + center * 120
 				shot.LookAtVec = +(vtx - center) * i
-				shot.LivingLimit = parent.LivingLimit
+				shot.LifeSpan = parent.LifeSpan
 				
 				morph = shot.CreateVertexMorph(0, lambda v: Vector3(-v.x * 0.9, -v.y * 0.9, 0))
 				shot.AddMorphKeyFrame(morph, 1, 0)
@@ -64,7 +64,7 @@ def task():
 				shot = EntityShot(WORLD, "STAR_S", 0xA00000)
 				shot.Pos = parent.Pos
 				shot.Velocity = vec * mat * 2
-				shot.LivingLimit = 400
+				shot.LifeSpan = 400
 				shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 45, False)
 				
 				def curve(shot = shot, rot = Matrix3.RotationAxis(center, RAD * 2)): shot.Velocity *= rot

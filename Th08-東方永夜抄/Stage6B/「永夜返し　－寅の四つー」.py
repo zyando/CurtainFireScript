@@ -7,7 +7,7 @@ def phase0():
         for vec in veclist:
             shot = EntityShot(WORLD, "DIA", 0x4040A0)
             shot.Velocity = vec * 10
-            shot.LivingLimit = 150
+            shot.LifeSpan = 150
 
             def pause(shot = shot): shot.Velocity *= 0
             shot.AddTask(pause, 0, 1, 15)
@@ -21,7 +21,7 @@ WORLD.AddTask(phase0, 80, 8, 0)
 def phase1(task):
     shot = EntityShot(WORLD, "L", 0xA00000)
     shot.Velocity = Vector3.UnitX * (task.ExecutedCount % 2 * 2 - 1) * 3
-    shot.LivingLimit = 300
+    shot.LifeSpan = 300
     shot()
 
     def turn():

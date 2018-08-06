@@ -22,7 +22,7 @@ def laser_task(vec, axis):
 		shot.Pos = binder[0] * 80 * gauss(1, 0.2)
 		shot.Velocity = binder[0] * Matrix3.RotationAxis(randomvec(), RAD * 20 * gauss()) * 16
 		shot.Upward = randomvec()
-		shot.LivingLimit = 120
+		shot.LifeSpan = 120
 		shot()
 		
 		binder[0] *= rot
@@ -33,7 +33,7 @@ def s_task():
 		shot = EntityShot(WORLD, "S", COLORS[randint(0, len(COLORS))])
 		shot.Pos = randomvec() * 200 * gauss()
 		shot.Velocity = Vector3.UnitZ * Quaternion.RotationAxis(randomvec(), RAD * gauss(20)) * 5
-		shot.LivingLimit = 300
+		shot.LifeSpan = 300
 		
 		def acc(a = Vector3(0, 0, -shot.Velocity.Length() / 30 * 2)): shot.Velocity += a
 		shot.AddTask(acc, 0, 30, 0)

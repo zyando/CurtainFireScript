@@ -2,11 +2,11 @@
 
 rose_poslist, linelist = objlines("rose_lowpolygon2.obj")
 
-def shot_rose(shot_factory, rose_rot, scale, blooming_frame, livinglimit):
+def shot_rose(shot_factory, rose_rot, scale, blooming_frame, lifespan):
 	for pos in rose_poslist:
 		shot = shot_factory()
 		shot.Velocity = pos * rose_rot * scale * (1.0 / blooming_frame)
-		shot.LivingLimit = livinglimit
+		shot.LifeSpan = lifespan
 		shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), blooming_frame)
 		
 		def stop(shot = shot): shot.Velocity *= 0
@@ -24,7 +24,7 @@ def shot_s(world, color, rotangle, way = 32):
 	for vec in [Vector3.UnitZ * Matrix3.RotationY(RAD * 360.0 / way * i * rotangle) for i in range(way)]:
 		shot = EntityShot(world, "S", color)
 		shot.Velocity = vec * mat * 1.6
-		shot.LivingLimit = 330
+		shot.LifeSpan = 330
 		shot()
 		shotlist.append(shot)
 	

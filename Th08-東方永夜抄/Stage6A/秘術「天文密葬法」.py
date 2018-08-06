@@ -24,7 +24,7 @@ class EntityMagicCircle(EntityShot):
 				particle = EntityShotStraight(WORLD, "DIA", 0x900070, Vector3(1, 1, 3))
 				particle.Pos = self.Pos
 				particle.Velocity = randomvec() * 12
-				particle.LivingLimit = 10
+				particle.LifeSpan = 10
 				particle()
 	
 	def Hit(self, color):
@@ -44,13 +44,13 @@ class EntityMagicCircle(EntityShot):
 			
 			for i in range(40 + WORLD.FrameCount / 100):
 				velocity = -self.mgc_vec * 0.5 + randomvec() * uniform(1, 2)
-				livinglimit = min((400 if velocity * self.mgc_vec < 0 else 100, REIMU_BOMB_FRAME2 + randint(30, 40) - WORLD.FrameCount, get_time_to_vanish(self.Pos, velocity)))
-				if livinglimit <= 0: continue
+				lifespan = min((400 if velocity * self.mgc_vec < 0 else 100, REIMU_BOMB_FRAME2 + randint(30, 40) - WORLD.FrameCount, get_time_to_vanish(self.Pos, velocity)))
+				if lifespan <= 0: continue
 				
 				shot = EntityShotStraight(WORLD, "DIA_BRIGHT", color)
 				shot.Pos = self.Pos
 				shot.Velocity = velocity
-				shot.LivingLimit = livinglimit
+				shot.LifeSpan = lifespan
 				shot()
 		self.AddTask(shot_dia, 0, 1, 20)
 
@@ -63,7 +63,7 @@ def shot_dia(task, max_idx = 20.0):
 		shot = EntityShotStraight(WORLD, "DIA_BRIGHT", 0x000040)
 		shot.Pos = HAND_BONE.WorldPos
 		shot.Velocity = (Vector3.UnitZ + (vec - Vector3.UnitZ) * t) * 12.0
-		shot.LivingLimit = 100
+		shot.LifeSpan = 100
 		shot()
 WORLD.AddTask(shot_dia, 5, 32, 0, True)
 
@@ -75,7 +75,7 @@ def shot_mgc(vec, shot_range):
 	mgc.Rot = Matrix3.LookAt(vec, randomvec())
 	mgc.Pos = HAND_BONE.WorldPos
 	mgc.Velocity = (pos - HAND_BONE.WorldPos) * (1.0 / 90)
-	mgc.LivingLimit = REIMU_BOMB_FRAME2 + randint(30, 40) - WORLD.FrameCount
+	mgc.LifeSpan = REIMU_BOMB_FRAME2 + randint(30, 40) - WORLD.FrameCount
 	mgc.mgc_pos = pos
 	mgc.mgc_vec = vec
 	
@@ -87,7 +87,7 @@ def shot_mgc(vec, shot_range):
 	
 	def on_remove(sender, e):
 		octree.RemoveEntity(mgc)
-	mgc.RemoveEvent += on_remove
+	mgc.RemovedEvent += on_remove
 	
 	mgc()
 pos_and_range_list = [(0.95, 800), (0.9, 760), (0.8, 720), (0.7, 680), (0.4, 640), (0.1, 620), (-0.1, 600)]
@@ -103,7 +103,7 @@ def shot_l(vec, color):
 	shot = EntityShot(WORLD, "L", 0xFF00FF)
 	shot.Velocity = vec * 4.0
 	shot.Pos = HAND_BONE.WorldPos
-	shot.LivingLimit = 320
+	shot.LifeSpan = 320
 
 	time_to_turn = int(600.0 / ((shot.Velocity * Matrix3(1, 1, 0)).Length() + 1e-6))
 	
@@ -153,13 +153,13 @@ def shot_red_amullet(mat = [Matrix3.Identity, Matrix3.RotationAxis(Vector3.UnitZ
 		shot.Velocity = vec * REIMU_HAND_BONE.WorldMat * 12.0
 		
 		shot.Upward = (vec ^ (vec ^ Vector3.UnitZ)) * REIMU_HAND_BONE.WorldMat
-		shot.LivingLimit = 100
+		shot.LifeSpan = 100
 		
 		entity, time = octree.MinTimeToCollide(shot.Pos, shot.Velocity, 40)
 		
 		if 3000 > time > 0:
 			WORLD.AddTask(lambda count = REIMU_SHOT_FLAG.Pos.x: [entity.SetDamage() for i in range(count)], 0, 1, time)
-			shot.LivingLimit = time
+			shot.LifeSpan = time
 		shot()
 WORLD.AddTask(shot_red_amullet, 3, 0, 0)
 
@@ -182,7 +182,7 @@ def shot_homing_amulet(speed = 12):
 		
 		def hit(sender, args, shot = shot, damage_func_binder = damage_func_binder):
 			damage_func_binder[0]()
-		shot.RemoveEvent += hit
+		shot.RemovedEvent += hit
 		
 		def homing(shot = shot, target_binder = target_binder, damage_func_binder = damage_func_binder):
 			if target_binder[0].IsRemoved:
@@ -196,7 +196,7 @@ def shot_homing_amulet(speed = 12):
 			alpha = (1 - vec * vec_to_target) * 0.4
 			
 			shot.Velocity = (vec + (vec_to_target - vec) * alpha) * speed
-			shot.LivingLimit = shot.FrameCount + int((pos - shot.Pos).Length() / speed)
+			shot.LifeSpan = shot.FrameCount + int((pos - shot.Pos).Length() / speed)
 		shot.AddTask(homing, 0, 0, 0)
 		shot()
 WORLD.AddTask(shot_homing_amulet, 3, 0, 0)
@@ -220,7 +220,7 @@ def shot_reimu_bomb(speed = 16, veclist = objvertices("ico.obj", 0)):
 			alpha = (1 - vec * vec_to_target) * min(0.4, max(task.ExecutedCount - 20, 0) * 0.4 * 0.05)
 			
 			shot.Velocity = +(vec + (vec_to_target - vec) * alpha) * speed
-			shot.LivingLimit = shot.FrameCount + int((pos - shot.Pos).Length() / speed)
+			shot.LifeSpan = shot.FrameCount + int((pos - shot.Pos).Length() / speed)
 		shot.AddTask(homing, 0, 0, 0, True)
 		shot()
 WORLD.AddTask(shot_reimu_bomb, 0, 1, REIMU_BOMB_FRAME1)

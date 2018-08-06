@@ -31,6 +31,6 @@ def shot_dia():
 		for vec in objvertices("ico.obj", 2):
 			shot = EntityShotStraight(WORLD, "DIA", 0xFF0000)
 			shot.Velocity = vec * mat * speed
-			shot.LivingLimit = 200
+			shot.LifeSpan = 200
 			shot()
 WORLD.AddTask(shot_dia, 10, 12, 0)

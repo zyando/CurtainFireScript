@@ -3,7 +3,7 @@
 veclist0 = objvertices("ico.obj", 0)
 veclist1 = objvertices("ico.obj", 1)
 
-def task_to_shoot_while_rotating(vec, axis, shottype, color, init_angle, angle_interval, speed, livinglimit):
+def task_to_shoot_while_rotating(vec, axis, shottype, color, init_angle, angle_interval, speed, lifespan):
 	if abs(vec * axis) > 0.995 > 0: return lambda: 0
 
 	axis = vec ^ (vec ^ axis)
@@ -14,7 +14,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, init_angle, angle_i
 		shot = EntityShot(WORLD, shottype, color)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = binder[0] * speed
-		shot.LivingLimit = livinglimit if livinglimit + WORLD.FrameCount < WORLD.EndFrame else WORLD.EndFrame - WORLD.FrameCount - randint(0, 15)
+		shot.LifeSpan = lifespan if lifespan + WORLD.FrameCount < WORLD.EndFrame else WORLD.EndFrame - WORLD.FrameCount - randint(0, 15)
 		shot()
 
 		binder[0] *= rot
@@ -34,12 +34,12 @@ def task_to_shoot_mgc():
 		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF)
 		mgc.Pos = HAND_BONE.WorldPos
 		mgc.Velocity = vec * 4 * mat
-		mgc.LivingLimit = 150
+		mgc.LifeSpan = 150
 
 		def shot_s(mgc = mgc):
 			shot = EntityShot(WORLD, "S", 0x0000A0)
 			shot.Pos = mgc.Pos + randomvec() * (random() * 50)
-			shot.LivingLimit = 120
+			shot.LifeSpan = 120
 			shot()
 		mgc.AddTask(shot_s, 0, 120, 10)
 		mgc()

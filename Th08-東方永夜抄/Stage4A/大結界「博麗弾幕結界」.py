@@ -45,15 +45,15 @@ for pos in edge_list:
 			shot = EntityShot(WORLD, "SCALE", 0xA00000)
 			shot.Pos = mgc.WorldPos
 			shot.Velocity = vec * Matrix3.LookAt(mgc.WorldPos, Vector3.UnitY * parent1.Rot) * 6
-			shot.LivingLimit = get_collide_frame1(shot.Pos, shot.Velocity)
+			shot.LifeSpan = get_collide_frame1(shot.Pos, shot.Velocity)
 			
 			def on_collide(org = shot):
 				shot = EntityShot(WORLD, "SCALE", 0xA00000)
 				shot.Pos = org.Pos * -2
 				shot.Velocity = org.Velocity
-				shot.LivingLimit = get_collide_frame2(shot.Pos, shot.Velocity)
+				shot.LifeSpan = get_collide_frame2(shot.Pos, shot.Velocity)
 				shot()
-			shot.AddTask(on_collide, 0, 1, shot.LivingLimit)
+			shot.AddTask(on_collide, 0, 1, shot.LifeSpan)
 			shot()
 	mgc.AddTask(shot_red_scale, 3, 300, 0)
 	mgc()
@@ -71,15 +71,15 @@ for pos in face_list:
 			shot = EntityShot(WORLD, "SCALE", 0xA0A0A0)
 			shot.Pos = mgc.WorldPos
 			shot.Velocity = vec * Matrix3.LookAt(mgc.WorldPos, Vector3.UnitY * parent2.Rot) * 6
-			shot.LivingLimit = get_collide_frame1(shot.Pos, shot.Velocity)
+			shot.LifeSpan = get_collide_frame1(shot.Pos, shot.Velocity)
 			
 			def on_collide(org = shot):
 				shot = EntityShot(WORLD, "SCALE", 0xA0A0A0)
 				shot.Pos = org.Pos * -2
 				shot.Velocity = org.Velocity
-				shot.LivingLimit = get_collide_frame2(shot.Pos, shot.Velocity)
+				shot.LifeSpan = get_collide_frame2(shot.Pos, shot.Velocity)
 				shot()
-			shot.AddTask(on_collide, 0, 1, shot.LivingLimit)
+			shot.AddTask(on_collide, 0, 1, shot.LifeSpan)
 			shot()
 	mgc.AddTask(shot_red_scale, 3, 300, 0)
 	mgc()
@@ -87,14 +87,14 @@ for pos in face_list:
 def shot_s():
 	shot = EntityShot(WORLD, "S", 0xA0A0A0)
 	shot.Velocity = randomvec() * 4
-	shot.LivingLimit = get_collide_frame1(shot.Pos, shot.Velocity)
+	shot.LifeSpan = get_collide_frame1(shot.Pos, shot.Velocity)
 	
 	def on_collide(org = shot):
 		shot = EntityShot(WORLD, "S", 0xA0A0A0)
 		shot.Pos = org.Pos * -2
 		shot.Velocity = org.Velocity
-		shot.LivingLimit = get_collide_frame2(shot.Pos, shot.Velocity)
+		shot.LifeSpan = get_collide_frame2(shot.Pos, shot.Velocity)
 		shot()
-	shot.AddTask(on_collide, 0, 1, shot.LivingLimit)
+	shot.AddTask(on_collide, 0, 1, shot.LifeSpan)
 	shot()
 WORLD.AddTask(shot_s, 1, 0, 300)

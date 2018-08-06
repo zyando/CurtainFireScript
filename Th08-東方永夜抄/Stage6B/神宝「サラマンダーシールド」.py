@@ -26,7 +26,7 @@ def task(vec, axis, veclist = objvertices("ico_y.obj", 0)):
 			shot = EntityShotStraight(WORLD, "S", 0xFF0000)
 			shot.Pos = binder[0] * 160
 			shot.Velocity = v * 4
-			shot.LivingLimit = 200
+			shot.LifeSpan = 200
 			shot()
 		
 		binder[0] *= rot
@@ -44,7 +44,7 @@ def laser_task(pos):
 		shot = EntityShotStraight(WORLD, "DIA", 0xFF0000, Vector3(2, 2, 16))
 		shot.Pos = parent.Pos
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 12
-		shot.LivingLimit = 120
+		shot.LifeSpan = 120
 		shot()
 	parent.AddTask(short_laser, 20, 10, 60)
 	
@@ -52,7 +52,7 @@ def laser_task(pos):
 		shot = EntityShot(WORLD, "LASER_LINE", 0xFF0000, Vector3(5, 5, 4000))
 		shot.Pos = parent.Pos
 		shot.LookAtVec = +(TARGET_BONE.WorldPos - shot.Pos) * 12
-		shot.LivingLimit = 35
+		shot.LifeSpan = 35
 		
 		morph = shot.CreateVertexMorph(0, lambda v: Vector3(v.x * -0.99, v.y * -0.99, 0))
 		shot.AddMorphKeyFrame(morph, 1, 0)

@@ -2,7 +2,7 @@
 
 veclists = [objvertices("ico.obj", i) for i in range(2)]
 
-def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, speed, livinglimit):
+def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, speed, lifespan):
 	if abs(vec * axis) > 0.995 > 0: return lambda: 0
 
 	axis = vec ^ (vec ^ axis)
@@ -13,7 +13,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, spe
 		shot = EntityShotStraight(WORLD, shottype, color)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = binder[0] * speed
-		shot.LivingLimit = livinglimit
+		shot.LifeSpan = lifespan
 		shot()
 
 		binder[0] *= rot

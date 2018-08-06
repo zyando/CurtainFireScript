@@ -10,7 +10,7 @@ def phase0(vertices = WavefrontObject("rising_game.obj", lambda v: v * 40)):
 
 			shot = EntityShot(WORLD, "S", 0x0000A0)
 			shot.Pos = TARGET_BONE.WorldPos + vtx
-			shot.LivingLimit = randint(120, 135)
+			shot.LifeSpan = randint(120, 135)
 			shot()
 	WORLD.AddTask(shot_s, 30, 3, 0)
 WORLD.AddTask(phase0, 240, 8, 0)

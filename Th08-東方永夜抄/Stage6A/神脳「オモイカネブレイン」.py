@@ -15,7 +15,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 	axis = -Vector3.UnitY if task.ExecutedCount % 2 == 0 else Vector3.UnitY
 
 	root = EntityShot(WORLD, "BONE", 0xFFFFFF)
-	root.LivingLimit = time_to_stop + wait_time
+	root.LifeSpan = time_to_stop + wait_time
 	root.GetRecordedRot = lambda e: e.Rot
 	root.Pos = CENTER_BONE.WorldPos + Vector3(0, 0, -300)
 	root.Rot = Quaternion.RotationAxis(Vector3.UnitY, RAD * 180)
@@ -28,7 +28,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 	root()
 
 	parent = EntityShot(WORLD, "BONE", 0xFFFFFF, root)
-	parent.LivingLimit = root.LivingLimit
+	parent.LifeSpan = root.LifeSpan
 	parent.GetRecordedRot = lambda e: e.Rot
 	parent.Rot = Quaternion.RotationAxis(Vector3.UnitY, RAD * 180)
 	parent.Velocity = Vector3(0.4, 0, 0)
@@ -47,7 +47,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 			shot = EntityShotStraight(WORLD, "DIA_BRIGHT", 0x400000)
 			shot.Pos = parent.WorldPos
 			shot.Velocity = vec * parent.WorldRot * 12.0
-			shot.LivingLimit = 100
+			shot.LifeSpan = 100
 			shot()
 	parent.AddTask(shot_dia, interval_of_shoot, 0, 0)
 
@@ -56,14 +56,14 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 			laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(2, 2, 4000), parent)
 			laser.GetRecordedRot = lambda e: e.Rot
 			laser.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
-			laser.LivingLimit = time_to_stop + wait_time - 30
+			laser.LifeSpan = time_to_stop + wait_time - 30
 
 			morph = laser.CreateVertexMorph(0, lambda v: Vector3(v.x * -0.99, v.y * -0.99, 0))
 			laser.AddMorphKeyFrame(morph, 1, 0)
 			laser.AddMorphKeyFrame(morph, 1, 20)
 			laser.AddMorphKeyFrame(morph, 0, 50)
-			laser.AddMorphKeyFrame(morph, 0, laser.LivingLimit - 30)
-			laser.AddMorphKeyFrame(morph, 1, laser.LivingLimit)
+			laser.AddMorphKeyFrame(morph, 0, laser.LifeSpan - 30)
+			laser.AddMorphKeyFrame(morph, 1, laser.LifeSpan)
 
 			laser()
 	parent.AddTask(shot_laser, 0, 1, 0)
@@ -80,7 +80,7 @@ def shoot_dia_while_rotating(vec, axis):
 				shot = EntityShotStraight(WORLD_SUB, "DIA", 0x0000A0)
 				shot.Pos = Vector3(0, 0, 0)
 				shot.Velocity = vec_[0] * (i + 1) * 2.0
-				shot.LivingLimit = 240 * (2 - i)
+				shot.LifeSpan = 240 * (2 - i)
 				shot()
 		vec_[0] *= rot * rot
 	WORLD.AddTask(shot_dia, 1, 960, 60, True)

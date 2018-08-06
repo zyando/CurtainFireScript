@@ -2,7 +2,7 @@
 
 COLORS = [0x00A0A0, 0xA0A000, 0x00A0A0, 0xA000A0, 0xA00000]
 
-def task_to_shoot_while_rotating(vec, axis, num_pitch, num_yaw, angle_pitchyaw, shottype, angle_interval, speed, livinglimit):
+def task_to_shoot_while_rotating(vec, axis, num_pitch, num_yaw, angle_pitchyaw, shottype, angle_interval, speed, lifespan):
 	if abs(vec * axis) > 0.995 > 0: return lambda: 0
 
 	veclist = []
@@ -26,7 +26,7 @@ def task_to_shoot_while_rotating(vec, axis, num_pitch, num_yaw, angle_pitchyaw, 
 		def shot_dia(color = color, binder = binder, rot = Matrix3.RotationAxis(vec ^ (vec ^ axis), angle_interval)):
 			shot = EntityShot(WORLD, shottype, color)
 			shot.Velocity = binder.vec * speed
-			shot.LivingLimit = livinglimit
+			shot.LifeSpan = lifespan
 
 			shot()
 

@@ -47,7 +47,7 @@ def spell(
 			shot.Pos = circle.WorldPos
 			shot.Velocity = shot.Pos * distance_inv * get_vec_rot(count) * -speed
 			shot.Upward = axis
-			shot.LivingLimit = 1000
+			shot.LifeSpan = 1000
 			
 			def pause(velocity = shot.Velocity):
 				if shot.Velocity == velocity: shot.Velocity *= 0
@@ -69,6 +69,6 @@ def spell(
 		shot.Pos = circle.WorldPos
 		shot.Velocity = +circle.WorldPos * 2.0
 		shot.Upward = axis
-		shot.LivingLimit = 1000
+		shot.LifeSpan = 1000
 		shot()
 	circle.AddTask(shot_amulet_outside, 0, int(num_task * interval_task * 0.8), wait_time)

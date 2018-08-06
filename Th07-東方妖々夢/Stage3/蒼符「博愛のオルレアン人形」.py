@@ -15,10 +15,10 @@ def divide(orgn, props):
         shot.Velocity = vec * mat * 8
 
         if len(props) > 1:
-            shot.LivingLimit = 45
-            shot.AddTask(lambda s = shot: divide(s, props[1:]), 0, 1, shot.LivingLimit)
+            shot.LifeSpan = 45
+            shot.AddTask(lambda s = shot: divide(s, props[1:]), 0, 1, shot.LifeSpan)
         else:
-            shot.LivingLimit = 300
+            shot.LifeSpan = 300
         shot()
 
 
@@ -27,9 +27,9 @@ def shot_scale(axis, props):
         shot = EntityShot(WORLD, "SCALE", 0x0000FF)
         shot.Pos = vec * 100
         shot.Velocity = vec * 8
-        shot.LivingLimit = 45
+        shot.LifeSpan = 45
 
-        shot.AddTask(lambda s = shot: divide(s, props), 0, 1, shot.LivingLimit)
+        shot.AddTask(lambda s = shot: divide(s, props), 0, 1, shot.LifeSpan)
         shot()
 
 COLORS = 0xFFFFFF, 0xFF0000, 0x00FF00

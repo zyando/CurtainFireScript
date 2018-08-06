@@ -21,7 +21,7 @@ def shot_knife1(task, veclist_list = [list(create_veclist(i)) for i in range(2, 
     for vec in veclist_list[min(len(veclist_list) - 1, task.ExecutedCount / 6)]:
         shot = EntityShot(WORLD, "KNIFE", 0xA00000)
         shot.Velocity = vec * mat[0] * 8
-        shot.LivingLimit = 100
+        shot.LifeSpan = 100
         shot()
 
     mat[0] *= mat[1]
@@ -31,7 +31,7 @@ def shot_knife2(veclist = list(create_veclist(30))):
     for vec in veclist:
         shot = EntityShot(WORLD, "KNIFE", 0xA00000)
         shot.Velocity = vec * mat[0] * 12
-        shot.LivingLimit = 50
+        shot.LifeSpan = 50
         shot()
 
     mat[0] *= mat[1]

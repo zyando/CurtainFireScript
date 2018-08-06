@@ -3,7 +3,7 @@
 veclist0 = objvertices("ico.obj", 1)
 veclist2 = objvertices("ico.obj", 2)
 
-def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, livinglimit):
+def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, lifespan):
 	if abs(vec * axis) > 0.995 > 0: return lambda: 0
 
 	axis = vec ^ (vec ^ axis)
@@ -14,12 +14,12 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, livinglimit)
 		parent = EntityShot(WORLD, "BONE", 0xFFFFFF)
 		parent.Velocity = binder[0] * speed
 		parent.GetRecordedRot = lambda e: e.Rot
-		parent.LivingLimit = livinglimit
+		parent.LifeSpan = lifespan
 		parent()
 
 		shot = EntityShot(WORLD, shottype, color, parent)
 		shot.Velocity = binder[0] * speed
-		shot.LivingLimit = livinglimit
+		shot.LifeSpan = lifespan
 		shot()
 
 		def rotate(rot = Quaternion.RotationAxis(axis, RAD * -150)):
@@ -38,6 +38,6 @@ def shot_dia():
 	for vec in veclist2:
 		shot = EntityShot(WORLD, "DIA_BRIGHT", 0x004040)
 		shot.Velocity = vec * 3.0
-		shot.LivingLimit = 800
+		shot.LifeSpan = 800
 		shot()
 WORLD.AddTask(shot_dia, 15, 22, 0)

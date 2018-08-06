@@ -39,7 +39,7 @@ def world_task_func1():
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 
-			shot.LivingLimit = 120
+			shot.LifeSpan = 120
 			shot()
 	WORLD.AddTask(shot_laser, 2, wayHoriz, 0)
 WORLD.AddTask(world_task_func1, 200, 2, 0)
@@ -67,7 +67,7 @@ def world_task_func3():
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 
-			shot.LivingLimit = 120
+			shot.LifeSpan = 120
 			shot()
 	WORLD.AddTask(shot_laser, 2, wayHoriz, 0)
 WORLD.AddTask(world_task_func3, 200, 3, 40)

@@ -9,14 +9,14 @@ def shot_dia():
 		shot = EntityShotStraight(WORLD, "DIA_BRIGHT", 0x400000)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * mat * 6
-		shot.LivingLimit = 60
+		shot.LifeSpan = 60
 		
 		def replace(flag = (vec in veclists[3]), orgn = shot):
 			shot = EntityShotStraight(WORLD, "DIA", 0xA00000)
 			shot.Pos = orgn.Pos
 			shot.Velocity = orgn.Velocity * (2.0 if flag else -1.0)
-			shot.LivingLimit = (200 if flag else 460) - (1 - (+shot.Velocity).z) * 80
+			shot.LifeSpan = (200 if flag else 460) - (1 - (+shot.Velocity).z) * 80
 			shot()
-		WORLD.AddTask(replace, 0, 1, shot.LivingLimit)
+		WORLD.AddTask(replace, 0, 1, shot.LifeSpan)
 		shot()
 WORLD.AddTask(shot_dia, 20, 13, 0)

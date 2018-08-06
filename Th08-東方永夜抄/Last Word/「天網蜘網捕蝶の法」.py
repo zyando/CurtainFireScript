@@ -4,7 +4,7 @@ def shot_func(pos, vec, way, level):
 	shot = EntityShot(WORLD, "M", 0x0000A0)
 	shot.Pos = pos
 	shot.Velocity = vec * 100
-	shot.LivingLimit = 50
+	shot.LifeSpan = 50
 	shot()
 	
 	laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(2, 2, 4000))
@@ -19,7 +19,7 @@ def shot_func(pos, vec, way, level):
 	laser.AddMorphKeyFrame(morph, 0, 100)
 	laser.AddMorphKeyFrame(morph, 1, 120)
 	
-	laser.LivingLimit = 120
+	laser.LifeSpan = 120
 	laser()
 	
 	if level < 0: return
@@ -33,13 +33,13 @@ def shot_func(pos, vec, way, level):
 			shot_func(shot.Pos, +shotVec, way, level - 1)
 			shotVec = shotVec * mat2
 	shot.AddTask(shot_task_func, 0, 1, 6)
-	shot.LivingLimit = 10
+	shot.LifeSpan = 10
 	
 	def shot_m():
 		for i in range(2):
 			shot = EntityShotStraight(WORLD, "M", 0x0000A0)
 			shot.Pos = pos
-			shot.LivingLimit = 500
+			shot.LifeSpan = 500
 			shot.Velocity = Vector3.UnitZ  * (i * 2 - 1) * 4
 			shot()
 	WORLD.AddTask(shot_m, 0, 1, 50)

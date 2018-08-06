@@ -7,14 +7,14 @@ def shot_l():
 		shot = EntityShot(WORLD, "L", 0xA000F0)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * 5
-		shot.LivingLimit = 500
+		shot.LifeSpan = 500
 		
 		def divide(org = shot):
 			for i in range(5):
 				shot = EntityShot(WORLD, "L", 0xA000F0)
 				shot.Pos = org.Pos
 				shot.Velocity = org.Velocity * (6 - i)
-				shot.LivingLimit = i * 60
+				shot.LifeSpan = i * 60
 				shot()
 		shot.AddTask(divide, 0, 1, 45)
 		shot()
@@ -27,7 +27,7 @@ def shot_dia():
 		shot = EntityShot(WORLD, "DIA", 0xA000A0)
 		shot.Pos = pos
 		shot.Velocity = Vector3.UnitZ * i * uniform(4, 6)
-		shot.LivingLimit = 300
+		shot.LifeSpan = 300
 		shot()
 WORLD.AddTask(lambda: [shot_dia() for i in range(6)], 0, 0, 210)
 
@@ -37,9 +37,9 @@ def shot_butterfly(vec, color, homing):
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * (i + 0.5)
 		shot.Upward = Vector3.UnitZ * CENTER_BONE.WorldRot
-		shot.LivingLimit = 40
+		shot.LifeSpan = 40
 		
-		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), shot.LivingLimit)
+		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), shot.LifeSpan)
 		
 		def shot_child(org = shot):
 			axis = +(vec ^ (vec ^ Vector3.UnitZ * CENTER_BONE.WorldRot))
@@ -58,7 +58,7 @@ def shot_butterfly(vec, color, homing):
 				shot = EntityShot(WORLD, "BUTTERFLY", color, axis_bone)
 				shot.Velocity = Vector3.UnitZ * Matrix3.RotationX(RAD * 30) * Matrix3.RotationZ(RAD * i * 120) * 0.4
 				shot.Upward = Vector3.UnitZ
-				shot.LivingLimit = 45
+				shot.LifeSpan = 45
 				
 				def divide(org = shot):
 					velocity = +((TARGET_BONE.WorldPos - org.Pos) if False else (org.Velocity * axis_bone.WorldRot))
@@ -68,11 +68,11 @@ def shot_butterfly(vec, color, homing):
 						shot.Pos = org.WorldPos
 						shot.Velocity = velocity * (1.5 + i)
 						shot.Upward = axis
-						shot.LivingLimit = (5 - i) * 100
+						shot.LifeSpan = (5 - i) * 100
 						shot()
-				shot.AddTask(divide, 0, 1, shot.LivingLimit)
+				shot.AddTask(divide, 0, 1, shot.LifeSpan)
 				shot()
-		shot.AddTask(shot_child, 0, 1, shot.LivingLimit)
+		shot.AddTask(shot_child, 0, 1, shot.LifeSpan)
 		shot()
 
 way = 5

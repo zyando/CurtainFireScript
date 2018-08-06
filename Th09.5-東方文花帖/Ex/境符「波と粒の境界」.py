@@ -14,7 +14,7 @@ def shot_dia():
 	for vec in veclist:
 		shot = EntityShotStraight(WORLD, "DIA", 0xFF40FF)
 		shot.Velocity = vec * rot_binder[0] * 8
-		shot.LivingLimit = 80
+		shot.LifeSpan = 80
 		shot()
 	cos_binder[0] = +(cos_binder[0] * cos_binder[1])
 	vec_binder[0] = +(vec_binder[0] * vec_binder[1])

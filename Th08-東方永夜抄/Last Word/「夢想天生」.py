@@ -50,7 +50,7 @@ def shot_amulet(pos, vec, upward):
 		shot.Pos = original.Pos
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 24.0
 		shot.Upward = original.Upward
-		shot.LivingLimit = 100
+		shot.LifeSpan = 100
 		
 		shot()
 	
@@ -59,7 +59,7 @@ def shot_amulet(pos, vec, upward):
 		shot.Pos = original.Pos
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func1(s) , 0, 1, 10)
-		shot.LivingLimit = 10
+		shot.LifeSpan = 10
 		
 		shot()
 	
@@ -70,7 +70,7 @@ def shot_amulet(pos, vec, upward):
 		shot.Upward = original.Upward
 		shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 40)
 		shot.AddTask(lambda s = shot :shot_func2(s) , 0, 1, 40)
-		shot.LivingLimit = 40
+		shot.LifeSpan = 40
 		
 		shot()
 	
@@ -79,7 +79,7 @@ def shot_amulet(pos, vec, upward):
 		shot.Pos = original.Pos
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func3(s) , 0, 1, 10)
-		shot.LivingLimit = 10
+		shot.LifeSpan = 10
 		shot()
 	
 	for j in range(24):
@@ -89,5 +89,5 @@ def shot_amulet(pos, vec, upward):
 		shot.Upward = upward
 		shot.AddTask(lambda s = shot: shot_func4(s) , 0, 1, 30)
 		shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
-		shot.LivingLimit = 30
+		shot.LifeSpan = 30
 		shot()

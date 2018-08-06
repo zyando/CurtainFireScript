@@ -69,7 +69,7 @@ for vec in objvertices("ico.obj", 1):
 			shot = EntityShotStraight(WORLD, "S", colorlist[task.ExecutedCount % len(colorlist)])
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = binder[0] * 3.4
-			shot.LivingLimit = 160
+			shot.LifeSpan = 160
 			shot()
 		WORLD.AddTask(shot_s, 10, 40, 0, True)
 		

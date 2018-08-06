@@ -14,7 +14,7 @@ def shot_rice():
 		shot = EntityShot(WORLD, "RICE_M", 0xA00000)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * binder[0] * 12
-		shot.LivingLimit = 120
+		shot.LifeSpan = 120
 		shot()
 WORLD.AddTask(shot_rice, 5, 0, 0)
 
@@ -25,7 +25,7 @@ def shot_dia():
 		shot = EntityShot(WORLD, "DIA_BRIGHT", 0x400000)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * binder[0] * 12
-		shot.LivingLimit = 120
+		shot.LifeSpan = 120
 		shot()
 WORLD.AddTask(shot_dia, 40, 0, 40)
 
@@ -40,6 +40,6 @@ def shot_dia_to_target():
 			shot = EntityShot(WORLD, "SCALE", 0x0000A0)
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * mat * (1 + i * 0.5) * 6
-			shot.LivingLimit = 400
+			shot.LifeSpan = 400
 			shot()
 WORLD.AddTask(shot_dia_to_target, 5, 0, 622)

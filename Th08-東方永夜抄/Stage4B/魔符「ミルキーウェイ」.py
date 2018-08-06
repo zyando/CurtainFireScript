@@ -13,7 +13,7 @@ def entity_to_shoot(vec, axis):
         shot = EntityShot(WORLD, "STAR_M", 0xA00000 if task.ExecutedCount % 2 == 0 else 0x0000A0)
         shot.Pos = CENTER_BONE.WorldPos
         shot.Velocity = entity.Pos * 4
-        shot.LivingLimit = 300
+        shot.LifeSpan = 300
         shot()
 
         entity.Pos = entity.Pos * entity.Rot
@@ -32,6 +32,6 @@ def shot_small_star():
             shot = EntityShot(WORLD, "STAR_S", color[randint(0, 2)])
             shot.Pos = CENTER_BONE.WorldPos + Vector3((gauss(0, 1) + 1) * i * 1000, gauss(0, 1) * 600, (gauss(0, 1) + 1) * -800)
             shot.Velocity = Vector3.UnitX * -i * 4 * Matrix3.RotationAxis(randomvec(), RAD * random() * 20)
-            shot.LivingLimit = 300
+            shot.LifeSpan = 300
             shot()
 WORLD.AddTask(shot_small_star, 0, 300, 50)

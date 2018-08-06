@@ -44,19 +44,19 @@ def shot_amulet_and_sphere(vec = [Vector3.UnitZ], mat = Matrix3.RotationAxis(ran
     for i in range(24):
         shot = EntityShot(WORLD, "M", 0xFF0000)
         shot.Velocity = vec[0] * Matrix3.RotationAxis(randomvec(), RAD * 20) * 12
-        shot.LivingLimit = 400
+        shot.LifeSpan = 400
         shot()
 
     for i in range(40):
         shot = EntityShot(WORLD, "S", 0xFF0000)
         shot.Velocity = vec[0] * Matrix3.RotationAxis(randomvec(), RAD * 20) * 12
-        shot.LivingLimit = 400
+        shot.LifeSpan = 400
         shot()
 
     for i in range(40):
         shot = EntityShot(WORLD, "XS", 0xFFFFFF)
         shot.Velocity = vec[0] * Matrix3.RotationAxis(randomvec(), RAD * 20) * 12
-        shot.LivingLimit = 400
+        shot.LifeSpan = 400
         shot()
 
     vec[0] = vec[0] * mat

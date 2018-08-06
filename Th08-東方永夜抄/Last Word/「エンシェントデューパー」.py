@@ -95,7 +95,7 @@ def world_task():
 					shot = EntityShot(WORLD, "S", 0x0000A0)
 					shot.Pos = CENTER_BONE.WorldPos
 					shot.Velocity = shotvec * 3.0 * (1 + i * 0.2) * 2
-					shot.LivingLimit = 100
+					shot.LifeSpan = 100
 					shot()
 			WORLD.AddTask(shot_s, 10, 30, 30, True)
 WORLD.AddTask(world_task, 0, 1, 0)

@@ -17,7 +17,7 @@ def night_dacce():
         shot = EntityShot(WORLD, "DIA", 0xFFFFFF, Vector3(0.5, 0.5, 2.5))
         shot.Pos = Vector4(2 * i, 0, 2, 1) * HAND_BONE.WorldMat
         shot.Velocity = Vector3.UnitZ * HAND_BONE.WorldMat * 16.0
-        shot.LivingLimit = 100
+        shot.LifeSpan = 100
         shot()
 WORLD.AddTask(night_dacce, 2, 100, 25)
 
@@ -30,7 +30,7 @@ def servant_flyer(pos, lookat):
         shot = EntityShot(WORLD, "SCALE", 0xA0A0A0)
         shot.Pos = mgc.WorldPos
         shot.Velocity = Vector3.UnitZ * HAND_BONE.WorldMat * 16.0
-        shot.LivingLimit = 100
+        shot.LifeSpan = 100
         shot()
     mgc.AddTask(shot_scale, 2, 100, 25)
     mgc()

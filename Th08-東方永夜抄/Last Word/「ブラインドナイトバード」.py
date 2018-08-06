@@ -22,7 +22,7 @@ def world_task():
 				shot.Pos = CENTER_BONE.WorldPos
 				shot.Velocity = binder[0] * (10.0 + (binder[0] * Vector3.UnitZ) + task.ExecutedCount * 0.08)
 				shot.Upward = axis
-				shot.LivingLimit = 180
+				shot.LifeSpan = 180
 				shot()
 				
 				binder[0] = binder[0] * binder[1]
@@ -37,6 +37,6 @@ def shot_s():
 			shot = EntityShotStraight(WORLD, "S", 0x00A000)
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * speed * mat
-			shot.LivingLimit = 120
+			shot.LifeSpan = 120
 			shot()
 WORLD.AddTask(shot_s, 8, 60, 60)

@@ -23,13 +23,13 @@ def task(color, scale):
 	border.Pos = YUKARI_HAND_BONE.WorldPos
 	
 	border.GetRecordedRot = lambda e: e.Rot
-	border.LivingLimit = BORDER_BOMB_ACTIVETIME + 15
+	border.LifeSpan = BORDER_BOMB_ACTIVETIME + 15
 
 	morph = border.CreateVertexMorph(0, lambda v: -v * 0.99)
 	border.AddMorphKeyFrame(morph, 1, 0)
 	border.AddMorphKeyFrame(morph, 0, 15)
-	border.AddMorphKeyFrame(morph, 0, border.LivingLimit - 15)
-	border.AddMorphKeyFrame(morph, 1, border.LivingLimit)
+	border.AddMorphKeyFrame(morph, 0, border.LifeSpan - 15)
+	border.AddMorphKeyFrame(morph, 1, border.LifeSpan)
 
 	def rotate(rot = Quaternion.RotationAxis(randomvec(), RAD * 90)): border.Rot *= rot
 	WORLD.AddTask(rotate, 30, 0, 0)
@@ -39,9 +39,9 @@ def task(color, scale):
 			shot = EntityShot(WORLD, "DIA", color, Vector3(1, 1, 10))
 			shot.Velocity = randomvec() * 80
 			shot.Pos = YUKARI_HAND_BONE.WorldPos + +shot.Velocity * scale * uniform(0.1, 1)
-			shot.LivingLimit = 50
+			shot.LifeSpan = 50
 			shot()
-	WORLD.AddTask(effect, 0, border.LivingLimit ,0)
+	WORLD.AddTask(effect, 0, border.LifeSpan ,0)
 	border()
 
 def quadruple_barrier():

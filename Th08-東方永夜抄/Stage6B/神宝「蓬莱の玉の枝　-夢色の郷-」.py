@@ -25,15 +25,15 @@ def task(pos, color1, color2):
 		shot = EntityShotStraight(WORLD, "DIA_BRIGHT", color2)
 		shot.Pos = mgc.Pos
 		shot.Velocity = vec * 6
-		shot.LivingLimit = get_collide_time(shot.Pos, shot.Velocity)
+		shot.LifeSpan = get_collide_time(shot.Pos, shot.Velocity)
 		
 		def replace(org = shot):
 			shot = EntityShotStraight(WORLD, "DIA", color1)
 			shot.Pos = org.Pos
 			shot.Velocity = +(TARGET_BONE.WorldPos - org.Pos) * 5
-			shot.LivingLimit = 300
+			shot.LifeSpan = 300
 			shot()
-		mgc.AddTask(replace, 0, 1, shot.LivingLimit)
+		mgc.AddTask(replace, 0, 1, shot.LifeSpan)
 		shot()
 	
 	def init_shot(veclist = objvertices("ico.obj", 3)):
@@ -64,7 +64,7 @@ def shot_rainbow_s(vec, axis):
 	def shot_s(task, rot = Matrix3.RotationAxis(vec ^ (vec ^ axis), RAD * 15)):
 		shot = EntityShotStraight(WORLD, "S", COLORS[task.ExecutedCount % len(COLORS)][0])
 		shot.Velocity = binder[0] * 4
-		shot.LivingLimit = 240
+		shot.LifeSpan = 240
 		shot()
 		
 		if task.ExecutedCount > 10:

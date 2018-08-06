@@ -9,7 +9,7 @@ def world_task(task):
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * 5 * (1 + i * 1)
 			#shot.Colliding = Colliding.Stick
-			shot.LivingLimit = 64 if shot.Velocity.Length() > 16 else 128
+			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
 			shot()
 
 	def shot_red_amulet():
@@ -19,7 +19,7 @@ def world_task(task):
 			shot.Velocity = randomvec() * uniform(8, 30)
 			shot.Upward = randomvec()
 			#shot.Colliding = Colliding.Stick
-			shot.LivingLimit = 64 if shot.Velocity.Length() > 16 else 128
+			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
 			shot()
 	WORLD.AddTask(shot_red_amulet, 1, 5, 0)
 
@@ -30,7 +30,7 @@ def world_task(task):
 			shot.Velocity = randomvec() * uniform(8, 30)
 			shot.Upward = randomvec()
 			#shot.Colliding = Colliding.Vanish
-			shot.LivingLimit = 64 if shot.Velocity.Length() > 16 else 128
+			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
 			shot()
 	WORLD.AddTask(shot_M, 1, 5, 0)
 WORLD.AddTask(world_task, 65, 5, 0, True)

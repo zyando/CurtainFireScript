@@ -25,15 +25,15 @@ def task():
 
 			shot = EntityShot(WORLD, "M", 0xA00000)
 			shot.Pos = offset + vtx * mat
-			shot.LivingLimit = 5
-			shot.Velocity = vec * mat * (1.0 / shot.LivingLimit)
+			shot.LifeSpan = 5
+			shot.Velocity = vec * mat * (1.0 / shot.LifeSpan)
 			shot()
 
 			laser = EntityShot(WORLD, "LASER_LINE", 0xA00000, Vector3(1 * SCALE, 1 * SCALE, length))
 			laser.GetRecordedRot = lambda e: e.Rot
 			laser.Pos = offset + vtx * mat
 			laser.Rot = Matrix3.LookAt(+(vec * mat), Vector3.UnitY)
-			laser.LivingLimit = 100
+			laser.LifeSpan = 100
 
 			morph = laser.CreateVertexMorph(0, lambda v: Vector3(v.x * -0.95, v.y * -0.95, 0))
 			laser.AddMorphKeyFrame(morph, 1, 0)
@@ -57,7 +57,7 @@ def shot_dia():
 		shot = EntityShot(WORLD, "DIA", 0x0000A0)
 		shot.Pos = HAND_BONE.WorldPos
 		shot.Velocity = vec * mat * 4
-		shot.LivingLimit = 400
+		shot.LifeSpan = 400
 
 		shot()
 		
@@ -73,7 +73,7 @@ def shot_l():
 		shot = EntityShot(WORLD, "L", 0xFF0000)
 		shot.Pos = HAND_BONE.WorldPos
 		shot.Velocity = vec * HAND_BONE.WorldRot * 1.2
-		shot.LivingLimit = 800
+		shot.LifeSpan = 800
 
 		shot()
 		VANISHABLE_SHOTLIST.append(shot)

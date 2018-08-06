@@ -7,7 +7,7 @@ def shot_randomvec(shottype, color, parent, link_parent, speed):
     shot = EntityShot(WORLD, shottype, color, parent)
     shot.Velocity = randomvec() * speed
     shot.Upward = randomvec()
-    shot.LivingLimit = shot_range / speed
+    shot.LifeSpan = shot_range / speed
 
     if link_parent != None:
         shot.RootBone.LinkParentId = link_parent.RootBone.BoneId

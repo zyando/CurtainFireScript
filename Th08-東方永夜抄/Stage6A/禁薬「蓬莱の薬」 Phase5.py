@@ -22,7 +22,7 @@ def phase5():
 			shot = EntityShotStraight(WORLDS[get_idx(idx)], "DIA_BRIGHT", 0x000040)
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * mat * 2
-			shot.LivingLimit = 400
+			shot.LifeSpan = 400
 			shot()
 	WORLD.AddTask(shot_dia1, lambda i: max(5, interval + int(acceleration * i)), interval / -acceleration + 8, 0)
 
@@ -33,15 +33,15 @@ def phase5():
 			shot = EntityShotStraight(WORLD, "DIA_BRIGHT", 0x000040)
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * mat * (2.0 if vec in veclists[1] else 4.0)
-			shot.LivingLimit = 60 if vec in veclists[1] else 30
+			shot.LifeSpan = 60 if vec in veclists[1] else 30
 
 			def replace(orgn = shot):
 				shot = EntityShotStraight(WORLD, "DIA", 0x0000A0)
 				shot.Pos = orgn.Pos
 				shot.Velocity = orgn.Velocity
-				shot.LivingLimit = orgn.LivingLimit * 8
+				shot.LifeSpan = orgn.LifeSpan * 8
 				shot()
-			WORLD.AddTask(replace, 0, 1, shot.LivingLimit)
+			WORLD.AddTask(replace, 0, 1, shot.LifeSpan)
 			shot()
 	WORLD.AddTask(shot_dia2, 15, 120, 0)
 WORLD.AddTask(phase5, 0, 1, 0)

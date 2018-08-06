@@ -22,7 +22,7 @@ def shot_homing_amulet(speed = 5):
 			shot.Velocity = (vec + (vec_to_target - vec) * alpha) * length * 1.05
 
 			if (target_pos - shot.Pos).Length() <= 60:
-				shot.LivingLimit = 1
+				shot.LifeSpan = 1
 				impact_effect(shot.Pos)
 			
 			for s in VANISHABLE_SHOTLIST:
@@ -36,5 +36,5 @@ def impact_effect(pos):
 		shot = EntityShot(WORLD, "DIA", 0xFFFFFF, Vector3(1, 1, 12))
 		shot.Pos = pos
 		shot.Velocity = randomvec() * uniform(60, 100)
-		shot.LivingLimit = 45
+		shot.LifeSpan = 45
 		shot()

@@ -21,7 +21,7 @@ for vec in veclist:
 					shot = EntityShot(WORLD, "DIA", 0xA00050 if angle < 0 else 0x5000A0)
 					shot.Pos = CENTER_BONE.WorldPos + binder[0] * 640
 					shot.Velocity = binder[0] * binder[1] * -6
-					shot.LivingLimit = 110
+					shot.LifeSpan = 110
 					shot()
 				WORLD.AddTask(shot_dia, 4, 8, 0)
 			WORLD.AddTask(rotate, 32, 20, 0)

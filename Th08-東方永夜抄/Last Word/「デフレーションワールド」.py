@@ -27,7 +27,7 @@ def world_task_func():
 				shot = EntityShot(WORLD, "KNIFE", 0xFFD700)
 				shot.Velocity = vec * (1 + j * 0.5)
 				shot.Pos = CENTER_BONE.WorldPos + shot.Velocity
-				shot.LivingLimit = 600
+				shot.LifeSpan = 600
 				shot()
 
 				pauseList.append(shot)
@@ -42,7 +42,7 @@ def world_task_func():
 			shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 			shot.Velocity = vec * 4.0
 			shot.Pos = CENTER_BONE.WorldPos + shot.Velocity
-			shot.LivingLimit = 200
+			shot.LifeSpan = 200
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 30)
 
 			def shot_task_func(shot = shot, mat = mat):
@@ -61,7 +61,7 @@ def world_task_func():
 		shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
-		shot.LivingLimit = 200
+		shot.LifeSpan = 200
 		shot()
 
 		cloneList.append(shot)
@@ -86,7 +86,7 @@ def world_task_func():
 			shot = EntityShot(WORLD, "KNIFE", 0xA0A0A0)
 			shot.LookAtVec = src.LookAtVec
 			shot.Pos = src.Pos + interval * (-num_clone / 3 + task.ExecutedCount)
-			shot.LivingLimit = 120
+			shot.LifeSpan = 120
 
 			def move(shot = shot):
 				shot.Velocity = +shot.LookAtVec * 8.0

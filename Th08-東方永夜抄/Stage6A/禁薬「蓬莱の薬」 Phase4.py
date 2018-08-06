@@ -21,19 +21,19 @@ def phase4():
 				shot = EntityShot(WORLD, "DIA_BRIGHT", 0x004000)
 				shot.Pos = CENTER_BONE.WorldPos
 				shot.Velocity = vec * mat * 2.0
-				shot.LivingLimit = 60
+				shot.LifeSpan = 60
 
 				def replace(orgn = shot, parent = parent):
 					shot = EntityShot(WORLD, "DIA", 0x00A000, parent)
 					shot.Pos = orgn.Pos - CENTER_BONE.WorldPos
 					shot.Velocity = orgn.Velocity
-					shot.LivingLimit = 400
+					shot.LifeSpan = 400
 
 					def rotate(): shot.Velocity *= Matrix3(parent.Rot)
 					shot.AddTask(rotate, 0, 1, 60)
 
 					shot()
-				shot.AddTask(replace, 0, 1, shot.LivingLimit)
+				shot.AddTask(replace, 0, 1, shot.LifeSpan)
 				shot()
 	WORLD.AddTask(shot_dia, 20, 13, 0)
 WORLD.AddTask(phase4, 0, 1, 0)

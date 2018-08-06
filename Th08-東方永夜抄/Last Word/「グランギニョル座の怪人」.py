@@ -22,7 +22,7 @@ def world_task(vec, axis, angle1, angle2, range, should_shot_scale):
 		shot = EntityShot(WORLD, "DIA", 0xA0A0A0)
 		shot.Pos = parent.WorldPos
 		shot.Velocity = -Vector3.UnitZ * parent.WorldMat * 2
-		shot.LivingLimit = 400
+		shot.LifeSpan = 400
 		shot()
 		
 		if task.ExecutedCount % 2 == 0:
@@ -42,7 +42,7 @@ def world_task(vec, axis, angle1, angle2, range, should_shot_scale):
 				shot = EntityShotStraight(WORLD, "SCALE", 0xA00000 if task.ExecutedCount % 2 == 0 else 0xA000A0)
 				shot.Pos = parent.WorldPos
 				shot.Velocity = +(vec3(vec4(pos) * TARGET_BONE.WorldMat) - shot.Pos) * 12
-				shot.LivingLimit = 80
+				shot.LifeSpan = 80
 				shot()
 		root.AddTask(shot_scale, 2, 50, 240, True)
 

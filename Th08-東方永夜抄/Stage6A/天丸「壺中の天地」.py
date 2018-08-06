@@ -15,7 +15,7 @@ def shot_mgc(axis):
 		shot = EntityShot(WORLD, "S", 0xFFFFFF)
 		shot.Pos = mgc.WorldPos
 		shot.Velocity = +(TARGET_BONE.WorldPos - mgc.WorldPos) * 4
-		shot.LivingLimit = 300
+		shot.LifeSpan = 300
 		shot()
 	WORLD.AddTask(shot_to_target, 8, 0, 0)
 
@@ -46,7 +46,7 @@ def shot_mgc(axis):
 
 				shot.Pos = mgc.WorldPos
 				shot.Velocity = +mgc.Pos * parent.LocalMat * Matrix3.RotationAxis(axis, angle) * 8
-				shot.LivingLimit = 120
+				shot.LifeSpan = 120
 				shot()
 		mgc.AddTask(shot_dia, 4, 100, 0)
 		mgc()

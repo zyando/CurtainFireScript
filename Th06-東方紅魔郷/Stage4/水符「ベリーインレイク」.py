@@ -11,7 +11,7 @@ def task():
         for i in range(way):
             shot = EntityShot(WORLD, "LASER", 0x000A0, Vector3(8, 8, 1000))
             shot.LookAtVec = vec
-            shot.LivingLimit = 45
+            shot.LifeSpan = 45
 
             morph = shot.CreateVertexMorph(lambda v: Vector3(-v.x, -v.y, 0))
             shot.AddMorphKeyFrame(morph, 1, 0)
@@ -34,7 +34,7 @@ def task():
 
             shot = EntityShot(WORLD, "S", 0x0000A0)
             shot.Velocity = vec * mat * 3
-            shot.LivingLimit = 300 / i
+            shot.LifeSpan = 300 / i
             shot()
     WORLD.AddTask(shot_s, 15, 6, 5)
 
@@ -48,7 +48,7 @@ def task():
 
             shot = EntityShot(WORLD, "L", 0xA000A0)
             shot.Velocity = vec * 10
-            shot.LivingLimit = 100
+            shot.LifeSpan = 100
             shot()
     WORLD.AddTask(shot_l, 5, 10, 30)
 WORLD.AddTask(task, 120, 5, 0)

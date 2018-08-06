@@ -10,11 +10,11 @@ def butterflies_task(pos, veclist, axis, speed, color):
 		shot.Pos = pos
 		shot.Velocity = vec * speed
 		shot.Upward = axis
-		shot.LivingLimit = 75
+		shot.LifeSpan = 75
 		
 		def rotate(rot = Matrix3.RotationAxis(vec ^ (vec ^ axis), RAD * 2)):
 			shot.Velocity *= rot
-		shot.AddTask(rotate, 0, shot.LivingLimit, 0)
+		shot.AddTask(rotate, 0, shot.LifeSpan, 0)
 		
 		def shot_child(org = shot):
 			for i in range(5):
@@ -22,9 +22,9 @@ def butterflies_task(pos, veclist, axis, speed, color):
 				shot.Pos = org.Pos
 				shot.Velocity = org.Velocity * (1 + i * 0.5)
 				shot.Upward = org.Upward
-				shot.LivingLimit = 300
+				shot.LifeSpan = 300
 				shot()
-		shot.AddTask(shot_child, 0, 1, shot.LivingLimit)
+		shot.AddTask(shot_child, 0, 1, shot.LifeSpan)
 		shot()
 	
 	for vec in veclist:
@@ -37,7 +37,7 @@ def butterflies_to_target_task(vec, axis, color):
 	for i in range(30):
 		shot = EntityShot(WORLD, "BUTTERFLY", color)
 		shot.Velocity = vec * 2
-		shot.LivingLimit = 300
+		shot.LifeSpan = 300
 		
 		def turn(shot = shot):
 			shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 8

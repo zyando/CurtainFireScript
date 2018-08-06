@@ -13,7 +13,7 @@ def phase0():
             shot = EntityShot(WORLD, "STAR_S", 0xA0A000)
             shot.Pos = CENTER_BONE.WorldPos
             shot.Velocity = vec * (2 + (i * 2))
-            shot.LivingLimit = 400 - i * 200
+            shot.LifeSpan = 400 - i * 200
             shot()
 WORLD.AddTask(phase0, 5, 40, 30)
 
@@ -31,7 +31,7 @@ def phase1(task):
         mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x808000)
         mgc.Pos = CENTER_BONE.WorldPos
         mgc.Velocity = posstack.pop() * VEC_BONE.WorldMat * (1.0 / 30)
-        mgc.LivingLimit = 50
+        mgc.LifeSpan = 50
 
         def pause(): mgc.Velocity *= 0
         mgc.AddTask(pause, 0, 1, 30)
@@ -40,7 +40,7 @@ def phase1(task):
             shot = EntityShot(WORLD, "DIA", laser_color, Vector3(0.5, 0.5, 20))
             shot.Pos = mgc.Pos
             shot.Velocity = Vector3.UnitY * VEC_BONE.WorldMat * 20 * Matrix3.RotationAxis(randomvec(), RAD * 20)
-            shot.LivingLimit = 100
+            shot.LifeSpan = 100
             shot()
         mgc.AddTask(shot_laser, 0, 1, 45)
         mgc()

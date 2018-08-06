@@ -13,16 +13,16 @@ def shot_dia(vec, axis, color1, color2):
 		shot = EntityShot(WORLD, "DIA_BRIGHT", color1)
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * 4
-		shot.LivingLimit = 45
-		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), shot.LivingLimit)
+		shot.LifeSpan = 45
+		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), shot.LifeSpan)
 		
 		def replace_shot(org = shot):
 			shot = EntityShot(WORLD, "DIA", color2)
 			shot.Pos = org.Pos
 			shot.Velocity = +org.Velocity * mat2 * 4
-			shot.LivingLimit = 400
+			shot.LifeSpan = 400
 			shot()
-		shot.AddTask(replace_shot, 0, 1, shot.LivingLimit)
+		shot.AddTask(replace_shot, 0, 1, shot.LifeSpan)
 		shot()
 WORLD.AddTask(lambda: [shot_dia(randomvec(), choice(Vector3.Units), 0x000040, 0x0000A0) for i in range(3)], 0, 600, 0)
 WORLD.AddTask(lambda: [shot_dia(randomvec(), -choice(Vector3.Units), 0x400000, 0xA00000) for i in range(3)], 0, 600, 0)
@@ -33,6 +33,6 @@ def shot_rice():
 	for i in range(10):
 		shot = EntityShot(WORLD, "RICE_M", 0xA00000)
 		shot.Velocity = vec_to_target * (4 + i * 1)
-		shot.LivingLimit = 200
+		shot.LifeSpan = 200
 		shot()
 WORLD.AddTask(shot_rice, 60, 20, 0)

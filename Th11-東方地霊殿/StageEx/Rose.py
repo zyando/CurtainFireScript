@@ -14,7 +14,7 @@ def shot_rose(rose_pos, rose_rot, shot_factory, blooming_frame, init_scale = Mat
 		
 		shot = shot_factory()
 		shot.Pos = rose_pos + pos * rose_rot * scale * init_scale
-		shot.LivingLimit = 900
+		shot.LifeSpan = 900
 		shot()
 		
 		def move():
@@ -49,7 +49,7 @@ def stalk(pos, vec, color):
 	def shot_stalk():
 		shot = EntityShot(WORLD, "M", 0x004000)
 		shot.Pos = entity.Pos
-		shot.LivingLimit = 900
+		shot.LifeSpan = 900
 		shot()
 	WORLD.AddTask(shot_stalk, 5, 200, 0)
 	

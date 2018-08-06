@@ -17,7 +17,7 @@ def world_task():
 			shot.AddMorphKeyFrame(morph, 0, 70)
 			shot.AddMorphKeyFrame(morph, 0, 180)
 			shot.AddMorphKeyFrame(morph, 1, 200)
-			shot.LivingLimit = 200
+			shot.LifeSpan = 200
 			
 			shot.GetRecordedRot = lambda e: e.Rot
 			shot.Pos = CENTER_BONE.WorldPos
@@ -35,14 +35,14 @@ def world_task():
 			shot = EntityShot(WORLD, "L", 0xFF4040)
 			shot.Velocity = vec * 2
 			shot.Pos = CENTER_BONE.WorldPos + +shot.Velocity * 20
-			shot.LivingLimit = 400
+			shot.LifeSpan = 400
 			
 			def divide_shot(shot = shot):
 				for i in range(3):
 					new_shot = EntityShot(WORLD, shot.Property)
 					new_shot.Velocity = shot.Velocity * (1 + i) * 3
 					new_shot.Pos = shot.Pos
-					new_shot.LivingLimit = 200
+					new_shot.LifeSpan = 200
 					new_shot()
 			shot.AddTask(divide_shot, 0, 1, 40)
 			shot()
@@ -56,7 +56,7 @@ def world_task():
 				shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0 if flag else 0xA000A0)
 				shot.Velocity = vec * (1 + i * 0.6)
 				shot.Pos = CENTER_BONE.WorldPos + +shot.Velocity * 20
-				shot.LivingLimit = 400 - i * 50
+				shot.LifeSpan = 400 - i * 50
 				
 				def divide_shot(shot = shot):
 					for i in range(3):
@@ -64,14 +64,14 @@ def world_task():
 						new_shot.Velocity = shot.Velocity * -(1 + i * 0.4) * 3
 						new_shot.Pos = shot.WorldPos
 						new_shot.SetMotionInterpolationCurve(Vector2(0.2, 0.5), Vector2(0.9, 0.045), 200)
-						new_shot.LivingLimit = 300
+						new_shot.LifeSpan = 300
 						new_shot()
 					
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)
 						new_shot.Velocity = shot.Velocity * (1 + i) * 3
 						new_shot.Pos = shot.WorldPos
-						new_shot.LivingLimit = 300
+						new_shot.LifeSpan = 300
 						new_shot()
 				shot.AddTask(divide_shot, 0, 1, 60 - i * 5)
 				shot()
@@ -107,17 +107,17 @@ def world_task():
 						new_shot.Velocity = shotVec * -(1 + i * 0.4) * 3
 						new_shot.Pos = shot.WorldPos
 						new_shot.SetMotionInterpolationCurve(Vector2(0.2, 0.5), Vector2(0.9, 0.045), 200)
-						new_shot.LivingLimit = 400
+						new_shot.LifeSpan = 400
 						new_shot()
 					
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)
 						new_shot.Velocity = shotVec * (1 + i) * 3
 						new_shot.Pos = shot.WorldPos
-						new_shot.LivingLimit = 200
+						new_shot.LifeSpan = 200
 						new_shot()
 				shot.AddTask(divide_shot, 0, 1, wait_frame)
-				shot.LivingLimit = 400
+				shot.LifeSpan = 400
 				shot()
 	WORLD.AddTask(shot_butterfly_r, 15, 4, 60, True)
 WORLD.AddTask(world_task, 240, 2, 0)

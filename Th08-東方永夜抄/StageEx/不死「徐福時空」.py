@@ -9,7 +9,7 @@ def shot_dia():
 			shot = EntityShot(WORLD, "DIA", 0xA00000)
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * 4
-			shot.LivingLimit = 200
+			shot.LifeSpan = 200
 			shot()
 WORLD.AddTask(shot_dia, 30, 15, 90)
 
@@ -17,8 +17,8 @@ def shot_magic_circle(level, pos, vec, color, shot_vec, upward):
 	parent = EntityShot(WORLD, "MAGIC_CIRCLE", color)
 	parent.Pos = pos
 	parent.Velocity = vec * 6
-	parent.LivingLimit = 15 * (level + 1)
-	parent.SetMotionInterpolationCurve(Vector2(0.4, 0.6), Vector2(0.4, 0.6), parent.LivingLimit)
+	parent.LifeSpan = 15 * (level + 1)
+	parent.SetMotionInterpolationCurve(Vector2(0.4, 0.6), Vector2(0.4, 0.6), parent.LifeSpan)
 	
 	def shot_amulet():
 		shot = EntityShot(WORLD, "AMULET", color)
@@ -28,7 +28,7 @@ def shot_magic_circle(level, pos, vec, color, shot_vec, upward):
 		
 		def move(): shot.Velocity = shot_vec * 4
 		shot.AddTask(move, 0, 1, 60)
-		shot.LivingLimit = 60 + 90
+		shot.LifeSpan = 60 + 90
 		shot()
 	parent.AddTask(shot_amulet, 1, 0, 0)
 	
@@ -38,7 +38,7 @@ def shot_magic_circle(level, pos, vec, color, shot_vec, upward):
 				if abs(vec * axis) < 0.9:
 					mat = Matrix3.RotationAxis(axis, RAD * 90)
 					shot_magic_circle(level + 1, parent.Pos, vec * mat, color, shot_vec, upward)
-		parent.AddTask(divide, 0, 1, parent.LivingLimit - 1)
+		parent.AddTask(divide, 0, 1, parent.LifeSpan - 1)
 	parent()
 
 for vec in [(Vector3.UnitX, Vector3.UnitY), (Vector3.UnitY, Vector3.UnitZ)]:
