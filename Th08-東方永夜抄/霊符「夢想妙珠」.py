@@ -28,7 +28,7 @@ def shot_homing_amulet(speed = 5):
 			for s in VANISHABLE_SHOTLIST:
 				if not s.IsRemoved and (s.Pos - shot.Pos).Length() < 400: s.Remove()
 		shot.AddTask(homing, 0, 0, 0)
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_homing_amulet, 0, 1, REIMU_BOMB_FRAME - WORLD.FrameCount)
 
 def impact_effect(pos):
@@ -37,4 +37,4 @@ def impact_effect(pos):
 		shot.Pos = pos
 		shot.Velocity = randomvec() * uniform(60, 100)
 		shot.LifeSpan = 45
-		shot()
+		shot.Spawn()

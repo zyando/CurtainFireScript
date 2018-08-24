@@ -32,8 +32,8 @@ def phase4():
 					def rotate(): shot.Velocity *= Matrix3(parent.Rot)
 					shot.AddTask(rotate, 0, 1, 60)
 
-					shot()
+					shot.Spawn()
 				shot.AddTask(replace, 0, 1, shot.LifeSpan)
-				shot()
+				shot.Spawn()
 	WORLD.AddTask(shot_dia, 20, 13, 0)
 WORLD.AddTask(phase4, 0, 1, 0)

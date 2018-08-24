@@ -39,7 +39,7 @@ def task_to_shoot_mgc_crcl(task, axis):
 			shot = EntityShot(WORLD, "L", 0xA00000 if task.ExecutedCount % 2 == 0 else 0x0000A0)
 			shot.Pos = mgc.WorldPos + randomvec() * random() * 200
 			shot.LifeSpan = 600
-			shot()
+			shot.Spawn()
 
 			def move(velocity = vec * parent.Rot):
 				shot.Velocity = velocity * 2
@@ -57,5 +57,5 @@ def shot_dia(speed, lifespan):
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * mat * speed
 		shot.LifeSpan = lifespan
-		shot()
+		shot.Spawn()
 WORLD.AddTask(lambda: [shot_dia(s, l) for s, l in (4.0, 240), (3.0, 250)], 30, 23, 0)

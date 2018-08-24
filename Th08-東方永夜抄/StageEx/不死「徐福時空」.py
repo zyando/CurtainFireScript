@@ -10,7 +10,7 @@ def shot_dia():
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * 4
 			shot.LifeSpan = 200
-			shot()
+			shot.Spawn()
 WORLD.AddTask(shot_dia, 30, 15, 90)
 
 def shot_magic_circle(level, pos, vec, color, shot_vec, upward):
@@ -29,7 +29,7 @@ def shot_magic_circle(level, pos, vec, color, shot_vec, upward):
 		def move(): shot.Velocity = shot_vec * 4
 		shot.AddTask(move, 0, 1, 60)
 		shot.LifeSpan = 60 + 90
-		shot()
+		shot.Spawn()
 	parent.AddTask(shot_amulet, 1, 0, 0)
 	
 	if level < 3:

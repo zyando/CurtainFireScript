@@ -25,7 +25,7 @@ class EntityMagicCircle(EntityShot):
 				particle.Pos = self.Pos
 				particle.Velocity = randomvec() * 12
 				particle.LifeSpan = 10
-				particle()
+				particle.Spawn()
 	
 	def Hit(self, color):
 		if self.IsRemoved: return
@@ -51,7 +51,7 @@ class EntityMagicCircle(EntityShot):
 				shot.Pos = self.Pos
 				shot.Velocity = velocity
 				shot.LifeSpan = lifespan
-				shot()
+				shot.Spawn()
 		self.AddTask(shot_dia, 0, 1, 20)
 
 def shot_dia(task, max_idx = 20.0):
@@ -64,7 +64,7 @@ def shot_dia(task, max_idx = 20.0):
 		shot.Pos = HAND_BONE.WorldPos
 		shot.Velocity = (Vector3.UnitZ + (vec - Vector3.UnitZ) * t) * 12.0
 		shot.LifeSpan = 100
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_dia, 5, 32, 0, True)
 
 def shot_mgc(vec, shot_range):
@@ -119,7 +119,7 @@ def shot_l(vec, color):
 			check_whether_collided()
 		shot.AddTask(turn, 0, 1, time_to_turn)
 	
-	shot()
+	shot.Spawn()
 
 def bool_iter(bool_value = True):
 	while True:
@@ -160,7 +160,7 @@ def shot_red_amullet(mat = [Matrix3.Identity, Matrix3.RotationAxis(Vector3.UnitZ
 		if 3000 > time > 0:
 			WORLD.AddTask(lambda count = REIMU_SHOT_FLAG.Pos.x: [entity.SetDamage() for i in range(count)], 0, 1, time)
 			shot.LifeSpan = time
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_red_amullet, 3, 0, 0)
 
 homing_veclist = [Vector3(sin(a) * i, 0, -cos(a)) for a in [RAD * 30, RAD * 45] for i in -1, 1]
@@ -198,7 +198,7 @@ def shot_homing_amulet(speed = 12):
 			shot.Velocity = (vec + (vec_to_target - vec) * alpha) * speed
 			shot.LifeSpan = shot.FrameCount + int((pos - shot.Pos).Length() / speed)
 		shot.AddTask(homing, 0, 0, 0)
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_homing_amulet, 3, 0, 0)
 
 """霊符「夢想妙珠」"""
@@ -222,5 +222,5 @@ def shot_reimu_bomb(speed = 16, veclist = objvertices("ico.obj", 0)):
 			shot.Velocity = +(vec + (vec_to_target - vec) * alpha) * speed
 			shot.LifeSpan = shot.FrameCount + int((pos - shot.Pos).Length() / speed)
 		shot.AddTask(homing, 0, 0, 0, True)
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_reimu_bomb, 0, 1, REIMU_BOMB_FRAME1)

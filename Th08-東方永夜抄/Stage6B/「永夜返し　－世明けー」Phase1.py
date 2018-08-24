@@ -13,7 +13,7 @@ def shot_randomvec(shottype, color, parent, link_parent, speed):
         shot.RootBone.LinkParentId = link_parent.RootBone.BoneId
         shot.RootBone.LinkWeight = 1.0
         shot.RootBone.Flag |= BoneFlags.LOCAL_LINK
-    shot()
+    shot.Spawn()
 
 parentlist = [EntityShot(WORLD, "BONE", 0) for i in range(2)]
 

@@ -10,5 +10,5 @@ def shot_amulet():
 		def move(s = shot): s.Velocity = +s.Pos * -1
 		shot.AddTask(move, 0, 1, 210 - WORLD.FrameCount)
 		
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_amulet, 0, 150, 0)

@@ -56,7 +56,7 @@ def spell(
 			def restart(vec = +shot.Velocity):
 				shot.Velocity = vec * get_speed2(count)
 			shot.AddTask(restart, 0, 1, int(get_restart_frame(count)))
-			shot()
+			shot.Spawn()
 		WORLD.AddTask(shot_amulet, interval_shot, num_shot, 0)
 	WORLD.AddTask(add_shot_task, interval_task, num_task, wait_time)
 	
@@ -70,5 +70,5 @@ def spell(
 		shot.Velocity = +circle.WorldPos * 2.0
 		shot.Upward = axis
 		shot.LifeSpan = 1000
-		shot()
+		shot.Spawn()
 	circle.AddTask(shot_amulet_outside, 0, int(num_task * interval_task * 0.8), wait_time)

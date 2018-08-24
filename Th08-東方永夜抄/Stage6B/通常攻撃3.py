@@ -24,7 +24,7 @@ def task_to_shoot_mgc_crcl(axis):
 				shot = EntityShot(WORLD, choice(types), 0xA000A0 if i > 0 else 0x00A0A0)
 				shot.Pos = mgc.WorldPos + randomvec() * gauss(0, 300)
 				shot.LifeSpan = 600
-				shot()
+				shot.Spawn()
 
 				def move(velocity = -vec * Quaternion.RotationAxis(axis * i, RAD * uniform(30, 60))):
 					shot.Velocity = velocity * 2
@@ -42,5 +42,5 @@ def shot_dia():
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * mat * 4
 		shot.LifeSpan = 240
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_dia, 30, 23, 0)

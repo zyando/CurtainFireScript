@@ -23,9 +23,9 @@ def butterflies_task(pos, veclist, axis, speed, color):
 				shot.Velocity = org.Velocity * (1 + i * 0.5)
 				shot.Upward = org.Upward
 				shot.LifeSpan = 300
-				shot()
+				shot.Spawn()
 		shot.AddTask(shot_child, 0, 1, shot.LifeSpan)
-		shot()
+		shot.Spawn()
 	
 	for vec in veclist:
 		if abs(vec * axis) > 0.95: continue
@@ -42,7 +42,7 @@ def butterflies_to_target_task(vec, axis, color):
 		def turn(shot = shot):
 			shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 8
 		shot.AddTask(turn, 0, 1, 60)
-		shot()
+		shot.Spawn()
 		
 		vec *= mat
 

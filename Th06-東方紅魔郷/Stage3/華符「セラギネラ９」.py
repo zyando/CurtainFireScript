@@ -25,7 +25,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, spe
 			shot.Velocity = +shot.Velocity * 4 * Matrix3.RotationAxis(axis ^ +shot.Velocity, RAD * 160)
 		shot.AddTask(turn2, 0, 1, 75)
 
-		shot()
+		shot.Spawn()
 
 		binder.vec *= rot
 	return shot_dia
@@ -43,5 +43,5 @@ def shot_dia():
 		shot = EntityShot(WORLD, "DIA", 0xA00000)
 		shot.Velocity = vec * 6
 		shot.LifeSpan = 140
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_dia, 30, 10, 30)

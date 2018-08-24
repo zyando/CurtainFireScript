@@ -13,5 +13,5 @@ def shot_s(task):
             shot.Pos = pos * distance
             shot.Velocity = vec * mat * 6
             shot.LifeSpan = 160
-            shot()
+            shot.Spawn()
 WORLD.AddTask(shot_s, 10, 30, 0, True)

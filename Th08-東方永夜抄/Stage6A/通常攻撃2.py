@@ -15,7 +15,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, init_angle, angle_i
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = binder[0] * speed
 		shot.LifeSpan = lifespan if lifespan + WORLD.FrameCount < WORLD.EndFrame else WORLD.EndFrame - WORLD.FrameCount - randint(0, 15)
-		shot()
+		shot.Spawn()
 
 		binder[0] *= rot
 	return shot_dia
@@ -40,7 +40,7 @@ def task_to_shoot_mgc():
 			shot = EntityShot(WORLD, "S", 0x0000A0)
 			shot.Pos = mgc.Pos + randomvec() * (random() * 50)
 			shot.LifeSpan = 120
-			shot()
+			shot.Spawn()
 		mgc.AddTask(shot_s, 0, 120, 10)
 		mgc()
 WORLD.AddTask(task_to_shoot_mgc, 180, 3, 2)

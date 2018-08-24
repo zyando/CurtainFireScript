@@ -27,7 +27,7 @@ def task(vec, axis, veclist = objvertices("ico_y.obj", 0)):
 			shot.Pos = binder[0] * 160
 			shot.Velocity = v * 4
 			shot.LifeSpan = 200
-			shot()
+			shot.Spawn()
 		
 		binder[0] *= rot
 	WORLD.AddTask(shot_s, 2, 200, 0)
@@ -45,7 +45,7 @@ def laser_task(pos):
 		shot.Pos = parent.Pos
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 12
 		shot.LifeSpan = 120
-		shot()
+		shot.Spawn()
 	parent.AddTask(short_laser, 20, 10, 60)
 	
 	def long_laser():
@@ -58,7 +58,7 @@ def laser_task(pos):
 		shot.AddMorphKeyFrame(morph, 1, 0)
 		shot.AddMorphKeyFrame(morph, 0, 15)
 		
-		shot()
+		shot.Spawn()
 	parent.AddTask(long_laser, 60, 5, 90)
 	parent()
 

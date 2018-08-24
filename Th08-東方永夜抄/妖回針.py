@@ -7,5 +7,5 @@ def shot_dia():
 	shot.Pos = Vector4(0, 0, -20, 1) * YUKARI_HAND_BONE.WorldMat + vec4(randomvec() * random() * random() * 60)
 	shot.Velocity = +(CENTER_BONE.WorldPos - YUKARI_HAND_BONE.WorldPos) * 30
 	shot.LifeSpan = 100
-	shot()
+	shot.Spawn()
 WORLD.AddTask(lambda: [shot_dia() for i in range(4)], 0, 0, 0)

@@ -45,7 +45,7 @@ def world_task():
 			shot.AddMorphKeyFrame(morph, 1, 20)
 			shot.AddMorphKeyFrame(morph, 0, 30)
 			shot.AddMorphKeyFrame(morph, 0, 120)
-			shot()
+			shot.Spawn()
 			
 			shotrot = ~shotrot
 			
@@ -74,7 +74,7 @@ def world_task():
 						def move():
 							shot.Velocity = vec * 2.4
 						shot.AddTask(move, 0, 1, 100)
-						shot()
+						shot.Spawn()
 					WORLD.AddTask(shot_dia, 1, numshot, 0)
 				WORLD.AddTask(lambda t, a = axis, f = front, s = shot: shot_task(t, 80, 80, a, f, s), 30, 3, 40, True)
 				WORLD.AddTask(lambda t, a = axis, f = front, s = shot: shot_task(t, 85, 90, a, f, s), 30, 3, 70, True)
@@ -96,6 +96,6 @@ def world_task():
 					shot.Pos = CENTER_BONE.WorldPos
 					shot.Velocity = shotvec * 3.0 * (1 + i * 0.2) * 2
 					shot.LifeSpan = 100
-					shot()
+					shot.Spawn()
 			WORLD.AddTask(shot_s, 10, 30, 30, True)
 WORLD.AddTask(world_task, 0, 1, 0)

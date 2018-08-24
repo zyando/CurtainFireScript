@@ -16,7 +16,7 @@ def shot_mgc(axis):
 		shot.Pos = mgc.WorldPos
 		shot.Velocity = +(TARGET_BONE.WorldPos - mgc.WorldPos) * 4
 		shot.LifeSpan = 300
-		shot()
+		shot.Spawn()
 	WORLD.AddTask(shot_to_target, 8, 0, 0)
 
 	for pos in veclist:
@@ -47,7 +47,7 @@ def shot_mgc(axis):
 				shot.Pos = mgc.WorldPos
 				shot.Velocity = +mgc.Pos * parent.LocalMat * Matrix3.RotationAxis(axis, angle) * 8
 				shot.LifeSpan = 120
-				shot()
+				shot.Spawn()
 		mgc.AddTask(shot_dia, 4, 100, 0)
 		mgc()
 

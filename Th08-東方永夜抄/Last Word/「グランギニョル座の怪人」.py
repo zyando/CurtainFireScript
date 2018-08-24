@@ -23,7 +23,7 @@ def world_task(vec, axis, angle1, angle2, range, should_shot_scale):
 		shot.Pos = parent.WorldPos
 		shot.Velocity = -Vector3.UnitZ * parent.WorldMat * 2
 		shot.LifeSpan = 400
-		shot()
+		shot.Spawn()
 		
 		if task.ExecutedCount % 2 == 0:
 			def pause(): shot.Velocity *= 0
@@ -43,7 +43,7 @@ def world_task(vec, axis, angle1, angle2, range, should_shot_scale):
 				shot.Pos = parent.WorldPos
 				shot.Velocity = +(vec3(vec4(pos) * TARGET_BONE.WorldMat) - shot.Pos) * 12
 				shot.LifeSpan = 80
-				shot()
+				shot.Spawn()
 		root.AddTask(shot_scale, 2, 50, 240, True)
 
 for vec in objvertices("ico.obj", 0):

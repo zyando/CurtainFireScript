@@ -29,7 +29,7 @@ def particle_task(sender, e):
 		vtx_morph = particle.CreateVertexMorph(1, lambda v: -v)
 		particle.AddMorphKeyFrame(vtx_morph, 0, 0)
 		particle.AddMorphKeyFrame(vtx_morph, 1, particle.LifeSpan)
-		particle()
+		particle.Spawn()
 
 for vec in veclist:
 	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0x000040, 5)
@@ -51,7 +51,7 @@ for vec in veclist:
 		for i in range(3):
 			shot.Pos[i] -= shot.Pos[i] % 3
 		shot.LifeSpan = 300
-		shot()
+		shot.Spawn()
 		
 		def move(v = binder[0] * Matrix3.RotationAxis(randomvec(), RAD * 90 * gauss()) * 5):
 			shot.Velocity = v

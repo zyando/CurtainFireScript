@@ -11,17 +11,17 @@ def shot_phenix():
 		shot = EntityShot(WORLD, "S", 0xFF0000)
 		shot.Pos = pos
 		shot.Velocity = Vector3.UnitZ * -8
-		shot()
+		shot.Spawn()
 	
 	shot = EntityShot(WORLD, "L", 0xFF0000)
 	shot.Pos = Vector3(0, 0, -8)
 	shot.Velocity = Vector3.UnitZ * -8
-	shot()
+	shot.Spawn()
 	
 	shot = EntityShot(WORLD, "M", 0xFF0000)
 	shot.Pos = Vector3(0, 0, 0)
 	shot.Velocity = Vector3.UnitZ * -8
-	shot()
+	shot.Spawn()
 WORLD.AddTask(shot_phenix, 5, 8, 60)
 
 def shot_dia():
@@ -32,5 +32,5 @@ def shot_dia():
 			shot = EntityShotStraight(WORLD, "DIA", 0xFF0000)
 			shot.Velocity = vec * mat * speed
 			shot.LifeSpan = 200
-			shot()
+			shot.Spawn()
 WORLD.AddTask(shot_dia, 10, 12, 0)

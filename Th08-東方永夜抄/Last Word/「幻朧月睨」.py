@@ -19,7 +19,7 @@ def world_task():
 				shot = EntityShot(WORLD, "M", 0x0000A0)
 				shot.Pos = CENTER_BONE.WorldPos + vec * task.ExecutedCount * 20 + pos
 				shot.LifeSpan = 90
-				shot()
+				shot.Spawn()
 				
 				def move(shot = shot, vec = vec):
 					newShot = EntityShotStraight(WORLD, "M", 0xA00000)
@@ -40,14 +40,14 @@ def world_task():
 				shot.Pos = CENTER_BONE.WorldPos
 				shot.Velocity = vec * speed
 				shot.LifeSpan = limit
-				shot()
+				shot.Spawn()
 
 				def respawn(pos = shot.Pos, vec = vec):
 					shot = EntityShotStraight(WORLD, *prop)
 					shot.Pos = pos + vec * speed * respaen_frame
 					shot.Velocity = vec * speed
 					shot.LifeSpan = limit
-					shot()
+					shot.Spawn()
 				WORLD.AddTask(respawn, 0, 1, respaen_frame)
 		WORLD.AddTask(lambda: shot_bullet(("BULLET", 0xA00000), 4.8, 30), 0, 1, 30)
 		WORLD.AddTask(lambda: shot_bullet(("BULLET", 0x0000A0), 4.5, 30), 0, 1, 30)

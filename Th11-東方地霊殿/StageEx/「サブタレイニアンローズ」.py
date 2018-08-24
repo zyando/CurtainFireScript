@@ -12,7 +12,7 @@ def shot_rose(shot_factory, rose_rot, scale, blooming_frame, lifespan):
 		def stop(shot = shot): shot.Velocity *= 0
 		shot.AddTask(stop, 0, 1, blooming_frame)
 		
-		shot()
+		shot.Spawn()
 
 way = 32
 
@@ -25,7 +25,7 @@ def shot_s(world, color, rotangle, way = 32):
 		shot = EntityShot(world, "S", color)
 		shot.Velocity = vec * mat * 1.6
 		shot.LifeSpan = 330
-		shot()
+		shot.Spawn()
 		shotlist.append(shot)
 	
 	def shot_rose_task(task):

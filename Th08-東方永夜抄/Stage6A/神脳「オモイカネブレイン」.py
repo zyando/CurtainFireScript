@@ -48,7 +48,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 			shot.Pos = parent.WorldPos
 			shot.Velocity = vec * parent.WorldRot * 12.0
 			shot.LifeSpan = 100
-			shot()
+			shot.Spawn()
 	parent.AddTask(shot_dia, interval_of_shoot, 0, 0)
 
 	def shot_laser():
@@ -65,7 +65,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 			laser.AddMorphKeyFrame(morph, 0, laser.LifeSpan - 30)
 			laser.AddMorphKeyFrame(morph, 1, laser.LifeSpan)
 
-			laser()
+			laser.Spawn()
 	parent.AddTask(shot_laser, 0, 1, 0)
 WORLD.AddTask(laser_and_dia_task, 600, 2, 0, True)
 
@@ -81,7 +81,7 @@ def shoot_dia_while_rotating(vec, axis):
 				shot.Pos = Vector3(0, 0, 0)
 				shot.Velocity = vec_[0] * (i + 1) * 2.0
 				shot.LifeSpan = 240 * (2 - i)
-				shot()
+				shot.Spawn()
 		vec_[0] *= rot * rot
 	WORLD.AddTask(shot_dia, 1, 960, 60, True)
 

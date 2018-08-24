@@ -32,9 +32,9 @@ def task(pos, color1, color2):
 			shot.Pos = org.Pos
 			shot.Velocity = +(TARGET_BONE.WorldPos - org.Pos) * 5
 			shot.LifeSpan = 300
-			shot()
+			shot.Spawn()
 		mgc.AddTask(replace, 0, 1, shot.LifeSpan)
-		shot()
+		shot.Spawn()
 	
 	def init_shot(veclist = objvertices("ico.obj", 3)):
 		mat = Matrix3.LookAt(mgc.LookAtVec, Vector3.UnitY)
@@ -65,7 +65,7 @@ def shot_rainbow_s(vec, axis):
 		shot = EntityShotStraight(WORLD, "S", COLORS[task.ExecutedCount % len(COLORS)][0])
 		shot.Velocity = binder[0] * 4
 		shot.LifeSpan = 240
-		shot()
+		shot.Spawn()
 		
 		if task.ExecutedCount > 10:
 			binder[0] *= rot

@@ -52,9 +52,9 @@ for pos in edge_list:
 				shot.Pos = org.Pos * -2
 				shot.Velocity = org.Velocity
 				shot.LifeSpan = get_collide_frame2(shot.Pos, shot.Velocity)
-				shot()
+				shot.Spawn()
 			shot.AddTask(on_collide, 0, 1, shot.LifeSpan)
-			shot()
+			shot.Spawn()
 	mgc.AddTask(shot_red_scale, 3, 300, 0)
 	mgc()
 
@@ -78,9 +78,9 @@ for pos in face_list:
 				shot.Pos = org.Pos * -2
 				shot.Velocity = org.Velocity
 				shot.LifeSpan = get_collide_frame2(shot.Pos, shot.Velocity)
-				shot()
+				shot.Spawn()
 			shot.AddTask(on_collide, 0, 1, shot.LifeSpan)
-			shot()
+			shot.Spawn()
 	mgc.AddTask(shot_red_scale, 3, 300, 0)
 	mgc()
 
@@ -94,7 +94,7 @@ def shot_s():
 		shot.Pos = org.Pos * -2
 		shot.Velocity = org.Velocity
 		shot.LifeSpan = get_collide_frame2(shot.Pos, shot.Velocity)
-		shot()
+		shot.Spawn()
 	shot.AddTask(on_collide, 0, 1, shot.LifeSpan)
-	shot()
+	shot.Spawn()
 WORLD.AddTask(shot_s, 1, 0, 300)

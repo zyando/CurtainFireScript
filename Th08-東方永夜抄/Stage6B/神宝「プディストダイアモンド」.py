@@ -39,7 +39,7 @@ for vec in veclist:
 		laser.AddMorphKeyFrame(morph, 1, 140)
 		laser.LifeSpan = 140
 		
-		laser()
+		laser.Spawn()
 	parent.AddTask(shot_laser, 120, 6, 15, True)
 	parent()
 
@@ -49,5 +49,5 @@ def shot_star():
 		shot.Pos = Vector4(gauss(0, 1) * 600, gauss(0, 1) * 400, gauss(0, 1) * 40, 1) * HAND_BONE.WorldMat
 		shot.Velocity = Vector3.UnitZ * Matrix3.RotationAxis(Vector3.UnitZ ^ randomvec(), RAD * random() * 60) * HAND_BONE.WorldRot * uniform(4, 8)
 		shot.LifeSpan = 450
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_star, 0, 400, 30)

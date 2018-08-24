@@ -40,7 +40,7 @@ def world_task_func1():
 			shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 
 			shot.LifeSpan = 120
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_laser, 2, wayHoriz, 0)
 WORLD.AddTask(world_task_func1, 200, 2, 0)
 
@@ -68,7 +68,7 @@ def world_task_func3():
 			shot.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 
 			shot.LifeSpan = 120
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_laser, 2, wayHoriz, 0)
 WORLD.AddTask(world_task_func3, 200, 3, 40)
 
@@ -97,10 +97,10 @@ for vec in veclist3:
 			shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0)
 			shot.Pos = parentShot2.WorldPos
 			shot.Velocity = +(parentShot2.WorldPos - parentShot1.WorldPos) * -1.0
-			shot()
+			shot.Spawn()
 
 			shot = EntityShot(WORLD, "BUTTERFLY", 0xA00000)
 			shot.Pos = parentShot2.WorldPos
 			shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 1.0
-			shot()
+			shot.Spawn()
 		parentShot1.AddTask(shot_butterfly, 10, 60, 0)

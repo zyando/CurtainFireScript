@@ -22,7 +22,7 @@ for vec in veclist:
 					shot.Pos = CENTER_BONE.WorldPos + binder[0] * 640
 					shot.Velocity = binder[0] * binder[1] * -6
 					shot.LifeSpan = 110
-					shot()
+					shot.Spawn()
 				WORLD.AddTask(shot_dia, 4, 8, 0)
 			WORLD.AddTask(rotate, 32, 20, 0)
 
@@ -39,7 +39,7 @@ def world_task():
 			shot = EntityShot(WORLD, "L", 0x4000D0)
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * mat2 * 8
-			shot()
+			shot.Spawn()
 			
 			mat2 = mat2 * mat1
 	WORLD.AddTask(shot_l, 5, 4, 0, True)

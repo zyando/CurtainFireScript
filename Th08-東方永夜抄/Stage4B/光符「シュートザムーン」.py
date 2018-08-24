@@ -14,7 +14,7 @@ def phase0():
             shot.Pos = CENTER_BONE.WorldPos
             shot.Velocity = vec * (2 + (i * 2))
             shot.LifeSpan = 400 - i * 200
-            shot()
+            shot.Spawn()
 WORLD.AddTask(phase0, 5, 40, 30)
 
 poslist = [v * 240 + -Vector3.UnitY * 320 for v in objvertices("ico.obj", 3) if v.y <= 0]
@@ -41,7 +41,7 @@ def phase1(task):
             shot.Pos = mgc.Pos
             shot.Velocity = Vector3.UnitY * VEC_BONE.WorldMat * 20 * Matrix3.RotationAxis(randomvec(), RAD * 20)
             shot.LifeSpan = 100
-            shot()
+            shot.Spawn()
         mgc.AddTask(shot_laser, 0, 1, 45)
         mgc()
     WORLD.AddTask(lambda: [shot_mgc_circle() for i in range(16)], 0, len(posstack) / 16, 0)

@@ -15,7 +15,7 @@ def shot_dia():
 		shot = EntityShotStraight(WORLD, "DIA", 0xFF40FF)
 		shot.Velocity = vec * rot_binder[0] * 8
 		shot.LifeSpan = 80
-		shot()
+		shot.Spawn()
 	cos_binder[0] = +(cos_binder[0] * cos_binder[1])
 	vec_binder[0] = +(vec_binder[0] * vec_binder[1])
 	

@@ -27,7 +27,7 @@ def shoot_laser_every_direction(color, vec, axis, is_begining_with_vanish):
         shot.AddMorphKeyFrame(morph, 70, 1.0)
         shot.AddMorphKeyFrame(morph, 80, 0.0)
     shot.AddTask(vanish, 140, 4, 70 if is_begining_with_vanish else 0)
-    shot()
+    shot.Spawn()
 count = 0
 for vec in veclist:
     for axis in [Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ]:

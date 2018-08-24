@@ -19,7 +19,7 @@ def task():
             shot.AddMorphKeyFrame(morph, 0, 30)
             shot.AddMorphKeyFrame(morph, 1, 45)
 
-            shot()
+            shot.Spawn()
 
             vec *= rot_z
         binder[0] *= rot_x
@@ -35,7 +35,7 @@ def task():
             shot = EntityShot(WORLD, "S", 0x0000A0)
             shot.Velocity = vec * mat * 3
             shot.LifeSpan = 300 / i
-            shot()
+            shot.Spawn()
     WORLD.AddTask(shot_s, 15, 6, 5)
 
     def shot_l():
@@ -49,6 +49,6 @@ def task():
             shot = EntityShot(WORLD, "L", 0xA000A0)
             shot.Velocity = vec * 10
             shot.LifeSpan = 100
-            shot()
+            shot.Spawn()
     WORLD.AddTask(shot_l, 5, 10, 30)
 WORLD.AddTask(task, 120, 5, 0)

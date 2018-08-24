@@ -28,7 +28,7 @@ def task_to_shoot_while_rotating(vec, axis, num_pitch, num_yaw, angle_pitchyaw, 
 			shot.Velocity = binder.vec * speed
 			shot.LifeSpan = lifespan
 
-			shot()
+			shot.Spawn()
 
 			binder.vec *= rot
 		shot_dia_list.append(shot_dia)

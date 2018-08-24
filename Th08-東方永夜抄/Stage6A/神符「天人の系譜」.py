@@ -27,7 +27,7 @@ def task():
 			shot.Pos = offset + vtx * mat
 			shot.LifeSpan = 5
 			shot.Velocity = vec * mat * (1.0 / shot.LifeSpan)
-			shot()
+			shot.Spawn()
 
 			laser = EntityShot(WORLD, "LASER_LINE", 0xA00000, Vector3(1 * SCALE, 1 * SCALE, length))
 			laser.GetRecordedRot = lambda e: e.Rot
@@ -42,7 +42,7 @@ def task():
 			laser.AddMorphKeyFrame(morph, 1, 100)
 
 			laser.AddTask(lambda v = connected_vtx: shot_laser(v, level + 1, offset), 0, 1, 5)
-			laser()
+			laser.Spawn()
 	shot_laser(Vector3.Zero, 0, HAND_BONE.WorldPos)
 WORLD.AddTask(task, 200, 4, 2)
 
@@ -59,7 +59,7 @@ def shot_dia():
 		shot.Velocity = vec * mat * 4
 		shot.LifeSpan = 400
 
-		shot()
+		shot.Spawn()
 		
 		VANISHABLE_SHOTLIST.append(shot)
 WORLD.AddTask(shot_dia, 8, 110, 2)
@@ -75,6 +75,6 @@ def shot_l():
 		shot.Velocity = vec * HAND_BONE.WorldRot * 1.2
 		shot.LifeSpan = 800
 
-		shot()
+		shot.Spawn()
 		VANISHABLE_SHOTLIST.append(shot)
 WORLD.AddTask(shot_l, 30, 32, 2)

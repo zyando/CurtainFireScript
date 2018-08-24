@@ -38,7 +38,7 @@ def shot_laser(mat):
 			laser.AddMorphKeyFrame(morph, 1, interval * 2)
 			
 			laser.AddTask(lambda next_pos = next_pos: shot_next_laser(next_pos), 0, 1, interval)
-			laser()
+			laser.Spawn()
 	shot_next_laser(Vector3(0, 0, 0))
 way = 6
 matlist = [Matrix3.RotationAxis(Vector3.UnitX, RAD * 180.0 / way * i) for i in range(way)]

@@ -14,9 +14,9 @@ def task(vec, axis):
 			shot.Pos = org.Pos
 			shot.Velocity = +org.Velocity * Matrix3.RotationAxis(randomvec() ^ org.Velocity, math.pi * gauss(0, 0.5)) * -2
 			shot.LifeSpan = 300
-			shot()
+			shot.Spawn()
 		shot.AddTask(replace, 0, 1, shot.LifeSpan)
-		shot()
+		shot.Spawn()
 		
 		binder[0] *= rot
 	WORLD.AddTask(shot_task, 4, 100, 1)

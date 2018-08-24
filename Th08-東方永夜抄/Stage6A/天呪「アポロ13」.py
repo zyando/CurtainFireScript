@@ -21,13 +21,13 @@ def shot_dia_group_task():
 
 			def pause(shot = shot): shot.Velocity *= 0
 			shot.AddTask(pause, 0, 1, 30)
-			shot()
+			shot.Spawn()
 
 			def replace(orgn_shot = shot, mat = Matrix3.RotationAxis(axis, RAD * (i % 2 * 2 - 1) * 30)):
 				shot = EntityShot(WORLD, "DIA", color2)
 				shot.Pos = orgn_shot.Pos
 				shot.LookAtVec = -orgn_shot.LookAtVec
-				shot()
+				shot.Spawn()
 
 				shot_list.append(shot)
 

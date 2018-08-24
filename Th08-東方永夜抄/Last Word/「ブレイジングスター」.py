@@ -25,5 +25,5 @@ def world_task(task):
 		def move(shot = shot):
 			shot.Velocity *= 3.4
 		shot.AddTask(move, 0, 1, 120)
-		shot()
+		shot.Spawn()
 WORLD.AddTask(world_task, 3, 16, 0, True)

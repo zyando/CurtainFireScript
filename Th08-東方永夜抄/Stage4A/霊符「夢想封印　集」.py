@@ -8,7 +8,7 @@ def shot_M():
 		shot.Pos = CENTER_BONE.WorldPos + v * 12.0
 		shot.Velocity = v * 2.0
 		shot.LifeSpan = 800
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_M, 30, 20, 10)
 
 def world_task1():
@@ -35,7 +35,7 @@ def shot_amulet(vec, upward):
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
 		shot.Upward = original.Upward
 		shot.LifeSpan = 800
-		shot()
+		shot.Spawn()
 
 	def shot_func2(original):
 		shot = EntityShot(WORLD, "S", 0xFF00FF)
@@ -43,7 +43,7 @@ def shot_amulet(vec, upward):
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func1(s) , 0, 1, 19)
 		shot.LifeSpan = 20
-		shot()
+		shot.Spawn()
 
 	def shot_func3(original):
 		shot = EntityShot(WORLD, "AMULET", 0xFF0000)
@@ -53,7 +53,7 @@ def shot_amulet(vec, upward):
 		shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 40)
 		shot.AddTask(lambda s = shot :shot_func2(s) , 0, 1, 39)
 		shot.LifeSpan = 40
-		shot()
+		shot.Spawn()
 
 	def shot_func4(original):
 		shot = EntityShot(WORLD, "S", 0xFF0000)
@@ -61,7 +61,7 @@ def shot_amulet(vec, upward):
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func3(s) , 0, 1, 19)
 		shot.LifeSpan = 20
-		shot()
+		shot.Spawn()
 
 	for i in range(len(veclist)):
 		for j in range(16):
@@ -72,4 +72,4 @@ def shot_amulet(vec, upward):
 			shot.AddTask(lambda s = shot :shot_func4(s) , 0, 1, 39)
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 40)
 			shot.LifeSpan = 40
-			shot()
+			shot.Spawn()

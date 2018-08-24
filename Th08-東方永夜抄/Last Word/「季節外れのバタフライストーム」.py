@@ -20,7 +20,7 @@ def shot_func(vec, axis):
 			shot.Velocity = +binder[0] * 1.6
 			shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 60)
 			shot.LifeSpan = 60
-			shot()
+			shot.Spawn()
 			
 			def shot_butterfly():
 				shot1 = EntityShot(WORLD, "BUTTERFLY", 0xA0A000)
@@ -55,7 +55,7 @@ def shot_func(vec, axis):
 			shot.Pos = CENTER_BONE.WorldPos + binder[1]
 			shot.Velocity = +binder[1] * 12
 			shot.LifeSpan = 100
-			shot()
+			shot.Spawn()
 		WORLD.AddTask(shot_task_func4, 2, 20, 0)
 	WORLD.AddTask(shot_task_func3, 40, 4, 90, True)
 

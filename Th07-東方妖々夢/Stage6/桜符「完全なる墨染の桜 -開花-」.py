@@ -15,9 +15,9 @@ def shot_l():
 				shot.Pos = org.Pos
 				shot.Velocity = org.Velocity * (6 - i)
 				shot.LifeSpan = i * 60
-				shot()
+				shot.Spawn()
 		shot.AddTask(divide, 0, 1, 45)
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_l, 360, 0, 0)
 
 def shot_dia():
@@ -28,7 +28,7 @@ def shot_dia():
 		shot.Pos = pos
 		shot.Velocity = Vector3.UnitZ * i * uniform(4, 6)
 		shot.LifeSpan = 300
-		shot()
+		shot.Spawn()
 WORLD.AddTask(lambda: [shot_dia() for i in range(6)], 0, 0, 210)
 
 def shot_butterfly(vec, color, homing):
@@ -69,11 +69,11 @@ def shot_butterfly(vec, color, homing):
 						shot.Velocity = velocity * (1.5 + i)
 						shot.Upward = axis
 						shot.LifeSpan = (5 - i) * 100
-						shot()
+						shot.Spawn()
 				shot.AddTask(divide, 0, 1, shot.LifeSpan)
-				shot()
+				shot.Spawn()
 		shot.AddTask(shot_child, 0, 1, shot.LifeSpan)
-		shot()
+		shot.Spawn()
 
 way = 5
 def task(color, veclist = [Vector3.UnitZ * Matrix3.RotationY(RAD * 60) * Matrix3.RotationZ(RAD * 360.0 / way * i) for i in range(way)]):

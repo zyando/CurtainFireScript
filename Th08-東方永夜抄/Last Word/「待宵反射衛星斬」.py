@@ -50,7 +50,7 @@ def shot_task1():
 					def move(shot = shot, v = +shot.Velocity):
 						shot.Velocity = v * 8
 					shot.AddTask(move, 0, 1, task_interval)
-					shot()
+					shot.Spawn()
 			WORLD.AddTask(shot_scale, 1, num_shot_in_line, 0)
 		WORLD.AddTask(shot_task2, interval, num_line, 1)
 WORLD.AddTask(shot_task1, task_interval, 2, 0)

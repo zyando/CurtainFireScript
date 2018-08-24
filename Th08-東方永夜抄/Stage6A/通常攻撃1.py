@@ -29,14 +29,14 @@ def task(task, colors_tuple = ((0x400000, 0xA00000), (0x000040, 0x0000A0))):
 			shot = EntityShot(WORLD, "DIA", color2)
 			shot.Pos = old_shot.Pos
 			shot.LookAtVec = -vec
-			shot()
+			shot.Spawn()
 
 			def move():
 				shot.Velocity = vec * -2.0
 				shot.LifeSpan = shot.FrameCount + 600
 				shot.LifeSpan = shot.LifeSpan if shot.LifeSpan + WORLD.FrameCount < WORLD.EndFrame else WORLD.EndFrame - WORLD.FrameCount - randint(0, 20)
 			return move
-		shot()
+		shot.Spawn()
 
 		return replace
 

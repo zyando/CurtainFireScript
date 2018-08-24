@@ -28,7 +28,7 @@ def world_task_func():
 				shot.Velocity = vec * (1 + j * 0.5)
 				shot.Pos = CENTER_BONE.WorldPos + shot.Velocity
 				shot.LifeSpan = 600
-				shot()
+				shot.Spawn()
 
 				pauseList.append(shot)
 			vec = vec * mat
@@ -48,7 +48,7 @@ def world_task_func():
 			def shot_task_func(shot = shot, mat = mat):
 				shot.Velocity = shot.Velocity * mat * 0.5
 			shot.AddTask(shot_task_func, 0, 1, 30)
-			shot()
+			shot.Spawn()
 
 			cloneList.append(shot)
 			pauseList.append(shot)
@@ -62,7 +62,7 @@ def world_task_func():
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
 		shot.LifeSpan = 200
-		shot()
+		shot.Spawn()
 
 		cloneList.append(shot)
 		pauseList.append(shot)
@@ -91,6 +91,6 @@ def world_task_func():
 			def move(shot = shot):
 				shot.Velocity = +shot.LookAtVec * 8.0
 			shot.AddTask(move, 0, 1, get_waiting_frame())
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(clone, 0, num_clone, 60, True)
 WORLD.AddTask(world_task_func, 120, 2, 0)

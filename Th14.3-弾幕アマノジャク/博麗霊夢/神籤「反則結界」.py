@@ -37,7 +37,7 @@ def shot_amulet(color):
                 is_needed[0] = False
         shot.AddTask(check_collision, 0, 0, 0)
 
-        shot()
+        shot.Spawn()
 WORLD.AddTask(lambda: shot_amulet(COLORS.pop()), 30, len(COLORS), 0)
 
 def shot_amulet_and_sphere(vec = [Vector3.UnitZ], mat = Matrix3.RotationAxis(randomvec() ^ Vector3.UnitZ, RAD * 15)):
@@ -45,19 +45,19 @@ def shot_amulet_and_sphere(vec = [Vector3.UnitZ], mat = Matrix3.RotationAxis(ran
         shot = EntityShot(WORLD, "M", 0xFF0000)
         shot.Velocity = vec[0] * Matrix3.RotationAxis(randomvec(), RAD * 20) * 12
         shot.LifeSpan = 400
-        shot()
+        shot.Spawn()
 
     for i in range(40):
         shot = EntityShot(WORLD, "S", 0xFF0000)
         shot.Velocity = vec[0] * Matrix3.RotationAxis(randomvec(), RAD * 20) * 12
         shot.LifeSpan = 400
-        shot()
+        shot.Spawn()
 
     for i in range(40):
         shot = EntityShot(WORLD, "XS", 0xFFFFFF)
         shot.Velocity = vec[0] * Matrix3.RotationAxis(randomvec(), RAD * 20) * 12
         shot.LifeSpan = 400
-        shot()
+        shot.Spawn()
 
     vec[0] = vec[0] * mat
 WORLD.AddTask(shot_amulet_and_sphere, 5, 24, 330)

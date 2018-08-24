@@ -23,7 +23,7 @@ def phase5():
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * mat * 2
 			shot.LifeSpan = 400
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_dia1, lambda i: max(5, interval + int(acceleration * i)), interval / -acceleration + 8, 0)
 
 	def shot_dia2():
@@ -40,8 +40,8 @@ def phase5():
 				shot.Pos = orgn.Pos
 				shot.Velocity = orgn.Velocity
 				shot.LifeSpan = orgn.LifeSpan * 8
-				shot()
+				shot.Spawn()
 			WORLD.AddTask(replace, 0, 1, shot.LifeSpan)
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_dia2, 15, 120, 0)
 WORLD.AddTask(phase5, 0, 1, 0)

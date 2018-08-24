@@ -37,6 +37,6 @@ def task():
 		#実際の停止するフレームは、中心に到達するまでに経過するフレーム * pause_frame_func(t)で求められる
 		get_pause_frame = lambda t: 0.1 + t * 1.1,
 		#再発進するフレームを返す関数、引数は最初の弾を0、最後の弾を1とした場合の浮動小数点
-		get_restart_frame = lambda t: 320 * (1 - t * 0.4),
+		get_restart_frame = lambda t: 320 * (1 - t * 0.2),
 		)
 WORLD.AddTask(task, 0, 1, 0)

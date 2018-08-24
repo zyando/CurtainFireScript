@@ -20,7 +20,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, lifespan):
 		shot = EntityShot(WORLD, shottype, color, parent)
 		shot.Velocity = binder[0] * speed
 		shot.LifeSpan = lifespan
-		shot()
+		shot.Spawn()
 
 		def rotate(rot = Quaternion.RotationAxis(axis, RAD * -150)):
 			parent.Rot *= rot
@@ -39,5 +39,5 @@ def shot_dia():
 		shot = EntityShot(WORLD, "DIA_BRIGHT", 0x004040)
 		shot.Velocity = vec * 3.0
 		shot.LifeSpan = 800
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_dia, 15, 22, 0)

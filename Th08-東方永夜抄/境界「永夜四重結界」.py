@@ -40,7 +40,7 @@ def task(color, scale):
 			shot.Velocity = randomvec() * 80
 			shot.Pos = YUKARI_HAND_BONE.WorldPos + +shot.Velocity * scale * uniform(0.1, 1)
 			shot.LifeSpan = 50
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(effect, 0, border.LifeSpan ,0)
 	border()
 

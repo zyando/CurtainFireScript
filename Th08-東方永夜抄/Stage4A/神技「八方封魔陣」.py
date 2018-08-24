@@ -28,9 +28,9 @@ def shot_omnidirectinal(binder = [0, 0]):
 					shot.Velocity = +vec * 6
 					shot.Upward = src_vec
 					shot.LifeSpan = 240
-					shot()
+					shot.Spawn()
 		shot.AddTask(divide, 0, 1, 50)
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_omnidirectinal, 4, 100, 0)
 
 def shot_every_directinal():
@@ -57,8 +57,8 @@ def shot_every_directinal():
 				def move(shot = shot): shot.Velocity = vec * 6
 				shot.AddTask(move, 0, 1, 20)
 
-				shot()
+				shot.Spawn()
 			shot.AddTask(shot_red_scale, 0, 1, 40)
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_s, 3, 5, 0, True)
 WORLD.AddTask(shot_every_directinal, 60, 4, 60)

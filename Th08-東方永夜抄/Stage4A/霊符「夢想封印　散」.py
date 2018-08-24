@@ -10,7 +10,7 @@ def world_task(task):
 			shot.Velocity = vec * 5 * (1 + i * 1)
 			#shot.Colliding = Colliding.Stick
 			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
-			shot()
+			shot.Spawn()
 
 	def shot_red_amulet():
 		for i in range(540 + 100 * task.ExecutedCount):
@@ -20,7 +20,7 @@ def world_task(task):
 			shot.Upward = randomvec()
 			#shot.Colliding = Colliding.Stick
 			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_red_amulet, 1, 5, 0)
 
 	def shot_M():
@@ -31,6 +31,6 @@ def world_task(task):
 			shot.Upward = randomvec()
 			#shot.Colliding = Colliding.Vanish
 			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_M, 1, 5, 0)
 WORLD.AddTask(world_task, 65, 5, 0, True)

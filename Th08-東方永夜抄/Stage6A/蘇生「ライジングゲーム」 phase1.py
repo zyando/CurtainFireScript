@@ -14,7 +14,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, spe
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = binder[0] * speed
 		shot.LifeSpan = lifespan
-		shot()
+		shot.Spawn()
 
 		binder[0] *= rot
 	return shot_dia

@@ -32,7 +32,7 @@ def died_decision1(entity):
 		shot.Pos = entity.Pos
 		shot.Velocity = -entity.Velocity
 		shot.ShouldRemove = died_decision2
-		shot()
+		shot.Spawn()
 		return True
 	return False
 
@@ -53,7 +53,7 @@ for vec in veclist:
 			shot.Pos = parent.WorldPos
 			shot.Velocity = vec * 2.4
 			shot.ShouldRemove  = died_decision1
-			shot()
+			shot.Spawn()
 			
 			vec = -vec
 	parent.AddTask(shot_dia, 3, 120, 0)
@@ -70,6 +70,6 @@ for vec in objvertices("ico.obj", 1):
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = binder[0] * 3.4
 			shot.LifeSpan = 160
-			shot()
+			shot.Spawn()
 		WORLD.AddTask(shot_s, 10, 40, 0, True)
 		

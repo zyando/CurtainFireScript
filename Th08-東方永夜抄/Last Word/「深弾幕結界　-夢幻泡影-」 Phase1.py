@@ -15,8 +15,6 @@ for i in range(way):
 		for mat in matrices[0:3]:
 			vec_axis_list.append((vec * mat, axis * mat))
 
-vec_axis_list = [(Vector3.UnitZ, Vector3.UnitY), (-Vector3.UnitZ, Vector3.UnitY)]
-
 curve = CubicBezierCurve(Vector2(0, 0), Vector2(0.9, 0.1), Vector2(0.1, 0.5), Vector2(1, 1))
 
 def task():
@@ -24,8 +22,8 @@ def task():
 		spell(
 		vec = vec,
 		axis = axis,
-		prop = ("SCALE", 0xA000A0 if vec.z > 0 else 0x0000A0, 2),
-		distance = 512,
+		prop = ("SCALE", 0xA000A0 if vec.z > 0 else 0x0000A0, 1),
+		distance = 1024,
 		wait_time = 60.0,
 		
 		get_speed1 = lambda t: 8.0,

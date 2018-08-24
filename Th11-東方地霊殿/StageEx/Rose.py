@@ -15,7 +15,7 @@ def shot_rose(rose_pos, rose_rot, shot_factory, blooming_frame, init_scale = Mat
 		shot = shot_factory()
 		shot.Pos = rose_pos + pos * rose_rot * scale * init_scale
 		shot.LifeSpan = 900
-		shot()
+		shot.Spawn()
 		
 		def move():
 			shot.Velocity = (pos * rose_rot * scale - pos * rose_rot * scale * init_scale) * (1.0 / 8)
@@ -31,7 +31,7 @@ def shot_rose(rose_pos, rose_rot, shot_factory, blooming_frame, init_scale = Mat
 				if next_pos not in poslist:
 					task(next_pos)
 		shot.AddTask(next_task, 0, 1, 1)
-		shot()
+		shot.Spawn()
 	
 	for v in edges:
 		task(v)
@@ -50,7 +50,7 @@ def stalk(pos, vec, color):
 		shot = EntityShot(WORLD, "M", 0x004000)
 		shot.Pos = entity.Pos
 		shot.LifeSpan = 900
-		shot()
+		shot.Spawn()
 	WORLD.AddTask(shot_stalk, 5, 200, 0)
 	
 	def blooming():

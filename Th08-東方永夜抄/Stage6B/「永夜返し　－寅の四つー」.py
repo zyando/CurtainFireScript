@@ -14,7 +14,7 @@ def phase0():
 
             def move(shot = shot, vec = vec): shot.Velocity = vec * -10
             shot.AddTask(move, 0, 1, 30)
-            shot()
+            shot.Spawn()
     WORLD.AddTask(shot_dia, 2, 9, 0)
 WORLD.AddTask(phase0, 80, 8, 0)
 
@@ -22,7 +22,7 @@ def phase1(task):
     shot = EntityShot(WORLD, "L", 0xA00000)
     shot.Velocity = Vector3.UnitX * (task.ExecutedCount % 2 * 2 - 1) * 3
     shot.LifeSpan = 300
-    shot()
+    shot.Spawn()
 
     def turn():
         shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 3

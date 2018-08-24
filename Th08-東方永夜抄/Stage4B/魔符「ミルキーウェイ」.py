@@ -14,7 +14,7 @@ def entity_to_shoot(vec, axis):
         shot.Pos = CENTER_BONE.WorldPos
         shot.Velocity = entity.Pos * 4
         shot.LifeSpan = 300
-        shot()
+        shot.Spawn()
 
         entity.Pos = entity.Pos * entity.Rot
     entity.AddTask(shot_star, 5, 50, 0, True)
@@ -33,5 +33,5 @@ def shot_small_star():
             shot.Pos = CENTER_BONE.WorldPos + Vector3((gauss(0, 1) + 1) * i * 1000, gauss(0, 1) * 600, (gauss(0, 1) + 1) * -800)
             shot.Velocity = Vector3.UnitX * -i * 4 * Matrix3.RotationAxis(randomvec(), RAD * random() * 20)
             shot.LifeSpan = 300
-            shot()
+            shot.Spawn()
 WORLD.AddTask(shot_small_star, 0, 300, 50)

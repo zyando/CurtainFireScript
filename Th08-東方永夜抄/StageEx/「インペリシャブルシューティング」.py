@@ -43,7 +43,7 @@ def shot_dia(pos, color, init_speed, spread_time, divergence_time):
 			
 			def divergence(shot = shot, vec = vec, i = i): shot.Velocity = vec * 20
 			shot.AddTask(divergence, 0, 1, divergence_time - WORLD.FrameCount)
-			shot()
+			shot.Spawn()
 WORLD.AddTask(lambda: shot_dia(Vector3(0, 0, 0), 0x0000A0, 3.0, 70, 140), 0, 1, 0)
 
 WORLD.AddTask(lambda: shot_dia(Vector3(0, 0, 0), 0x0000A0, 3.0, 240, 320), 0, 1, 170)

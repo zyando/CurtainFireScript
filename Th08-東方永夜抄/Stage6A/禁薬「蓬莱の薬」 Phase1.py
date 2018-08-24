@@ -16,7 +16,7 @@ def shot_dia():
 			shot.Pos = orgn.Pos
 			shot.Velocity = orgn.Velocity
 			shot.LifeSpan = orgn.LifeSpan * 8
-			shot()
+			shot.Spawn()
 		shot.AddTask(replace, 0, 1, shot.LifeSpan)
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_dia, lambda i: int(max(20 - i * 0.5, 5)), 0, 0)

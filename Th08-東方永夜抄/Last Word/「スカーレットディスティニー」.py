@@ -23,7 +23,7 @@ def world_task(task):
 				shot.Velocity = binder[0] * (10.0 + (binder[0] * Vector3.UnitZ) + task.ExecutedCount * 0.08)
 				shot.Upward = axis
 				shot.LifeSpan = 180
-				shot()
+				shot.Spawn()
 				
 				binder[0] = binder[0] * binder[1]
 			WORLD.AddTask(shot_knife, 1, 120, 0, True)
@@ -34,6 +34,6 @@ def world_task(task):
 					shot.Pos = CENTER_BONE.WorldPos
 					shot.Velocity = binder[0] * 5.0
 					shot.LifeSpan = 240
-					shot()
+					shot.Spawn()
 				WORLD.AddTask(shot_l, 3, 8, 4)
 WORLD.AddTask(world_task, 160, 4, 0, True)

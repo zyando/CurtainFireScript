@@ -23,7 +23,7 @@ def world_task(axis, r):
 	def create_shot_m(vec):
 		shot = EntityShot(WORLD, "M_ICO", 0xFFFFFF, root)
 		shot.Pos = vec * r
-		shot()
+		shot.Spawn()
 		return shot
 	shotlist = [create_shot_m(v) for v in veclist]
 	
@@ -52,7 +52,7 @@ def shot_amulet(pos, vec, upward):
 		shot.Upward = original.Upward
 		shot.LifeSpan = 100
 		
-		shot()
+		shot.Spawn()
 	
 	def shot_func2(original):
 		shot = EntityShot(WORLD, "S", 0xFF00FF)
@@ -61,7 +61,7 @@ def shot_amulet(pos, vec, upward):
 		shot.AddTask(lambda s = shot :shot_func1(s) , 0, 1, 10)
 		shot.LifeSpan = 10
 		
-		shot()
+		shot.Spawn()
 	
 	def shot_func3(original):
 		shot = EntityShot(WORLD, "AMULET", 0xFF0000)
@@ -72,7 +72,7 @@ def shot_amulet(pos, vec, upward):
 		shot.AddTask(lambda s = shot :shot_func2(s) , 0, 1, 40)
 		shot.LifeSpan = 40
 		
-		shot()
+		shot.Spawn()
 	
 	def shot_func4(original):
 		shot = EntityShot(WORLD, "S", 0xFF0000)
@@ -80,7 +80,7 @@ def shot_amulet(pos, vec, upward):
 		shot.Upward = original.Upward
 		shot.AddTask(lambda s = shot :shot_func3(s) , 0, 1, 10)
 		shot.LifeSpan = 10
-		shot()
+		shot.Spawn()
 	
 	for j in range(24):
 		shot = EntityShot(WORLD, "AMULET", 0xFFFFFF)
@@ -90,4 +90,4 @@ def shot_amulet(pos, vec, upward):
 		shot.AddTask(lambda s = shot: shot_func4(s) , 0, 1, 30)
 		shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
 		shot.LifeSpan = 30
-		shot()
+		shot.Spawn()

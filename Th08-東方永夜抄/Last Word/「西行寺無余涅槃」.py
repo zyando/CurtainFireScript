@@ -27,7 +27,7 @@ def world_task():
 			def set_rotation(shot = shot, rot = rot):
 				shot.Rot = rot
 			shot.AddTask(set_rotation, 0, 1, 50)
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_laser, 0, 1, 0)
 	
 	def shot_l():
@@ -43,9 +43,9 @@ def world_task():
 					new_shot.Velocity = shot.Velocity * (1 + i) * 3
 					new_shot.Pos = shot.Pos
 					new_shot.LifeSpan = 200
-					new_shot()
+					new_shot.Spawn()
 			shot.AddTask(divide_shot, 0, 1, 40)
-			shot()
+			shot.Spawn()
 	WORLD.AddTask(shot_l, 0, 1, 200)
 	
 	def shot_butterfly_gb():
@@ -65,16 +65,16 @@ def world_task():
 						new_shot.Pos = shot.WorldPos
 						new_shot.SetMotionInterpolationCurve(Vector2(0.2, 0.5), Vector2(0.9, 0.045), 200)
 						new_shot.LifeSpan = 300
-						new_shot()
+						new_shot.Spawn()
 					
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)
 						new_shot.Velocity = shot.Velocity * (1 + i) * 3
 						new_shot.Pos = shot.WorldPos
 						new_shot.LifeSpan = 300
-						new_shot()
+						new_shot.Spawn()
 				shot.AddTask(divide_shot, 0, 1, 60 - i * 5)
-				shot()
+				shot.Spawn()
 	WORLD.AddTask(shot_butterfly_gb, 0, 1, 0)
 	
 	def shot_butterfly_r(task):
@@ -108,16 +108,16 @@ def world_task():
 						new_shot.Pos = shot.WorldPos
 						new_shot.SetMotionInterpolationCurve(Vector2(0.2, 0.5), Vector2(0.9, 0.045), 200)
 						new_shot.LifeSpan = 400
-						new_shot()
+						new_shot.Spawn()
 					
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)
 						new_shot.Velocity = shotVec * (1 + i) * 3
 						new_shot.Pos = shot.WorldPos
 						new_shot.LifeSpan = 200
-						new_shot()
+						new_shot.Spawn()
 				shot.AddTask(divide_shot, 0, 1, wait_frame)
 				shot.LifeSpan = 400
-				shot()
+				shot.Spawn()
 	WORLD.AddTask(shot_butterfly_r, 15, 4, 60, True)
 WORLD.AddTask(world_task, 240, 2, 0)

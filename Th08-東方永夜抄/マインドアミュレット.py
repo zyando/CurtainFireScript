@@ -23,7 +23,7 @@ def particle_task(sender, e):
 		particle.AddMorphKeyFrame(vtx_morph, 0, 0)
 		particle.AddMorphKeyFrame(vtx_morph, 1, particle.LifeSpan)
 		
-		particle()
+		particle.Spawn()
 
 def shot_red_amullet():
 	if abs(REIMU_SHOT_FLAG.Pos.y) < 0.01: return
@@ -44,7 +44,7 @@ def shot_red_amullet():
 			shot.Upward = randomvec()
 			shot.LifeSpan = min(200, min([abs(calc_time_to_interesect(pl, shot.Pos, shot.Velocity, 100)) for pl in pl_list]))
 			shot.RemovedEvent += particle_task
-			shot()
+			shot.Spawn()
 WORLD.AddTask(shot_red_amullet, 0, 0, 0)
 
 def shot_homing_amulet_ex(speed = 24):
@@ -72,8 +72,8 @@ def shot_homing_amulet_ex(speed = 24):
 					particle.AddMorphKeyFrame(uv_morph, 0, 0)
 					particle.AddMorphKeyFrame(uv_morph, 1, particle.LifeSpan)
 					
-					particle()
-			shot.AddTask(particle_task, 0, 0, 0)
+					particle.Spawn()
+			#shot.AddTask(particle_task, 0, 0, 0)
 			
 			def homing(shot = shot):
 				vec_to_target = CENTER_BONE.WorldPos - shot.Pos
@@ -103,5 +103,5 @@ def shot_homing_amulet_ex(speed = 24):
 					shot.Velocity = (vec + (vec_to_target_normalized - vec) * alpha) * speed
 					shot.LifeSpan = shot.FrameCount + int((CENTER_BONE.WorldPos - shot.Pos).Length() / (speed * alpha * 2.5))
 			shot.AddTask(homing, 0, 0, 0)
-			shot()
+			shot.Spawn()
 WORLD.AddTask(shot_homing_amulet_ex, 0, 0, 0)

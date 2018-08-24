@@ -17,7 +17,7 @@ def task():
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * speed
 			shot.LifeSpan =  200
-			shot()
+			shot.Spawn()
 	
 	parent = EntityShot(WORLD, "BONE", 0)
 	parent.Pos = CENTER_BONE.WorldPos
@@ -55,7 +55,7 @@ def task():
 				shot.AddMorphKeyFrame(morph, 0, 15)
 				shot.AddMorphKeyFrame(morph, 0, 45)
 				shot.AddMorphKeyFrame(morph, 1, 75)
-				shot()
+				shot.Spawn()
 		
 		def shot_star():
 			mat = Matrix3.LookAt(center, randomvec())
@@ -70,7 +70,7 @@ def task():
 				def curve(shot = shot, rot = Matrix3.RotationAxis(center, RAD * 2)): shot.Velocity *= rot
 				shot.AddTask(curve, 0, 30, 45)
 				
-				shot()
+				shot.Spawn()
 		WORLD.AddTask(shot_star, 0, 1, 30)
 	WORLD.AddTask(lambda: [shot_laser(face) for face in facelist], 0, 1, 30)
 WORLD.AddTask(task, 150, 4, 0)

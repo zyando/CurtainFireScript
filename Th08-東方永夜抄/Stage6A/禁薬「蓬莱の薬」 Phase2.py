@@ -15,7 +15,7 @@ def shot_rice():
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * binder[0] * 12
 		shot.LifeSpan = 120
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_rice, 5, 0, 0)
 
 def shot_dia():
@@ -26,7 +26,7 @@ def shot_dia():
 		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = vec * binder[0] * 12
 		shot.LifeSpan = 120
-		shot()
+		shot.Spawn()
 WORLD.AddTask(shot_dia, 40, 0, 40)
 
 veclist = [Vector3(sin(RAD * 50), 0, -cos(RAD * 50)) * Matrix3.RotationZ(RAD * 60 * i) for i in range(6)] + [-Vector3.UnitZ]
@@ -41,5 +41,5 @@ def shot_dia_to_target():
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * mat * (1 + i * 0.5) * 6
 			shot.LifeSpan = 400
-			shot()
+			shot.Spawn()
 WORLD.AddTask(shot_dia_to_target, 5, 0, 622)

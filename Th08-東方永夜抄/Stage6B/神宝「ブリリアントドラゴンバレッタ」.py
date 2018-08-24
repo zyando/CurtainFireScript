@@ -23,7 +23,7 @@ def laser_task(vec, axis):
 		shot.Velocity = binder[0] * Matrix3.RotationAxis(randomvec(), RAD * 20 * gauss()) * 16
 		shot.Upward = randomvec()
 		shot.LifeSpan = 120
-		shot()
+		shot.Spawn()
 		
 		binder[0] *= rot
 	WORLD.AddTask(shot_laser, 3, 26, 0)
@@ -37,7 +37,7 @@ def s_task():
 		
 		def acc(a = Vector3(0, 0, -shot.Velocity.Length() / 30 * 2)): shot.Velocity += a
 		shot.AddTask(acc, 0, 30, 0)
-		shot()
+		shot.Spawn()
 	WORLD.AddTask(lambda: [shot_s() for i in range(16)], 0, 60, 0)
 
 for vec, axis in vec_axis_list:

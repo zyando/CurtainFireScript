@@ -19,7 +19,7 @@ def divide(orgn, props):
             shot.AddTask(lambda s = shot: divide(s, props[1:]), 0, 1, shot.LifeSpan)
         else:
             shot.LifeSpan = 300
-        shot()
+        shot.Spawn()
 
 
 def shot_scale(axis, props):
@@ -30,7 +30,7 @@ def shot_scale(axis, props):
         shot.LifeSpan = 45
 
         shot.AddTask(lambda s = shot: divide(s, props), 0, 1, shot.LifeSpan)
-        shot()
+        shot.Spawn()
 
 COLORS = 0xFFFFFF, 0xFF0000, 0x00FF00
 
