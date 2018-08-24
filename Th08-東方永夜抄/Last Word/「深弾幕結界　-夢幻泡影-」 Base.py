@@ -23,7 +23,7 @@ def spell(
 	parent = EntityShot(WORLD, "BONE", 0xFFFFFF)
 	parent.GetRecordedRot = lambda e: e.Rot
 	parent.Rot = Quaternion.RotationAxis(axis, init_pos)
-	parent()
+	parent.Spawn()
 	
 	circle = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, 4, parent)
 	circle.GetRecordedRot = lambda e: e.Rot
@@ -32,11 +32,10 @@ def spell(
 	
 	def stop(): circle.Velocity *= 0
 	circle.AddTask(stop, 0, 1, wait_time)
-	circle()
 	
-	def go_out(): circle.Velocity = +circle.Pos * 12
+	def go_out(): circle.Velocity = normalize(circle.Pos) * 12
 	circle.AddTask(go_out, 0, 1, wait_time + interval_task * num_task)
-	circle()
+	circle.Spawn()
 	
 	def add_shot_task():
 		def shot_amulet():
@@ -53,7 +52,7 @@ def spell(
 				if shot.Velocity == velocity: shot.Velocity *= 0
 			shot.AddTask(pause, 0, 1, int(distance / speed * get_pause_frame(count)))
 			
-			def restart(vec = +shot.Velocity):
+			def restart(vec = normalize(shot.Velocity)):
 				shot.Velocity = vec * get_speed2(count)
 			shot.AddTask(restart, 0, 1, int(get_restart_frame(count)))
 			shot.Spawn()
@@ -67,7 +66,7 @@ def spell(
 	def shot_amulet_outside():
 		shot = EntityShot(WORLD, *prop)
 		shot.Pos = circle.WorldPos
-		shot.Velocity = +circle.WorldPos * 2.0
+		shot.Velocity = normalize(circle.WorldPos) * 2.0
 		shot.Upward = axis
 		shot.LifeSpan = 1000
 		shot.Spawn()

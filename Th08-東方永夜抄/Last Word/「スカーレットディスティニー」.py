@@ -13,14 +13,14 @@ for i in range(way):
 def world_task(task):
 	for vec in veclist:
 		for angle in [RAD, -RAD]:
-			axis = vec ^ (vec ^ Vector3.UnitY)
+			axis = cross2(vec, Vector3.UnitY)
 			
 			binder = [vec, Matrix3.RotationAxis(axis, angle * 12)]
 			
 			def shot_knife(task, axis = axis, binder = binder):
 				shot = EntityShotStraight(WORLD, "KNIFE", 0xA00000)
 				shot.Pos = CENTER_BONE.WorldPos
-				shot.Velocity = binder[0] * (10.0 + (binder[0] * Vector3.UnitZ) + task.ExecutedCount * 0.08)
+				shot.Velocity = binder[0] * (10.0 + dot(binder[0], Vector3.UnitZ) + task.ExecutedCount * 0.08)
 				shot.Upward = axis
 				shot.LifeSpan = 180
 				shot.Spawn()

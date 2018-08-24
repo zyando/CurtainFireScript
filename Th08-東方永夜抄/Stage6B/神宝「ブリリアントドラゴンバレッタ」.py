@@ -10,7 +10,7 @@ matrices = Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1), Matrix3(0, 1, 0, 0, 0, 1, 1, 0, 0
 vec_axis_list = []
 for i in range(way):
 	vec = Vector3.UnitZ * Matrix3.RotationX(angle) * Matrix3.RotationY(RAD * (360.0 / way) * i)
-	axis = vec ^ (vec ^ Vector3.UnitY)
+	axis = cross2(vec, Vector3.UnitY)
 	vec *= Matrix3.RotationAxis(axis, RAD * (360.0 / way) * -i)
 	
 	for mat in matrices[0:1]:

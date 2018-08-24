@@ -43,6 +43,6 @@ def phase1(task):
             shot.LifeSpan = 100
             shot.Spawn()
         mgc.AddTask(shot_laser, 0, 1, 45)
-        mgc()
+        mgc.Spawn()
     WORLD.AddTask(lambda: [shot_mgc_circle() for i in range(16)], 0, len(posstack) / 16, 0)
 WORLD.AddTask(phase1, 75, 4, 0, True)

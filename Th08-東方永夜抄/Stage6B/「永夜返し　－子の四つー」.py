@@ -10,13 +10,13 @@ for i in -1, 1:
 
 	def rotate(parent = parent, rot = Quaternion.RotationAxis(Vector3.UnitY * i, RAD * 90)): parent.Rot *= rot
 	parent.AddTask(rotate, 180, 4, 180)
-	parent()
+	parent.Spawn()
 	parent_list.append(parent)
 
 def phase0():
 	shot = EntityShot(WORLD, "L", 0xFF0000)
 	shot.Pos = CENTER_BONE.WorldPos
-	shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 3
+	shot.Velocity = normalize(TARGET_BONE.WorldPos - shot.Pos) * 3
 	shot.LifeSpan = 240
 	shot.Spawn()
 

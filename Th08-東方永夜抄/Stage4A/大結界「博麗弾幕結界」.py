@@ -13,12 +13,12 @@ init_rot = Quaternion.RotationAxis(randomvec(), RAD * 30)
 parent1 = EntityShot(WORLD, "BONE", 0)
 parent1.Rot = init_rot
 parent1.GetRecordedRot = lambda e: e.Rot
-parent1()
+parent1.Spawn()
 
 parent2 = EntityShot(WORLD, "BONE", 0)
 parent2.Rot = init_rot
 parent2.GetRecordedRot = lambda e: e.Rot
-parent2()
+parent2.Spawn()
 
 def rotate(binder = [Vector3.UnitY, Quaternion.RotationAxis(randomvec(), RAD * 0.2)]):
 	rot = Quaternion.RotationAxis(binder[0], RAD * 0.4)
@@ -63,7 +63,7 @@ white_scale_veclist = [Vector3.UnitZ * Matrix3.RotationX(RAD * 20) * Matrix3.Rot
 for pos in face_list:
 	mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0xA00000, parent2)
 	mgc.Pos = pos * MGC_DISTANCE
-	mgc.Upward = randomvec() ^ pos
+	mgc.Upward = cross(randomvec(), pos)
 	mgc.LookAtVec = pos
 	
 	def shot_red_scale(mgc = mgc):

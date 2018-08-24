@@ -12,20 +12,20 @@ def shot_omnidirectinal(binder = [0, 0]):
 	for vec in veclist_ico0:
 		shot = EntityShot(WORLD, "AMULET", 0xA00000)
 		shot.Velocity = vec * mat * 6
-		shot.Pos = +shot.Velocity * 20
+		shot.Pos = normalize(shot.Velocity) * 20
 		shot.LifeSpan = 270
 
-		trans_mat = Matrix3(1, 0, 0, 0, 0, 1, 0, 1, 0) * Matrix3.LookAt(+vec, Vector3.UnitY)
+		trans_mat = Matrix3(1, 0, 0, 0, 0, 1, 0, 1, 0) * Matrix3.LookAt(normalize(vec), Vector3.UnitY)
 
-		def divide(src = shot, src_vec = +shot.Velocity, trans_mat = trans_mat):
+		def divide(src = shot, src_vec = normalize(shot.Velocity), trans_mat = trans_mat):
 			for vec in veclist_ico_y:
 				vec = vec * trans_mat
-				dot = vec * src_vec
+				d = dot(vec, src_vec)
 
-				if -0.99 < dot < 0.99:
-					shot = EntityShotStraight(WORLD, "AMULET", 0xA00000 if 0 < dot else 0xFFD700)
+				if -0.99 < d < 0.99:
+					shot = EntityShotStraight(WORLD, "AMULET", 0xA00000 if 0 < d else 0xFFD700)
 					shot.Pos = src.Pos
-					shot.Velocity = +vec * 6
+					shot.Velocity = normalize(vec) * 6
 					shot.Upward = src_vec
 					shot.LifeSpan = 240
 					shot.Spawn()
@@ -41,7 +41,7 @@ def shot_every_directinal():
 			vec  = vec * mat
 			shot = EntityShot(WORLD, "S", 0xFFFFFF)
 			shot.Velocity = vec * (12 - task.ExecutedCount * 0.6)
-			shot.Pos = +shot.Velocity * 10
+			shot.Pos = normalize(shot.Velocity) * 10
 			shot.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
 			shot.LifeSpan = 40
 

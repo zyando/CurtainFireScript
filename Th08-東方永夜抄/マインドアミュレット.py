@@ -77,8 +77,8 @@ def shot_homing_amulet_ex(speed = 24):
 			
 			def homing(shot = shot):
 				vec_to_target = CENTER_BONE.WorldPos - shot.Pos
-				vec_to_target_normalized = +vec_to_target
-				vec = +shot.Velocity
+				vec_to_target_normalized = normalize(vec_to_target)
+				vec = normalize(shot.Velocity)
 				
 				intersect_sp_list = [sp for sp in sp_list if sp.IsIntersectWithRay(shot.Pos, shot.Velocity) and (sp.Pos - shot.Pos).LengthSquare() < 160000]
 				
@@ -96,9 +96,9 @@ def shot_homing_amulet_ex(speed = 24):
 					cos = math.sqrt(dot2) / length_to_sp
 					
 					alpha = (1 - cos) * 0.2
-					shot.Velocity = vec * Matrix3.RotationAxis(vec_to_target ^ shot.Velocity, math.acos(cos) * alpha) * speed
+					shot.Velocity = vec * Matrix3.RotationAxis(cross(vec_to_target, shot.Velocity), math.acos(cos) * alpha) * speed
 				else:
-					alpha = (1 - vec * vec_to_target_normalized) * 0.6
+					alpha = (1 - dot(vec, vec_to_target_normalized)) * 0.6
 					
 					shot.Velocity = (vec + (vec_to_target_normalized - vec) * alpha) * speed
 					shot.LifeSpan = shot.FrameCount + int((CENTER_BONE.WorldPos - shot.Pos).Length() / (speed * alpha * 2.5))

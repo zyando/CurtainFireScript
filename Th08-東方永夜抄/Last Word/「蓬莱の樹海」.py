@@ -22,7 +22,7 @@ def rotate():
 	root.Rot = rot1 * root.Rot
 	root.Rot = root.Rot * rot2
 root.AddTask(rotate, 3, 120, 0)
-root()
+root.Spawn()
 
 colorstack = list(colorlist)
 
@@ -57,7 +57,7 @@ for vec in veclist:
 			
 			vec = -vec
 	parent.AddTask(shot_dia, 3, 120, 0)
-	parent()
+	parent.Spawn()
 
 for vec in objvertices("ico.obj", 1):
 	for axis in [Vector3.UnitX, Vector3.UnitZ]:

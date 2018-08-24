@@ -25,12 +25,12 @@ def shot_func(pos, vec, way, level):
 	if level < 0: return
 	
 	def shot_task_func():
-		mat1 = Matrix3.RotationAxis(+(vec ^ Vector3.UnitY), RAD * 60)
+		mat1 = Matrix3.RotationAxis(normalize(cross(vec, Vector3.UnitY)), RAD * 60)
 		mat2 = Matrix3.RotationAxis(vec, RAD * (360 / way))
 		shotVec = vec * mat1
 		
 		for i in range(way):
-			shot_func(shot.Pos, +shotVec, way, level - 1)
+			shot_func(shot.Pos, normalize(shotVec), way, level - 1)
 			shotVec = shotVec * mat2
 	shot.AddTask(shot_task_func, 0, 1, 6)
 	shot.LifeSpan = 10

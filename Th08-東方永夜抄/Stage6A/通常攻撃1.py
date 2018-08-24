@@ -17,7 +17,7 @@ def task(task, colors_tuple = ((0x400000, 0xA00000), (0x000040, 0x0000A0))):
 		def pause(): shot.Velocity *= 0
 		shot.AddTask(pause, 0, 1, 30)
 
-		vec = vec * Matrix3.RotationAxis(vec ^ (vec ^ pos), angle)
+		vec = vec * Matrix3.RotationAxis(cross2(vec, pos), angle)
 
 		def rotate(): shot.LookAtVec = vec
 		shot.AddTask(pause, 0, 1, 40)

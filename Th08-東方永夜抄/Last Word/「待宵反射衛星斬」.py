@@ -20,7 +20,7 @@ def shot_task1():
 	
 	root = Entity(WORLD)
 	root.Rot = Quaternion.RotationAxis(Vector3.UnitZ, RAD * random() * 180)
-	root()
+	root.Spawn()
 	
 	def rotate(root = root, rotate_quat = Quaternion.RotationAxis(Vector3.UnitZ, RAD * 6)):
 		root.Rot *= rotate_quat 
@@ -29,15 +29,15 @@ def shot_task1():
 	for vec in veclist:
 		parent1 = EntityMoving(WORLD, root)
 		parent1.Velocity = vec * 16
-		parent1()
+		parent1.Spawn()
 		
 		def shot_task2(parent1 = parent1, bonemat = CENTER_BONE.WorldMat):
 			parent2 = EntityMoving(WORLD)
 			parent2.Pos = vec4(parent1.WorldPos) * bonemat
 			parent2.Velocity = axis * 26
-			parent2()
+			parent2.Spawn()
 			
-			def shot_scale(parent2 = parent2, upward = +Vector3(parent1.WorldPos.x, parent1.WorldPos.y, 0) * bonemat):
+			def shot_scale(parent2 = parent2, upward = normalize(Vector3(parent1.WorldPos.x, parent1.WorldPos.y, 0)) * bonemat):
 				mat = Matrix3.RotationAxis(randomvec(), RAD * random() * 6)
 				vec = axis * mat * 0.1
 				
@@ -47,7 +47,7 @@ def shot_task1():
 					shot.Upward = upward
 					shot.Velocity = vec * (i * 2 - 1)
 					
-					def move(shot = shot, v = +shot.Velocity):
+					def move(shot = shot, v = normalize(shot.Velocity)):
 						shot.Velocity = v * 8
 					shot.AddTask(move, 0, 1, task_interval)
 					shot.Spawn()

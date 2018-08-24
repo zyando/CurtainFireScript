@@ -9,7 +9,7 @@ def task_to_shoot_mgc_crcl(axis):
 	WORLD.AddTask(lambda: [f() for f in move_func_list], 0, 1, 100)
 
 	for vec in veclist0:
-		axis = vec ^ (vec ^ axis)
+		axis = cross2(vec, axis)
 		
 		for i in 1, -1:
 			mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0xA0A0A0, 2)

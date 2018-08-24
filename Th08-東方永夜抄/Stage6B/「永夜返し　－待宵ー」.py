@@ -21,6 +21,6 @@ def phase1(task):
 	shot.Spawn()
 
 	def turn():
-		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 3
+		shot.Velocity = normalize(TARGET_BONE.WorldPos - shot.Pos) * 3
 	shot.AddTask(turn, 0, 1, 60)
 WORLD.AddTask(phase1, 8, 75, 90, True)

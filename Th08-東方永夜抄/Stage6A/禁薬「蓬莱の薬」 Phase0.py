@@ -23,7 +23,7 @@ def shot_laser(mat):
 
 			laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(8, 8, distance))
 			laser.Pos = CENTER_BONE.WorldPos + pos * mat * struct_scale
-			laser.LookAtVec = +vec * mat
+			laser.LookAtVec = normalize(vec) * mat
 			laser.LifeSpan = interval * 2
 			
 			morph = laser.CreateVertexMorph(0, lambda v: Vector3(0, 0, -v.z))

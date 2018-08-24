@@ -11,15 +11,15 @@ pauseList = []
 TARGET_BONE = EntityShot(WORLD, "BONE", 0)
 TARGET_BONE.Pos = Vector3(300, 300, 400)
 TARGET_BONE.Velocity = Vector3(-20, -20, 0)
-TARGET_BONE()
+TARGET_BONE.Spawn()
 
 def world_task_func():
 	cloneList = []
 
 	def shot_knife1(way = 5):
 		vec = randomvec()
-		mat = Matrix3.RotationAxis(vec ^ (vec ^ randomvec()), RAD * 20)
-		vec = vec * (mat ^ 2)
+		mat = Matrix3.RotationAxis(cross2(vec, randomvec()), RAD * 20)
+		vec = vec * (mat * mat)
 		mat = ~mat
 
 		for i in range(way):
@@ -37,7 +37,7 @@ def world_task_func():
 	def shot_knife2(angle, axis):
 		for vec in veclist:
 			vec = vec
-			mat = Matrix3.RotationAxis(vec ^ (vec ^ axis), angle)
+			mat = Matrix3.RotationAxis(cross2(vec, axis), angle)
 			
 			shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 			shot.Velocity = vec * 4.0
@@ -60,7 +60,7 @@ def world_task_func():
 	def shot_knife3():
 		shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 		shot.Pos = CENTER_BONE.WorldPos
-		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
+		shot.Velocity = normalize(TARGET_BONE.WorldPos - shot.Pos) * 2.0
 		shot.LifeSpan = 200
 		shot.Spawn()
 
@@ -81,7 +81,7 @@ def world_task_func():
 
 	def clone(task):
 		for src in cloneList:
-			interval = +src.LookAtVec * 16
+			interval = normalize(src.LookAtVec) * 16
 
 			shot = EntityShot(WORLD, "KNIFE", 0xA0A0A0)
 			shot.LookAtVec = src.LookAtVec
@@ -89,7 +89,7 @@ def world_task_func():
 			shot.LifeSpan = 120
 
 			def move(shot = shot):
-				shot.Velocity = +shot.LookAtVec * 8.0
+				shot.Velocity = normalize(shot.LookAtVec) * 8.0
 			shot.AddTask(move, 0, 1, get_waiting_frame())
 			shot.Spawn()
 	WORLD.AddTask(clone, 0, num_clone, 60, True)

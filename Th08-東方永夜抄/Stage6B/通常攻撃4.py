@@ -12,7 +12,7 @@ def task(vec, axis):
 		def replace(org = shot):
 			shot = EntityShotStraight(WORLD, "RICE_M", 0xA00000)
 			shot.Pos = org.Pos
-			shot.Velocity = +org.Velocity * Matrix3.RotationAxis(randomvec() ^ org.Velocity, math.pi * gauss(0, 0.5)) * -2
+			shot.Velocity = normalize(org.Velocity) * Matrix3.RotationAxis(cross(randomvec(), org.Velocity), math.pi * gauss(0, 0.5)) * -2
 			shot.LifeSpan = 300
 			shot.Spawn()
 		shot.AddTask(replace, 0, 1, shot.LifeSpan)

@@ -23,7 +23,7 @@ def world_task():
 			shot.Pos = CENTER_BONE.WorldPos
 			
 			rot = Matrix3.LookAt(vec, Vector3.UnitY)
-			shot.Rot = rot * Matrix3.RotationAxis(vec ^ (vec ^ Vector3.UnitY), RAD * (170 if flag else -170))
+			shot.Rot = rot * Matrix3.RotationAxis(cross2(vec, Vector3.UnitY), RAD * (170 if flag else -170))
 			def set_rotation(shot = shot, rot = rot):
 				shot.Rot = rot
 			shot.AddTask(set_rotation, 0, 1, 50)
@@ -34,7 +34,7 @@ def world_task():
 		for vec in vec_dict["beveled_snub_cube"]:
 			shot = EntityShot(WORLD, "L", 0xFF4040)
 			shot.Velocity = vec * 2
-			shot.Pos = CENTER_BONE.WorldPos + +shot.Velocity * 20
+			shot.Pos = CENTER_BONE.WorldPos + normalize(shot.Velocity) * 20
 			shot.LifeSpan = 400
 			
 			def divide_shot(shot = shot):
@@ -55,7 +55,7 @@ def world_task():
 			for i in range(3 if flag else 2):
 				shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0 if flag else 0xA000A0)
 				shot.Velocity = vec * (1 + i * 0.6)
-				shot.Pos = CENTER_BONE.WorldPos + +shot.Velocity * 20
+				shot.Pos = CENTER_BONE.WorldPos + normalize(shot.Velocity) * 20
 				shot.LifeSpan = 400 - i * 50
 				
 				def divide_shot(shot = shot):
@@ -78,29 +78,29 @@ def world_task():
 	WORLD.AddTask(shot_butterfly_gb, 0, 1, 0)
 	
 	def shot_butterfly_r(task):
-		parentShot = EntityShot(WORLD, "BONE", 0xFFFFFF)
-		parentShot.GetRecordedRot = lambda e: e.Rot
-		parentShot.Pos = CENTER_BONE.WorldPos
+		parent = EntityShot(WORLD, "BONE", 0xFFFFFF)
+		parent.GetRecordedRot = lambda e: e.Rot
+		parent.Pos = CENTER_BONE.WorldPos
 		
 		quat = Quaternion.RotationAxis(Vector3.UnitY, RAD * 60  * (1 if task.ExecutedCount % 2 == 0 else -1))
 		
 		def rotate():
-			parentShot.Rot *= quat
-		parentShot.AddTask(rotate, 0, 1, 120)
-		parentShot()
+			parent.Rot *= quat
+		parent.AddTask(rotate, 0, 1, 120)
+		parent.Spawn()
 		
 		for vec in vec_dict["ico2"]:
 			if vec in vec_dict["ico1"]: continue
 			
 			for i in range(2):
-				shot = EntityShot(WORLD, "BUTTERFLY", 0xA00000, parentShot)
+				shot = EntityShot(WORLD, "BUTTERFLY", 0xA00000, parent)
 				shot.Velocity = vec * (1 + i * 0.6)
-				shot.Pos = +shot.Velocity * 20
+				shot.Pos = normalize(shot.Velocity) * 20
 				
 				wait_frame = 120 - i * 5
 				
 				def divide_shot(shot = shot, rot = quat ^ (120.0 / wait_frame)):
-					shotVec = shot.Velocity *  shot.ParentEntity.Rot
+					shotVec = shot.Velocity * shot.ParentEntity.Rot
 					
 					for i in range(3):
 						new_shot = EntityShot(WORLD, shot.Property)

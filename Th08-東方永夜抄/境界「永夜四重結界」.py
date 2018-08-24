@@ -38,7 +38,7 @@ def task(color, scale):
 		for i in range(16):
 			shot = EntityShot(WORLD, "DIA", color, Vector3(1, 1, 10))
 			shot.Velocity = randomvec() * 80
-			shot.Pos = YUKARI_HAND_BONE.WorldPos + +shot.Velocity * scale * uniform(0.1, 1)
+			shot.Pos = YUKARI_HAND_BONE.WorldPos + normalize(shot.Velocity) * scale * uniform(0.1, 1)
 			shot.LifeSpan = 50
 			shot.Spawn()
 	WORLD.AddTask(effect, 0, border.LifeSpan ,0)

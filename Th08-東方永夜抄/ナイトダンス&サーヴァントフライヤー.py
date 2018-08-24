@@ -10,7 +10,7 @@ parent.AddTask(lambda: update(0.05), 0, 0, 0)
 
 update(1)
 
-parent()
+parent.Spawn()
 
 def night_dacce():
     for i in 1, -1:

@@ -15,7 +15,7 @@ def phase4():
 			parent.AddTask(rotate, 0, 1, 120)
 			parent.AddTask(lambda p = parent: p.AddRootBoneKeyFrame(), 0, 1, 60)
 
-			parent()
+			parent.Spawn()
 
 			for vec in veclists[2]:
 				shot = EntityShot(WORLD, "DIA_BRIGHT", 0x004000)

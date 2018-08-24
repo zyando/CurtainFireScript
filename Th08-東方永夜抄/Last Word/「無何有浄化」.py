@@ -5,7 +5,7 @@ veclist = objvertices("ico.obj", 1)
 for vec in veclist:
 	for angle in [RAD, -RAD]:
 		for axis in [Vector3.UnitX, Vector3.UnitZ]:
-			axis = vec ^ (vec ^ axis)
+			axis = cross2(vec, axis)
 			
 			rotPosMat = Matrix3.RotationAxis(axis, angle * 6)
 			binder = [vec, Quaternion.Identity]
@@ -29,7 +29,7 @@ for vec in veclist:
 def world_task():
 	def shot_l(task):
 		vec = +(TARGET_BONE.WorldPos - CENTER_BONE.WorldPos)
-		axis = vec ^ (vec ^ Vector3.UnitY)
+		axis = cross2(vec, Vector3.UnitY)
 		
 		angle = (task.ExecutedCount - 1) * RAD * 5 * 0.5
 		mat1 = Matrix3.RotationAxis(axis, -RAD * 5)

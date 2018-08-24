@@ -4,9 +4,9 @@ veclist0 = objvertices("ico.obj", 1)
 veclist2 = objvertices("ico.obj", 2)
 
 def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, lifespan):
-	if abs(vec * axis) > 0.995 > 0: return lambda: 0
+	if abs(dot(vec, axis)) > 0.995 > 0: return lambda: 0
 
-	axis = vec ^ (vec ^ axis)
+	axis = cross2(vec, axis)
 	rot = Matrix3.RotationAxis(axis, RAD * 5)
 	binder = [vec]
 
@@ -15,7 +15,7 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, lifespan):
 		parent.Velocity = binder[0] * speed
 		parent.GetRecordedRot = lambda e: e.Rot
 		parent.LifeSpan = lifespan
-		parent()
+		parent.Spawn()
 
 		shot = EntityShot(WORLD, shottype, color, parent)
 		shot.Velocity = binder[0] * speed

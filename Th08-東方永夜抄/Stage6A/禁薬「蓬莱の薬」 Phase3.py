@@ -15,7 +15,7 @@ def shot_dia():
 			shot = EntityShotStraight(WORLD, "DIA", 0xA00000)
 			shot.Pos = orgn.Pos
 			shot.Velocity = orgn.Velocity * (2.0 if flag else -1.0)
-			shot.LifeSpan = (200 if flag else 460) - (1 - (+shot.Velocity).z) * 80
+			shot.LifeSpan = (200 if flag else 460) - (1 - (normalize(shot.Velocity)).z) * 80
 			shot.Spawn()
 		WORLD.AddTask(replace, 0, 1, shot.LifeSpan)
 		shot.Spawn()

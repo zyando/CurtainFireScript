@@ -72,35 +72,35 @@ def world_task_func3():
 	WORLD.AddTask(shot_laser, 2, wayHoriz, 0)
 WORLD.AddTask(world_task_func3, 200, 3, 40)
 
-veclist3 = [+Vector3(-1, 1, 1), +Vector3(1, 1, -1), +Vector3(1, -1, 1), +Vector3(-1, -1, -1)]
+veclist3 = [normalize(v) for v in [Vector3(-1, 1, 1), Vector3(1, 1, -1), Vector3(1, -1, 1), Vector3(-1, -1, -1)]]
 
 for vec in veclist3:
 	poslist = [Vector3(40, 40, 0), Vector3(-40, 40, 0), Vector3(40, -40, 0), Vector3(-40, -40, 0)]
-	rot = Quaternion.RotationAxis(vec ^ (vec ^ Vector3.UnitY), RAD * 30)
+	rot = Quaternion.RotationAxis(cross2(vec, Vector3.UnitY), RAD * 30)
 	rotlist = [rot, ~rot] * 2
 
 	for pos, rot in zip(poslist, rotlist):
 		parentShot1 = EntityShot(WORLD, "BONE", 0xFFFFFF)
 		parentShot1.Pos = CENTER_BONE.WorldPos + pos
 		parentShot1.GetRecordedRot = lambda e: e.Rot
-		parentShot1()
+		parentShot1.Spawn()
 
 		parentShot2 = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, parentShot1)
 		parentShot2.GetRecordedRot = lambda e: e.Rot
 		parentShot2.Pos = vec * 12
 		parentShot2.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
-		parentShot2()
+		parentShot2.Spawn()
 
 		def shot_butterfly(parentShot1 = parentShot1, parentShot2 = parentShot2, rot = rot):
 			parentShot1.Rot *= rot
 
 			shot = EntityShot(WORLD, "BUTTERFLY", 0x0000A0)
 			shot.Pos = parentShot2.WorldPos
-			shot.Velocity = +(parentShot2.WorldPos - parentShot1.WorldPos) * -1.0
+			shot.Velocity = normalize(parentShot2.WorldPos - parentShot1.WorldPos) * -1.0
 			shot.Spawn()
 
 			shot = EntityShot(WORLD, "BUTTERFLY", 0xA00000)
 			shot.Pos = parentShot2.WorldPos
-			shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 1.0
+			shot.Velocity = normalize(TARGET_BONE.WorldPos - shot.Pos) * 1.0
 			shot.Spawn()
 		parentShot1.AddTask(shot_butterfly, 10, 60, 0)

@@ -15,7 +15,7 @@ def world_task1():
 	entity = Entity(WORLD)
 	entity.Pos = randomvec()
 
-	upward = entity.Pos ^ (entity.Pos ^ randomvec())
+	upward = cross2(entity.Pos, randomvec())
 	mat = Matrix3.RotationAxis(upward, RAD * (20.0 + random() * 20.0))
 
 	def world_task2(upward = upward, mat = mat):
@@ -25,14 +25,14 @@ def world_task1():
 WORLD.AddTask(world_task1, lambda i: 90 - sum([randint(4, 8) for j in range(i)]), 10, 10)
 
 def shot_amulet(vec, upward):
-	mat = Matrix3.RotationAxis(vec ^ (vec ^ Vector3.UnitY), RAD * (4.0 + random() * 6.0))
+	mat = Matrix3.RotationAxis(cross2(vec, Vector3.UnitY), RAD * (4.0 + random() * 6.0))
 	veclist = [vec * mat, vec, vec * ~mat]
 	upwardList = [upward * mat, upward, upward * mat]
 
 	def shot_func1(original):
 		shot = EntityShot(WORLD, "AMULET", 0xFF00FF)
 		shot.Pos = original.Pos
-		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 2.0
+		shot.Velocity = normalize(TARGET_BONE.WorldPos - shot.Pos) * 2.0
 		shot.Upward = original.Upward
 		shot.LifeSpan = 800
 		shot.Spawn()

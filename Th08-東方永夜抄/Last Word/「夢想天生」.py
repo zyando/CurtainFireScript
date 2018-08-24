@@ -13,12 +13,12 @@ def world_task(axis, r):
 	root = EntityShot(WORLD, "BONE", 0xFFFFFF)
 	root.GetRecordedRot = lambda e: e.Rot
 	root.Pos = CENTER_BONE.WorldPos
-	root.Rot = Quaternion.RotationAxis(Vector3.UnitY ^ axis, math.acos(Vector3.UnitY * axis))
+	root.Rot = Quaternion.RotationAxis(cross(Vector3.UnitY, axis), math.acos(dot(Vector3.UnitY, axis)))
 	
 	def follow(rotate = Quaternion.RotationAxis(Vector3.UnitY, RAD * 8)):
 		root.Rot = rotate * root.Rot
 	root.AddTask(follow, 0, 470, 0)
-	root()
+	root.Spawn()
 	
 	def create_shot_m(vec):
 		shot = EntityShot(WORLD, "M_ICO", 0xFFFFFF, root)
@@ -36,7 +36,7 @@ def world_task(axis, r):
 		shotStack = list(shotlist)
 		def shot_task_func2():
 			parentShot = shotStack.pop()
-			vec = +(parentShot.WorldPos - root.WorldPos) * mat
+			vec = normalize(parentShot.WorldPos - root.WorldPos) * mat
 			shot_amulet(parentShot.WorldPos, vec, upward)
 		root.AddTask(shot_task_func2, 1 if flag else randint(3, 6), len(shotStack), 0)
 		task.ExecutingInterval -= 10
@@ -48,7 +48,7 @@ def shot_amulet(pos, vec, upward):
 	def shot_func1(original):
 		shot = EntityShot(WORLD, "AMULET", 0xFF00FF)
 		shot.Pos = original.Pos
-		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 24.0
+		shot.Velocity = normalize(TARGET_BONE.WorldPos - shot.Pos) * 24.0
 		shot.Upward = original.Upward
 		shot.LifeSpan = 100
 		

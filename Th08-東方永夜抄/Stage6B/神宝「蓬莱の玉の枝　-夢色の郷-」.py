@@ -19,7 +19,7 @@ def get_collide_time(pos, vec, plane = [Vector3(300, 300, 500), Vector3(-300, -3
 def task(pos, color1, color2):
 	mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x505050, 2)
 	mgc.Pos = pos
-	mgc.LookAtVec = +(Vector3.UnitZ * 250 - mgc.Pos)
+	mgc.LookAtVec = normalize(Vector3.UnitZ * 250 - mgc.Pos)
 	
 	def shot_dia(vec):
 		shot = EntityShotStraight(WORLD, "DIA_BRIGHT", color2)
@@ -30,7 +30,7 @@ def task(pos, color1, color2):
 		def replace(org = shot):
 			shot = EntityShotStraight(WORLD, "DIA", color1)
 			shot.Pos = org.Pos
-			shot.Velocity = +(TARGET_BONE.WorldPos - org.Pos) * 5
+			shot.Velocity = normalize(TARGET_BONE.WorldPos - org.Pos) * 5
 			shot.LifeSpan = 300
 			shot.Spawn()
 		mgc.AddTask(replace, 0, 1, shot.LifeSpan)
@@ -61,7 +61,7 @@ for idx, pos in enumerate(poslist):
 def shot_rainbow_s(vec, axis):
 	binder = [vec]
 	
-	def shot_s(task, rot = Matrix3.RotationAxis(vec ^ (vec ^ axis), RAD * 15)):
+	def shot_s(task, rot = Matrix3.RotationAxis(cross2(vec, axis), RAD * 15)):
 		shot = EntityShotStraight(WORLD, "S", COLORS[task.ExecutedCount % len(COLORS)][0])
 		shot.Velocity = binder[0] * 4
 		shot.LifeSpan = 240

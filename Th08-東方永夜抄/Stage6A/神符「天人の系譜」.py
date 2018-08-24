@@ -5,7 +5,7 @@ SCALE = 4
 parent = EntityShot(WORLD, "BONE", 0)
 def record(): parent.Pos = HAND_BONE.WorldPos
 WORLD.AddTask(record, 0, 0, 0)
-parent()
+parent.Spawn()
 
 obj = WavefrontObject("space_filling.obj", lambda v: v * 25 * SCALE)
 connected_vtx_dict = {v : obj.create_list_connected_vertex(v) for v in obj.veclist}
@@ -32,7 +32,7 @@ def task():
 			laser = EntityShot(WORLD, "LASER_LINE", 0xA00000, Vector3(1 * SCALE, 1 * SCALE, length))
 			laser.GetRecordedRot = lambda e: e.Rot
 			laser.Pos = offset + vtx * mat
-			laser.Rot = Matrix3.LookAt(+(vec * mat), Vector3.UnitY)
+			laser.Rot = Matrix3.LookAt(normalize(vec * mat), Vector3.UnitY)
 			laser.LifeSpan = 100
 
 			morph = laser.CreateVertexMorph(0, lambda v: Vector3(v.x * -0.95, v.y * -0.95, 0))

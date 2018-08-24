@@ -14,22 +14,22 @@ def shot_mgc(axis):
 
 		shot = EntityShot(WORLD, "S", 0xFFFFFF)
 		shot.Pos = mgc.WorldPos
-		shot.Velocity = +(TARGET_BONE.WorldPos - mgc.WorldPos) * 4
+		shot.Velocity = normalize(TARGET_BONE.WorldPos - mgc.WorldPos) * 4
 		shot.LifeSpan = 300
 		shot.Spawn()
 	WORLD.AddTask(shot_to_target, 8, 0, 0)
 
 	for pos in veclist:
-		if abs(pos * axis) > 0.95: continue
+		if abs(dot(pos, axis)) > 0.95: continue
 
 		parent = EntityShot(WORLD, "BONE", 0)
 		parent.GetRecordedRot = lambda e: e.Rot
 		parent.Pos = TARGET_BONE.WorldPos
 
-		def rotate(parent = parent, rot = Quaternion.RotationAxis(pos ^ (pos ^ axis), RAD * 0.5)): parent.Rot *= rot
+		def rotate(parent = parent, rot = Quaternion.RotationAxis(cross2(pos, axis), RAD * 0.5)): parent.Rot *= rot
 		parent.AddTask(rotate, 4, 75, 300)
 
-		parent()
+		parent.Spawn()
 
 		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x000080, parent)
 		mgc.Pos = pos * 100
@@ -40,12 +40,12 @@ def shot_mgc(axis):
 			mgc.Velocity = mgc.LookAtVec * 2
 		mgc.AddTask(move, 0, 1, 300)
 
-		def shot_dia(mgc = mgc, parent = parent, axis = pos ^ (pos ^ axis)):
+		def shot_dia(mgc = mgc, parent = parent, axis = cross2(pos, axis)):
 			for angle, color in anglelist:
 				shot = EntityShot(WORLD, "DIA", color)
 
 				shot.Pos = mgc.WorldPos
-				shot.Velocity = +mgc.Pos * parent.LocalMat * Matrix3.RotationAxis(axis, angle) * 8
+				shot.Velocity = normalize(mgc.Pos) * parent.LocalMat * Matrix3.RotationAxis(axis, angle) * 8
 				shot.LifeSpan = 120
 				shot.Spawn()
 		mgc.AddTask(shot_dia, 4, 100, 0)

@@ -8,7 +8,7 @@ matrices = Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1), Matrix3(0, 1, 0, 0, 0, 1, 1, 0, 0
 vec_axis_list = []
 for i in range(way):
 	vec = -Vector3.UnitZ * Matrix3.RotationX(angle) * Matrix3.RotationY(RAD * (360.0 / way) * i)
-	axis = vec ^ (vec ^ Vector3.UnitY)
+	axis = cross2(vec, Vector3.UnitY)
 	vec *= Matrix3.RotationAxis(axis, RAD * (360.0 / way) * -i)
 	
 	for mat in matrices[0:1]:
@@ -43,7 +43,7 @@ def laser_task(pos):
 	def short_laser():
 		shot = EntityShotStraight(WORLD, "DIA", 0xFF0000, Vector3(2, 2, 16))
 		shot.Pos = parent.Pos
-		shot.Velocity = +(TARGET_BONE.WorldPos - shot.Pos) * 12
+		shot.Velocity = normalize(TARGET_BONE.WorldPos - shot.Pos) * 12
 		shot.LifeSpan = 120
 		shot.Spawn()
 	parent.AddTask(short_laser, 20, 10, 60)
@@ -51,7 +51,7 @@ def laser_task(pos):
 	def long_laser():
 		shot = EntityShot(WORLD, "LASER_LINE", 0xFF0000, Vector3(5, 5, 4000))
 		shot.Pos = parent.Pos
-		shot.LookAtVec = +(TARGET_BONE.WorldPos - shot.Pos) * 12
+		shot.LookAtVec = normalize(TARGET_BONE.WorldPos - shot.Pos) * 12
 		shot.LifeSpan = 35
 		
 		morph = shot.CreateVertexMorph(0, lambda v: Vector3(v.x * -0.99, v.y * -0.99, 0))
@@ -60,7 +60,7 @@ def laser_task(pos):
 		
 		shot.Spawn()
 	parent.AddTask(long_laser, 60, 5, 90)
-	parent()
+	parent.Spawn()
 
 for pos in [Vector3(x * 100, y * 100, 0) for x in [1, -1] for y in [1, -1]]:
 	laser_task(pos)

@@ -126,8 +126,8 @@ def bool_iter(bool_value = True):
 		yield bool_value
 		bool_value = not bool_value
 
-def get_vecs(v = +Vector3(1, 0, -1.2), gen = bool_iter()):
-	return (+(TARGET_BONE.WorldPos - HAND_BONE.WorldPos), 0x400040), (v * Matrix3.RotationAxis(Vector3.UnitZ, RAD * random() * 360), 0x400000 if next(gen) else 0x000040)
+def get_vecs(v = noramlize(Vector3(1, 0, -1.2)), gen = bool_iter()):
+	return (noramlize(TARGET_BONE.WorldPos - HAND_BONE.WorldPos), 0x400040), (v * Matrix3.RotationAxis(Vector3.UnitZ, RAD * random() * 360), 0x400000 if next(gen) else 0x000040)
 
 WORLD.AddTask(lambda: [shot_l(*v) for v in get_vecs()], 120, 11, 400)
 
@@ -152,7 +152,7 @@ def shot_red_amullet(mat = [Matrix3.Identity, Matrix3.RotationAxis(Vector3.UnitZ
 		shot.Pos = pos
 		shot.Velocity = vec * REIMU_HAND_BONE.WorldMat * 12.0
 		
-		shot.Upward = (vec ^ (vec ^ Vector3.UnitZ)) * REIMU_HAND_BONE.WorldMat
+		shot.Upward = cross2(vec, Vector3.UnitZ) * REIMU_HAND_BONE.WorldMat
 		shot.LifeSpan = 100
 		
 		entity, time = octree.MinTimeToCollide(shot.Pos, shot.Velocity, 40)
@@ -175,7 +175,7 @@ def shot_homing_amulet(speed = 12):
 		shot = EntityShot(WORLD, "AMULET", 0xA000A0, 0.6)
 		shot.Pos = pos
 		shot.Velocity = vec * REIMU_HAND_BONE.WorldMat * speed
-		shot.Upward = (vec ^ (vec ^ Vector3.UnitZ)) * REIMU_HAND_BONE.WorldMat
+		shot.Upward = (cross2(vec, Vector3.UnitZ)) * REIMU_HAND_BONE.WorldMat
 		
 		target_binder = [target]
 		damage_func_binder = [target_binder[0].SetDamage]
@@ -191,9 +191,9 @@ def shot_homing_amulet(speed = 12):
 			
 			pos = target_binder[0].Pos
 			
-			vec = +shot.Velocity
-			vec_to_target = +(pos - shot.Pos)
-			alpha = (1 - vec * vec_to_target) * 0.4
+			vec = normalize(shot.Velocity)
+			vec_to_target = noramlize(pos - shot.Pos)
+			alpha = (1 - dot(vec, vec_to_target)) * 0.4
 			
 			shot.Velocity = (vec + (vec_to_target - vec) * alpha) * speed
 			shot.LifeSpan = shot.FrameCount + int((pos - shot.Pos).Length() / speed)
@@ -215,11 +215,11 @@ def shot_reimu_bomb(speed = 16, veclist = objvertices("ico.obj", 0)):
 			entity = octree_keeping.Nearest(shot.Pos)
 			pos = entity.Pos
 			
-			vec = +shot.Velocity
-			vec_to_target = +(pos - shot.Pos)
-			alpha = (1 - vec * vec_to_target) * min(0.4, max(task.ExecutedCount - 20, 0) * 0.4 * 0.05)
+			vec = normalize(shot.Velocity)
+			vec_to_target = noramlize(pos - shot.Pos)
+			alpha = (1 - dot(vec, vec_to_target)) * min(0.4, max(task.ExecutedCount - 20, 0) * 0.4 * 0.05)
 			
-			shot.Velocity = +(vec + (vec_to_target - vec) * alpha) * speed
+			shot.Velocity = noramlize(vec + (vec_to_target - vec) * alpha) * speed
 			shot.LifeSpan = shot.FrameCount + int((pos - shot.Pos).Length() / speed)
 		shot.AddTask(homing, 0, 0, 0, True)
 		shot.Spawn()

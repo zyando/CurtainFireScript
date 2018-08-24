@@ -23,7 +23,7 @@ for vec in veclist:
 		p.Velocity *= 0
 	parent.AddTask(pause, 0, 1, 15)
 	
-	def shot_laser(task, parent = parent, vec = +vec):
+	def shot_laser(task, parent = parent, vec = normalize(vec)):
 		if task.ExecutedCount > 1: vec = vec * Matrix3.RotationAxis(vec ^ randomvec(), RAD * random() * 60)
 		
 		laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(3, 3, 4000))
@@ -41,7 +41,7 @@ for vec in veclist:
 		
 		laser.Spawn()
 	parent.AddTask(shot_laser, 120, 6, 15, True)
-	parent()
+	parent.Spawn()
 
 def shot_star():
 	for i in range(16):

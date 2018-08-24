@@ -39,7 +39,7 @@ def shot_magic_circle(level, pos, vec, color, shot_vec, upward):
 					mat = Matrix3.RotationAxis(axis, RAD * 90)
 					shot_magic_circle(level + 1, parent.Pos, vec * mat, color, shot_vec, upward)
 		parent.AddTask(divide, 0, 1, parent.LifeSpan - 1)
-	parent()
+	parent.Spawn()
 
 for vec in [(Vector3.UnitX, Vector3.UnitY), (Vector3.UnitY, Vector3.UnitZ)]:
 	for i in range(2):

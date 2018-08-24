@@ -40,11 +40,11 @@ for vec in veclist:
 	parent.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)
 	
 	def pause(p = parent):
-		poslist.append((p.Pos, +parent.Velocity))
+		poslist.append((p.Pos, normalize(parent.Velocity)))
 		p.Velocity *= 0
 	parent.AddTask(pause, 0, 1, 30)
 	
-	def shot_s(parent = parent, vec = +vec, binder = [Vector3.UnitZ, Matrix3.RotationY(RAD * 10)]):
+	def shot_s(parent = parent, vec = normalize(vec), binder = [Vector3.UnitZ, Matrix3.RotationY(RAD * 10)]):
 		shot = EntityShot(WORLD, "S", 0x0000A0)
 		shot.Pos = parent.Pos + randomvec() * gauss(0, 80)
 		
@@ -59,7 +59,7 @@ for vec in veclist:
 		
 		binder[0] *= binder[1]
 	parent.AddTask(shot_s, 10, 64, 75 + randint(0, 10))
-	parent()
+	parent.Spawn()
 
 def export_poslist():
 	import pickle

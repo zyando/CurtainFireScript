@@ -33,7 +33,7 @@ veclist = [Vector3(sin(RAD * 50), 0, -cos(RAD * 50)) * Matrix3.RotationZ(RAD * 6
 matlist = [Matrix3.LookAt(v, Vector3.UnitY) for v in veclist]
 
 def shot_dia_to_target():
-	vec = +(REIMU_CENTER_BONE.WorldPos - CENTER_BONE.WorldPos)
+	vec = noramlize(REIMU_CENTER_BONE.WorldPos - CENTER_BONE.WorldPos)
 
 	for mat in matlist:
 		for i in range(3):

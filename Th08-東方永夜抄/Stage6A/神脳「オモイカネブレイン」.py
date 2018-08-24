@@ -25,7 +25,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 
 	def rotate_root(rot = Quaternion.RotationAxis(axis, RAD * 360.0 / (time_to_stop / interval_of_shoot))): root.Rot *= rot
 	root.AddTask(rotate_root, interval_of_shoot, time_to_stop / interval_of_shoot, wait_time + interval_of_shoot)
-	root()
+	root.Spawn()
 
 	parent = EntityShot(WORLD, "BONE", 0xFFFFFF, root)
 	parent.LifeSpan = root.LifeSpan
@@ -38,7 +38,7 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 
 	def rotate_parent(rot = Quaternion.RotationAxis(axis, RAD * -45.0 / (time_to_stop / interval_of_shoot))): parent.Rot *= rot
 	parent.AddTask(rotate_parent, interval_of_shoot, time_to_stop / interval_of_shoot, wait_time + interval_of_shoot)
-	parent()
+	parent.Spawn()
 
 	def shot_dia(ignore_vec = Vector3.UnitZ):
 		for vec in veclist:
@@ -72,7 +72,7 @@ WORLD.AddTask(laser_and_dia_task, 600, 2, 0, True)
 def shoot_dia_while_rotating(vec, axis):
 	if abs(vec * axis) > 0.99: return
 
-	axis = vec ^ (vec ^ axis)
+	axis = cross2(vec, axis)
 
 	def shot_dia(task, vec_ = [vec], rot = Quaternion.RotationAxis(axis, RAD * 0.6)):
 		if task.ExecutedCount % 8 < 4:

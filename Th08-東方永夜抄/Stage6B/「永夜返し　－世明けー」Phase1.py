@@ -4,25 +4,25 @@ from MMDataIO.Pmx import BoneFlags
 shot_range = 800
 
 def shot_randomvec(shottype, color, parent, link_parent, speed):
-    shot = EntityShot(WORLD, shottype, color, parent)
-    shot.Velocity = randomvec() * speed
-    shot.Upward = randomvec()
-    shot.LifeSpan = shot_range / speed
+	shot = EntityShot(WORLD, shottype, color, parent)
+	shot.Velocity = randomvec() * speed
+	shot.Upward = randomvec()
+	shot.LifeSpan = shot_range / speed
 
-    if link_parent != None:
-        shot.RootBone.LinkParentId = link_parent.RootBone.BoneId
-        shot.RootBone.LinkWeight = 1.0
-        shot.RootBone.Flag |= BoneFlags.LOCAL_LINK
-    shot.Spawn()
+	if link_parent != None:
+		shot.RootBone.LinkParentId = link_parent.RootBone.BoneId
+		shot.RootBone.LinkWeight = 1.0
+		shot.RootBone.Flag |= BoneFlags.LOCAL_LINK
+	shot.Spawn()
 
 parentlist = [EntityShot(WORLD, "BONE", 0) for i in range(2)]
 
 for idx, parent in enumerate(parentlist):
-    parent.GetRecordedRot = lambda e: e.Rot
+	parent.GetRecordedRot = lambda e: e.Rot
 
-    def rotate(p = parent, rot = Quaternion.RotationAxis(Vector3.UnitY, RAD * (idx * 2 - 1) * 90)): p.Rot *= rot
-    parent.AddTask(rotate, 180, 0, 0)
-    parent()
+	def rotate(p = parent, rot = Quaternion.RotationAxis(Vector3.UnitY, RAD * (idx * 2 - 1) * 90)): p.Rot *= rot
+	parent.AddTask(rotate, 180, 0, 0)
+	parent.Spawn()
 
 WORLD.AddTask(lambda: [shot_randomvec("BUTTERFLY", 0x0000A0, None, None, uniform(3, 8)) for i in range(8)], 0, 80, 0)
 WORLD.AddTask(lambda: [shot_randomvec("M", 0x00A0A0, None, parentlist[0], uniform(3, 8)) for i in range(9)], 0, 80, 95)

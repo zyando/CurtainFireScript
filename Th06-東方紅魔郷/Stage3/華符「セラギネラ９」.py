@@ -17,12 +17,12 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, angle_interval, spe
 		shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 43, False)
 
 		def turn1():
-			shot.Velocity = +shot.Velocity * 2 * Matrix3.RotationAxis(axis ^ +shot.Velocity, RAD * 150)
+			shot.Velocity = normalize(shot.Velocity) * 2 * Matrix3.RotationAxis(axis ^ normalize(shot.Velocity), RAD * 150)
 			shot.SetMotionInterpolationCurve(Vector2(0.3, 0.7), Vector2(0.3, 0.7), 29, False)
 		shot.AddTask(turn1, 0, 1, 45)
 
 		def turn2():
-			shot.Velocity = +shot.Velocity * 4 * Matrix3.RotationAxis(axis ^ +shot.Velocity, RAD * 160)
+			shot.Velocity = normalize(shot.Velocity) * 4 * Matrix3.RotationAxis(axis ^ normalize(shot.Velocity), RAD * 160)
 		shot.AddTask(turn2, 0, 1, 75)
 
 		shot.Spawn()

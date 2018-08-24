@@ -21,7 +21,7 @@ def world_task():
 	rot = Matrix3.RotationAxis(randomvec(), RAD * 20)
 	
 	for vec in laser_veclist:
-		axis = (vec ^ Vector3.UnitZ) * rot
+		axis = cross(vec, Vector3.UnitZ) * rot
 		shotrot = Quaternion.RotationAxis(axis, RAD * 45)
 		front = Vector3.UnitZ * rot
 		vec = vec * rot
@@ -53,7 +53,7 @@ def world_task():
 				def shot_task(task, r1, r2, axis, front, shot, numshot = 30):
 					root = Entity(WORLD)
 					root.Pos = shot.Pos + front * (r1 * (-1 + task.ExecutedCount * 2))
-					root()
+					root.Spawn()
 					
 					def rotate(r = Quaternion.RotationAxis(axis, RAD * (180 / numshot))):
 						root.Rot *= r
@@ -62,7 +62,7 @@ def world_task():
 					parent = Entity(WORLD, root)
 					parent.Pos = front * -r2
 					parent.Rot = Quaternion.RotationAxis(axis, RAD * 60)
-					parent()
+					parent.Spawn()
 					
 					def shot_dia():
 						vec = front * parent.WorldMat
@@ -82,7 +82,7 @@ def world_task():
 	
 	for vec in veclist:
 		for axis in [Vector3.UnitX]:
-			axis = vec ^ (vec ^ axis)
+			axis = cross2(vec, axis)
 			rot = Matrix3.RotationAxis(axis, RAD * 12)
 			
 			def shot_s(task, vec = vec, rot = rot):

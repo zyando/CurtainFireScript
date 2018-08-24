@@ -4,13 +4,13 @@ def world_task(vec, axis, angle1, angle2, range, should_shot_scale):
 	root = EntityShot(WORLD, "BONE", 0)
 	root.GetRecordedRot = lambda e: e.Rot
 	root.Pos = CENTER_BONE.WorldPos
-	root()
+	root.Spawn()
 	
 	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xFFFFFF, root)
 	parent.GetRecordedRot = lambda e: e.Rot
 	parent.Pos = vec * range
 	parent.Rot = Matrix3.LookAt(vec, randomvec())
-	parent()
+	parent.Spawn()
 	
 	rot1 = Quaternion.RotationAxis(axis, angle1)
 	rot2 = Quaternion.RotationAxis(axis, angle2)
@@ -41,14 +41,14 @@ def world_task(vec, axis, angle1, angle2, range, should_shot_scale):
 			for pos in poslist:
 				shot = EntityShotStraight(WORLD, "SCALE", 0xA00000 if task.ExecutedCount % 2 == 0 else 0xA000A0)
 				shot.Pos = parent.WorldPos
-				shot.Velocity = +(vec3(vec4(pos) * TARGET_BONE.WorldMat) - shot.Pos) * 12
+				shot.Velocity = normalize(vec3(vec4(pos) * TARGET_BONE.WorldMat) - shot.Pos) * 12
 				shot.LifeSpan = 80
 				shot.Spawn()
 		root.AddTask(shot_scale, 2, 50, 240, True)
 
 for vec in objvertices("ico.obj", 0):
 	for axis in Vector3.UnitX, Vector3.UnitZ:
-		if vec * axis > 0.95: continue
+		if dot(vec, axis) > 0.95: continue
 		
 		for i in 1, -1:
-			world_task(vec, vec ^ (vec ^ axis) * i, RAD * 1, RAD * 4, 128, axis.z == i)
+			world_task(vec, cross2(vec, axis) * i, RAD * 1, RAD * 4, 128, axis.z == i)
