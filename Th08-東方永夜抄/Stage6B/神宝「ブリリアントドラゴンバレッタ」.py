@@ -5,16 +5,12 @@ COLORS = 0xE60012, 0xF39800, 0xFFF100, 0x009944, 0x0068B7, 0x1D2088, 0x920783
 way = 16
 angle = RAD * 30
 
-matrices = Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1), Matrix3(0, 1, 0, 0, 0, 1, 1, 0, 0), Matrix3(0, 0, 1, 1, 0, 0, 0, 1, 0)
-
 vec_axis_list = []
 for i in range(way):
 	vec = Vector3.UnitZ * Matrix3.RotationX(angle) * Matrix3.RotationY(RAD * (360.0 / way) * i)
 	axis = cross2(vec, Vector3.UnitY)
 	vec *= Matrix3.RotationAxis(axis, RAD * (360.0 / way) * -i)
-	
-	for mat in matrices[0:1]:
-		vec_axis_list.append((vec * mat, axis * mat))
+	vec_axis_list.append((vec, axis))
 
 def laser_task(vec, axis):
 	def shot_laser(binder = [vec], rot = Quaternion.RotationAxis(axis, RAD * 8)):

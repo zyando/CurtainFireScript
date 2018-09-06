@@ -19,22 +19,9 @@ for vec in objvertices("ico.obj", 0):
 		
 poslist = []
 
-def particle_task(sender, e):
-	for i in range(30):
-		particle = EntityShot(WORLD, "S", sender.Property.Color, randint(1, 3) * 0.5)
-		particle.Pos = sender.Pos + randomvec() * 5
-		particle.Velocity = randomvec() * 2
-		particle.LifeSpan = randint(15, 25)
-		
-		vtx_morph = particle.CreateVertexMorph(1, lambda v: -v)
-		particle.AddMorphKeyFrame(vtx_morph, 0, 0)
-		particle.AddMorphKeyFrame(vtx_morph, 1, particle.LifeSpan)
-		particle.Spawn()
-
 for vec in veclist:
 	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0x000040, 5)
 	parent.LifeSpan = 1540 - WORLD.StartFrame + randint(0, 10)
-	parent.RemovedEvent += particle_task
 	parent.Pos = CENTER_BONE.WorldPos
 	parent.Velocity = vec * (1.0 / 30) * HAND_BONE.WorldRot
 	parent.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 30)

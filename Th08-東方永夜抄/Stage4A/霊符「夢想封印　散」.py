@@ -8,7 +8,6 @@ def world_task(task):
 			shot = EntityShot(WORLD, "AMULET", 0xFFFFFF)
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = vec * 5 * (1 + i * 1)
-			#shot.Colliding = Colliding.Stick
 			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
 			shot.Spawn()
 
@@ -18,7 +17,6 @@ def world_task(task):
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = randomvec() * uniform(8, 30)
 			shot.Upward = randomvec()
-			#shot.Colliding = Colliding.Stick
 			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
 			shot.Spawn()
 	WORLD.AddTask(shot_red_amulet, 1, 5, 0)
@@ -29,7 +27,6 @@ def world_task(task):
 			shot.Pos = CENTER_BONE.WorldPos
 			shot.Velocity = randomvec() * uniform(8, 30)
 			shot.Upward = randomvec()
-			#shot.Colliding = Colliding.Vanish
 			shot.LifeSpan = 64 if shot.Velocity.Length() > 16 else 128
 			shot.Spawn()
 	WORLD.AddTask(shot_M, 1, 5, 0)
