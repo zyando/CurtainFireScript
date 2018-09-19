@@ -26,22 +26,34 @@ root.Spawn()
 
 colorstack = list(colorlist)
 
-def died_decision1(entity):
-	if abs(entity.Pos.x) > 400 or abs(entity.Pos.y) > 400 or entity.Pos.z > 800 or entity.Pos.z < -300:
-		shot = EntityShot(WORLD, "DIA", 0xFFFFFF)
-		shot.Pos = entity.Pos
-		shot.Velocity = -entity.Velocity
-		shot.ShouldRemove = died_decision2
-		shot.Spawn()
-		return True
-	return False
+def get_lifespan(org, limit = [400, -400, 400, -400, 800, -300]):
+	min_frame = 1E+5
 
-died_decision2 = lambda e: (abs(e.Pos.x) > 400 or abs(e.Pos.y) > 400 or e.Pos.z > 800 or e.Pos.z < -300) and e.FrameCount > 10
+	for i in range(3):
+		if org.Velocity[i] == 0: continue
+		
+		for j in range(2):
+			frame = (limit[i * 2 + j] - org.Pos[i]) / org.Velocity[i]
+			if frame < 0:
+				continue
+			
+			min_frame = min(frame, min_frame)
+	
+	min_frame = int(min_frame)
+
+	def task():
+		shot = EntityShot(WORLD, "DIA", 0xFFFFFF)
+		shot.Pos = org.Pos
+		shot.Velocity = -org.Velocity
+		lifespan, task = get_lifespan(shot)
+		shot.LifeSpan = lifespan
+		shot.Spawn()
+	return min_frame, task
 
 for vec in veclist:
 	color = colorstack.pop()
 	
-	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xA0A0A0, root)
+	parent = EntityShot(WORLD, "MAGIC_CIRCLE", 0xA0A0A0, 2, root)
 	parent.GetRecordedRot = lambda e: e.Rot
 	parent.Pos = CENTER_BONE.WorldPos + vec * 20
 	
@@ -51,8 +63,12 @@ for vec in veclist:
 		for i in range(2):
 			shot = EntityShot(WORLD, "DIA", color)
 			shot.Pos = parent.WorldPos
-			shot.Velocity = vec * 2.4
-			shot.ShouldRemove  = died_decision1
+			shot.Velocity = vec * 4
+
+			lifespan, task = get_lifespan(shot)
+			shot.LifeSpan = lifespan
+			shot.AddTask(task, 0, 1, lifespan)
+
 			shot.Spawn()
 			
 			vec = -vec

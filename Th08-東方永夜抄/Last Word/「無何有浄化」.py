@@ -5,6 +5,8 @@ veclist = objvertices("ico.obj", 1)
 for vec in veclist:
 	for angle in [RAD, -RAD]:
 		for axis in [Vector3.UnitX, Vector3.UnitZ]:
+			if abs(dot(vec, axis)) > 0.95: continue
+
 			axis = cross2(vec, axis)
 			
 			rotPosMat = Matrix3.RotationAxis(axis, angle * 6)
@@ -28,7 +30,7 @@ for vec in veclist:
 
 def world_task():
 	def shot_l(task):
-		vec = +(TARGET_BONE.WorldPos - CENTER_BONE.WorldPos)
+		vec = normalize(TARGET_BONE.WorldPos - CENTER_BONE.WorldPos)
 		axis = cross2(vec, Vector3.UnitY)
 		
 		angle = (task.ExecutedCount - 1) * RAD * 5 * 0.5
@@ -38,7 +40,7 @@ def world_task():
 		for i in range(task.ExecutedCount):
 			shot = EntityShot(WORLD, "L", 0x4000D0)
 			shot.Pos = CENTER_BONE.WorldPos
-			shot.Velocity = vec * mat2 * 8
+			shot.Velocity = vec * mat2 * 12
 			shot.Spawn()
 			
 			mat2 = mat2 * mat1

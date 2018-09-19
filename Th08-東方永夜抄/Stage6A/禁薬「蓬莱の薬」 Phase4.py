@@ -24,7 +24,8 @@ def phase4():
 				shot.LifeSpan = 60
 
 				def replace(orgn = shot, parent = parent):
-					shot = EntityShot(WORLD, "DIA", 0x00A000, parent)
+					shot = EntityShot(WORLD, "DIA", 0x00A000)
+					shot.Parent = parent
 					shot.Pos = orgn.Pos - CENTER_BONE.WorldPos
 					shot.Velocity = orgn.Velocity
 					shot.LifeSpan = 400

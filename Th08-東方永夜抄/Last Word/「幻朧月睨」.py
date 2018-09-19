@@ -17,16 +17,16 @@ def world_task():
 				vec = vec * mat
 				
 				shot = EntityShot(WORLD, "M", 0x0000A0)
-				shot.Pos = CENTER_BONE.WorldPos + vec * task.ExecutedCount * 20 + pos
+				shot.Pos = CENTER_BONE.WorldPos + vec * task.ExecutedCount * 30 + pos
 				shot.LifeSpan = 90
 				shot.Spawn()
 				
 				def move(shot = shot, vec = vec):
 					newShot = EntityShotStraight(WORLD, "M", 0xA00000)
 					newShot.Pos = shot.Pos
-					newShot.Velocity = vec * 4
+					newShot.Velocity = vec * 6
 					newShot.LifeSpan = 200
-					newShot()
+					newShot.Spawn()
 				shot.AddTask(move, 0, 1, shot.LifeSpan)
 		WORLD.AddTask(shot_m, 2, 20, 30, True)
 		

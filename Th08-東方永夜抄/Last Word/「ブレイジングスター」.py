@@ -7,7 +7,7 @@ veclist = objvertices("ico.obj", 1)
 
 bone = EntityMoving(WORLD)
 bone.Velocity = Vector3.UnitZ * 12
-bone()
+bone.Spawn()
 
 def world_task(task):
 	mat = Matrix3.RotationAxis(randomvec(), RAD * 180 * random())

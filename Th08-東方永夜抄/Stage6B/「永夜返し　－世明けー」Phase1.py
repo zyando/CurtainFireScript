@@ -4,7 +4,8 @@ from MMDataIO.Pmx import BoneFlags
 shot_range = 800
 
 def shot_randomvec(shottype, color, parent, link_parent, speed):
-	shot = EntityShot(WORLD, shottype, color, parent)
+	shot = EntityShot(WORLD, shottype, color)
+	shot.Parent = parent
 	shot.Velocity = randomvec() * speed
 	shot.Upward = randomvec()
 	shot.LifeSpan = shot_range / speed

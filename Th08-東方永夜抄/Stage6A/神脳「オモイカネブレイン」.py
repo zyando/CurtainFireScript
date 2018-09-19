@@ -53,7 +53,8 @@ def laser_and_dia_task(task, interval_of_shoot = 5, time_to_stop = 480.0, wait_t
 
 	def shot_laser():
 		for vec in laser_veclist:
-			laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(2, 2, 4000), parent)
+			laser = EntityShot(WORLD, "LASER_LINE", 0x0000A0, Vector3(2, 2, 4000))
+			laser.Parent = parent
 			laser.GetRecordedRot = lambda e: e.Rot
 			laser.Rot = Matrix3.LookAt(vec, Vector3.UnitY)
 			laser.LifeSpan = time_to_stop + wait_time - 30

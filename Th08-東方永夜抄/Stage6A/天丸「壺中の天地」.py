@@ -31,7 +31,8 @@ def shot_mgc(axis):
 
 		parent.Spawn()
 
-		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x000080, parent)
+		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x000080)
+		mgc.Parent = parent
 		mgc.Pos = pos * 100
 		mgc.LookAtVec = pos
 		mgc.Upward = axis

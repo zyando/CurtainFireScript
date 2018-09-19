@@ -22,7 +22,8 @@ def night_dacce():
 WORLD.AddTask(night_dacce, 2, 100, 25)
 
 def servant_flyer(pos, lookat):
-    mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x800000, 1.4, parent)
+    mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x800000, 1.4)
+    mgc.Parent = parent
     mgc.Pos = pos
     mgc.LookAtVec = lookat
 

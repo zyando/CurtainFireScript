@@ -30,7 +30,11 @@ def shot_s(world, color, rotangle, way = 32):
 	
 	def shot_rose_task(task):
 		parent = shotlist[task.ExecutedCount % way]
-		shot_rose(lambda: EntityShot(world, "S", color, 0.6, parent), Matrix3.LookAt(+parent.Velocity, randomvec()), 0.6, 8, 12)
+
+		def create_shot():
+			shot = EntityShot(world, "S", color, 0.6)
+			shot.Parent = parent
+		shot_rose(create_shot, Matrix3.LookAt(+parent.Velocity, randomvec()), 0.6, 8, 12)
 	WORLD.AddTask(shot_rose_task, 3, 100, 20, True)
 	
 WORLD.AddTask(lambda w = CreateWorld("「サブタレニアンローズ」 BlueRose"): shot_s(w, 0x0000A0, 1), 180, 2, 0)

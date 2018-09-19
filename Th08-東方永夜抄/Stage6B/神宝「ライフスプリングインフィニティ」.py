@@ -30,7 +30,8 @@ def task():
 	parent.Spawn()
 	
 	for vec in ico0_veclist:
-		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x200050, 10, parent)
+		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0x200050, 10)
+		mgc.Parent = parent
 		mgc.LifeSpan = parent.LifeSpan
 		mgc.LookAtVec = vec
 		

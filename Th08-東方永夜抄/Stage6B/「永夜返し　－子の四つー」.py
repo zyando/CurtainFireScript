@@ -22,8 +22,9 @@ def phase0():
 
 	def shot_dia(task):
 		for vec in veclist:
-			shot = EntityShot(WORLD, "DIA", 0x404080, parent_list[task.ExecutedCount % 2])
-			shot.Velocity = vec * ~shot.ParentEntity.Rot * 3
+			shot = EntityShot(WORLD, "DIA", 0x404080)
+			shot.Parent = parent_list[task.ExecutedCount % 2]
+			shot.Velocity = vec * ~shot.Parent.Rot * 3
 			shot.LifeSpan = 320
 			shot.Spawn()
 	WORLD.AddTask(shot_dia, 8, 20, 0, True)

@@ -15,7 +15,7 @@ def world_task():
 		for angle in [RAD, -RAD]:
 			axis = cross2(vec, Vector3.UnitY)
 			
-			binder = [vec, Matrix3.RotationAxis(axis, angle * 12)]
+			binder = [vec, Matrix3.RotationAxis(axis, angle * 12, False)]
 			
 			def shot_scale(task, axis = axis, binder = binder, color = (0x00A0A0 if angle < 0 else 0x0000A0)):
 				shot = EntityShotStraight(WORLD, "SCALE", color)

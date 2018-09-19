@@ -17,7 +17,8 @@ def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, lifespan):
 		parent.LifeSpan = lifespan
 		parent.Spawn()
 
-		shot = EntityShot(WORLD, shottype, color, parent)
+		shot = EntityShot(WORLD, shottype, color)
+		shot.Parent = parent
 		shot.Velocity = binder[0] * speed
 		shot.LifeSpan = lifespan
 		shot.Spawn()

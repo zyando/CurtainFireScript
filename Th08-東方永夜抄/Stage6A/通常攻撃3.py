@@ -30,7 +30,8 @@ def task_to_shoot_mgc_crcl(task, axis):
 	for vec in veclist0:
 		parent = get_parent(vec)
 
-		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0xA0A0A0, parent)
+		mgc = EntityShot(WORLD, "MAGIC_CIRCLE", 0xA0A0A0)
+		mgc.Parent = parent
 		mgc.Velocity = vec * 5.0
 		mgc.LifeSpan = 120
 

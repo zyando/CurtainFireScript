@@ -11,6 +11,7 @@ for i in range(way):
 		vec = Vector3.UnitZ * j * Matrix3.RotationX(angle) * Matrix3.RotationY(RAD * (360.0 / way) * i)
 		axis = cross2(vec, Vector3.UnitY)
 		vec *= Matrix3.RotationAxis(axis, RAD * (360.0 / way) * -i)
+		axis *= Matrix3.RotationAxis(cross(vec, Vector3.UnitY), RAD * 20 * j)
 		
 		for mat in matrices[0:3]:
 			vec_axis_list.append((vec * mat, axis * mat))
@@ -26,7 +27,7 @@ def task():
 			wait_time = 60.0,
 			
 			get_speed1 = lambda t: 8.0,
-			get_speed2 = lambda t: 12.0,
+			get_speed2 = lambda t: 16.0,
 			
 			get_vec_rot = lambda t, begin = 30, end = -24: Quaternion.RotationAxis(axis, RAD * (begin + (end - begin) * t)),
 			init_pos = RAD * 0, interval_pos = RAD * 4,
@@ -50,7 +51,7 @@ def task():
 		wait_time = 60.0,
 		
 		get_speed1 = lambda t: 8.0,
-		get_speed2 = lambda t: 12.0,
+		get_speed2 = lambda t: 16.0,
 		
 		get_vec_rot = lambda t, begin = 40, end = -40: Quaternion.RotationAxis(axis, RAD * (begin + (end - begin) * t)),
 		init_pos = RAD * 0, interval_pos = RAD * 2,
