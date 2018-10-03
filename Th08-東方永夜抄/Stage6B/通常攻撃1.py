@@ -5,7 +5,7 @@ veclist = [Vector3(x * (r + 1) * 0.015, 0, 1) for x in [1, -1] for r in range(2)
 
 def shot_dia(vec, axis, color1, color2):
 	mat1 = Matrix3.LookAt(vec, randomvec())
-	mat2 = Matrix3.RotationAxis(cross2(vec, axis), RAD * 150)
+	mat2 = Matrix3.RotationAxis(cross3(vec, vec, axis), RAD * 150)
 	
 	for vec in veclist:
 		vec *= mat1

@@ -82,7 +82,7 @@ def world_task():
 	
 	for vec in veclist:
 		for axis in [Vector3.UnitX]:
-			axis = cross2(vec, axis)
+			axis = cross3(vec, vec, axis)
 			rot = Matrix3.RotationAxis(axis, RAD * 12)
 			
 			def shot_s(task, vec = vec, rot = rot):

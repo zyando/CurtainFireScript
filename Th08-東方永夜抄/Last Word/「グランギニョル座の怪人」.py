@@ -51,4 +51,4 @@ for vec in objvertices("ico.obj", 0):
 		if dot(vec, axis) > 0.95: continue
 		
 		for i in 1, -1:
-			world_task(vec, cross2(vec, axis) * i, RAD * 1, RAD * 4, 200, axis.z == i)
+			world_task(vec, cross3(vec, vec, axis) * i, RAD * 1, RAD * 4, 200, axis.z == i)

@@ -7,7 +7,7 @@ for vec in veclist:
 		for axis in [Vector3.UnitX, Vector3.UnitZ]:
 			if abs(dot(vec, axis)) > 0.95: continue
 
-			axis = cross2(vec, axis)
+			axis = cross3(vec, vec, axis)
 			
 			rotPosMat = Matrix3.RotationAxis(axis, angle * 6)
 			binder = [vec, Quaternion.Identity]

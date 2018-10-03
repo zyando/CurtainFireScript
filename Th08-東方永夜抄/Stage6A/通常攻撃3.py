@@ -15,7 +15,7 @@ def task_to_shoot_mgc_crcl(task, axis):
 			parent.GetRecordedRot = lambda e: e.Rot
 			parent.LifeSpan = 120
 
-			def rotate(rot = Quaternion.RotationAxis(cross2(vec, axis), RAD * (1.5 if task.ExecutedCount % 2 == 0 else -1.5))):
+			def rotate(rot = Quaternion.RotationAxis(cross3(vec, vec, axis), RAD * (1.5 if task.ExecutedCount % 2 == 0 else -1.5))):
 				parent.Rot *= rot
 				parent.Pos = CENTER_BONE.WorldPos
 			parent.AddTask(rotate, 0, 120, 0)

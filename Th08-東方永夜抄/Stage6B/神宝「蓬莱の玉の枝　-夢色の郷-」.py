@@ -4,9 +4,13 @@ COLORS = (0xE60012, 0x600000), (0xF39800, 0x702000), (0xFFF100, 0x606000), (0x00
 
 poslist = [Vector3.UnitZ * 250 - Vector3.UnitZ * 120 * Matrix3.RotationY(RAD * (i - 3) * 12) for i in range(7)]
 
-def get_collide_time(pos, vec, plane = [Vector3(300, 300, 500), Vector3(-300, -300, -200)]):
-	min_dis = 1E5
-	for i in range(2):
+def get_collide_time(pos, vec, plane = [Vector3(400, 400, 1E+6), Vector3(-400, -400, -100)]):
+	min_dis = 1E4
+
+	if normalize(vec).z > cos(RAD * 45):
+		return min_dis
+
+	for i in range(3):
 		v = vec[i] if abs(vec[i]) > 0.001 else 0.001 
 		
 		if v > 0:
@@ -21,16 +25,16 @@ def task(pos, color1, color2):
 	mgc.Pos = pos
 	mgc.LookAtVec = normalize(Vector3.UnitZ * 250 - mgc.Pos)
 	
-	def shot_dia(vec):
-		shot = EntityShotStraight(WORLD, "DIA_BRIGHT", color2)
+	def shot_dia(velocity):
+		shot = EntityShot(WORLD, "DIA_BRIGHT", color2)
 		shot.Pos = mgc.Pos
-		shot.Velocity = vec * 6
+		shot.Velocity = velocity
 		shot.LifeSpan = get_collide_time(shot.Pos, shot.Velocity)
 		
 		def replace(org = shot):
-			shot = EntityShotStraight(WORLD, "DIA", color1)
+			shot = EntityShot(WORLD, "DIA", color1)
 			shot.Pos = org.Pos
-			shot.Velocity = normalize(TARGET_BONE.WorldPos - org.Pos) * 5
+			shot.Velocity = normalize(REIMU_CNETR_BONE.WorldPos - org.Pos) * 5
 			shot.LifeSpan = 300
 			shot.Spawn()
 		mgc.AddTask(replace, 0, 1, shot.LifeSpan)
@@ -39,8 +43,8 @@ def task(pos, color1, color2):
 	def init_shot(veclist = objvertices("ico.obj", 3)):
 		mat = Matrix3.LookAt(mgc.LookAtVec, Vector3.UnitY)
 		for vec in veclist:
-			shot_dia(vec * mat)
-	mgc.AddTask(init_shot, 0, 1, 0)
+			shot_dia(vec * mat * 4)
+	mgc.AddTask(init_shot, 0, 1, 30)
 	
 	def dia_task(task, veclist = [Vector3.UnitX * Matrix3.RotationZ(RAD * 30 * i) for i in [1, -1]]):
 		i = (task.ExecutedCount % 2) * 2 - 1
@@ -50,29 +54,31 @@ def task(pos, color1, color2):
 			vec = Vector3.UnitX * Matrix3.RotationZ(RAD * 30 * task.ExecutedCount / float(way) * i)
 			
 			for j in 1, -1:
-				shot_dia(vec * j)
+				shot_dia(vec * j * 5)
 		mgc.AddTask(shot_dia_task, 2, way, 0, True)
-	mgc.AddTask(dia_task, 90, 6, 210, True)
+	mgc.AddTask(dia_task, 90, 6, 300, True)
 	
-	mgc()
+	mgc.Spawn()
+
 for idx, pos in enumerate(poslist):
 	task(pos, *COLORS[idx])
 
 def shot_rainbow_s(vec, axis):
 	binder = [vec]
 	
-	def shot_s(task, rot = Matrix3.RotationAxis(cross2(vec, axis), RAD * 15)):
-		shot = EntityShotStraight(WORLD, "S", COLORS[task.ExecutedCount % len(COLORS)][0])
+	def shot_s(task, rot = Matrix3.RotationAxis(cross3(vec, vec, axis), RAD * 15)):
+		shot = EntityShot(WORLD, "S", COLORS[task.ExecutedCount % len(COLORS)][0])
+		shot.Pos = CENTER_BONE.WorldPos
 		shot.Velocity = binder[0] * 4
 		shot.LifeSpan = 240
 		shot.Spawn()
 		
 		if task.ExecutedCount > 10:
 			binder[0] *= rot
-	WORLD.AddTask(shot_s, 4, 160, 180, True)
+	WORLD.AddTask(shot_s, 4, 160, 410, True)
 
 for vec in objvertices("ico.obj", 1):
 	for axis in Vector3.Units:
-		if vec * axis > 0.95: continue
+		if dot(vec, axis) > 0.95: continue
 		
 		shot_rainbow_s(vec, axis)

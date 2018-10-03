@@ -26,7 +26,7 @@ def shot_mgc(axis):
 		parent.GetRecordedRot = lambda e: e.Rot
 		parent.Pos = TARGET_BONE.WorldPos
 
-		def rotate(parent = parent, rot = Quaternion.RotationAxis(cross2(pos, axis), RAD * 0.5)): parent.Rot *= rot
+		def rotate(parent = parent, rot = Quaternion.RotationAxis(cross3(pos, pos, axis), RAD * 0.5)): parent.Rot *= rot
 		parent.AddTask(rotate, 4, 75, 300)
 
 		parent.Spawn()
@@ -41,7 +41,7 @@ def shot_mgc(axis):
 			mgc.Velocity = mgc.LookAtVec * 2
 		mgc.AddTask(move, 0, 1, 300)
 
-		def shot_dia(mgc = mgc, parent = parent, axis = cross2(pos, axis)):
+		def shot_dia(mgc = mgc, parent = parent, axis = cross3(pos, pos, axis)):
 			for angle, color in anglelist:
 				shot = EntityShot(WORLD, "DIA", color)
 

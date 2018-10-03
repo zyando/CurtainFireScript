@@ -14,6 +14,8 @@ def particle_task(sender, e):
 		particle.Pos = sender.Pos + randomvec() * 1
 		particle.Velocity = randomvec() * 0.5
 		particle.LifeSpan = randint(15, 25)
+
+		particle.Spawn()
 		
 		"""uv_morph = particle.CreateUvMorph(0, MMDataIO.Pmx.MorphType.EXUV2, lambda p: Vector4(-1, -1, 0, 0))
 		particle.AddMorphKeyFrame(uv_morph, 0, 0)
@@ -22,8 +24,6 @@ def particle_task(sender, e):
 		vtx_morph = particle.CreateVertexMorph(1, lambda v: -v)
 		particle.AddMorphKeyFrame(vtx_morph, 0, 0)
 		particle.AddMorphKeyFrame(vtx_morph, 1, particle.LifeSpan)
-		
-		particle.Spawn()
 
 def shot_red_amullet():
 	if abs(REIMU_SHOT_FLAG.Pos.y) < 0.01: return
@@ -68,12 +68,12 @@ def shot_homing_amulet_ex(speed = 24):
 					particle.Velocity = randomvec() * 0.5
 					particle.LifeSpan = randint(15, 25)
 					
+					particle.Spawn()
+
 					uv_morph = particle.CreateUvMorph(0, MMDataIO.Pmx.MorphType.EXUV2, lambda p: Vector4(-1, -1, 0, 0))
 					particle.AddMorphKeyFrame(uv_morph, 0, 0)
 					particle.AddMorphKeyFrame(uv_morph, 1, particle.LifeSpan)
-					
-					particle.Spawn()
-			#shot.AddTask(particle_task, 0, 0, 0)
+			shot.AddTask(particle_task, 0, 0, 0)
 			
 			def homing(shot = shot):
 				vec_to_target = CENTER_BONE.WorldPos - shot.Pos
@@ -92,7 +92,7 @@ def shot_homing_amulet_ex(speed = 24):
 					vec_to_sp = sp.Pos - shot.Pos
 					
 					length_to_sp = vec_to_sp.Length()
-					dot2 = sp.Range ** 2 - length_to_sp ** 2 + (vec * vec_to_sp) ** 2
+					dot2 = sp.Range ** 2 - length_to_sp ** 2 + dot(vec, vec_to_sp) ** 2
 					cos = math.sqrt(dot2) / length_to_sp
 					
 					alpha = (1 - cos) * 0.2

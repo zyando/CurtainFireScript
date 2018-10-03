@@ -6,7 +6,7 @@ veclist2 = objvertices("ico.obj", 2)
 def task_to_shoot_while_rotating(vec, axis, shottype, color, speed, lifespan):
 	if abs(dot(vec, axis)) > 0.995 > 0: return lambda: 0
 
-	axis = cross2(vec, axis)
+	axis = cross3(vec, vec, axis)
 	rot = Matrix3.RotationAxis(axis, RAD * 5)
 	binder = [vec]
 

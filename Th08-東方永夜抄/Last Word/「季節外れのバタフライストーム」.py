@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 def shot_func(vec, axis):
-	axis = cross2(vec, axis)
+	axis = cross3(vec, vec, axis)
 	
 	binder = [vec * 20.0, vec * 20.0]
 	

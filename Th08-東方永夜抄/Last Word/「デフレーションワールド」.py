@@ -37,7 +37,7 @@ def world_task_func():
 	def shot_knife2(angle, axis):
 		for vec in veclist:
 			vec = vec
-			mat = Matrix3.RotationAxis(cross2(vec, axis), angle)
+			mat = Matrix3.RotationAxis(cross3(vec, vec, axis), angle)
 			
 			shot = EntityShot(WORLD, "KNIFE", 0x0000A0)
 			shot.Velocity = vec * 4.0

@@ -73,7 +73,7 @@ WORLD.AddTask(laser_and_dia_task, 600, 2, 0, True)
 def shoot_dia_while_rotating(vec, axis):
 	if abs(vec * axis) > 0.99: return
 
-	axis = cross2(vec, axis)
+	axis = cross3(vec, vec, axis)
 
 	def shot_dia(task, vec_ = [vec], rot = Quaternion.RotationAxis(axis, RAD * 0.6)):
 		if task.ExecutedCount % 8 < 4:
