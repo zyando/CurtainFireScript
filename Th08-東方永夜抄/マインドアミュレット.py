@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 import MMDataIO.Pmx
-
+import os
 import pickle
-with open(EXPORT_DIRECTORY + '\\poslist.pickle', mode='rb') as f:
-	from VecMath.Geometry import Sphere
-	poslist = pickle.load(f)
-	sp_list = [Sphere(p, 24) for p, n in poslist]
-	pl_list = [Plane(p, n) for p, n in poslist]
+
+POSLIST_FILEPATH = EXPORT_DIRECTORY + '\\poslist.pickle'
+
+if os.path.exists(POSLIST_FILEPATH):
+	with open(POSLIST_FILEPATH, mode='rb') as f:
+		from VecMath.Geometry import Sphere
+		poslist = pickle.load(f)
+		sp_list = [Sphere(p, 24) for p, n in poslist]
+		pl_list = [Plane(p, n) for p, n in poslist]
+else:
+	sp_list = [Sphere(Vector3(1E+6, 1E+6, 1E+6), 24)]
+	pl_list = [Plane(Vector3(1E+6, 1E+6, 1E+6), Vector3.UnitY)]
 
 def particle_task(sender, e):
 	for i in range(15):
@@ -25,7 +32,7 @@ def particle_task(sender, e):
 		particle.AddMorphKeyFrame(vtx_morph, 0, 0)
 		particle.AddMorphKeyFrame(vtx_morph, 1, particle.LifeSpan)
 
-def shot_red_amullet():
+def shot_red_amullet(MAX_LIFE_SPAN = 120):
 	if abs(REIMU_SHOT_FLAG.Pos.y) < 0.01: return
 	
 	def calc_time_to_interesect(plane, pos, velocity, r):
@@ -42,8 +49,10 @@ def shot_red_amullet():
 			shot.Pos = mat.Translation
 			shot.Velocity = Vector3.UnitZ * hand_mat * Matrix3.RotationAxis(randomvec(), RAD * 10) * 16 * REIMU_SHOT_FLAG.Pos.y
 			shot.Upward = randomvec()
-			shot.LifeSpan = min(200, min([abs(calc_time_to_interesect(pl, shot.Pos, shot.Velocity, 100)) for pl in pl_list]))
-			shot.RemovedEvent += particle_task
+			shot.LifeSpan = min(MAX_LIFE_SPAN, min([abs(calc_time_to_interesect(pl, shot.Pos, shot.Velocity, 100)) for pl in pl_list]))
+
+			if shot.LifeSpan != MAX_LIFE_SPAN:
+				shot.RemovedEvent += particle_task
 			shot.Spawn()
 WORLD.AddTask(shot_red_amullet, 0, 0, 0)
 

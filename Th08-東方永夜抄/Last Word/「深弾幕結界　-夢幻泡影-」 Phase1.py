@@ -15,7 +15,7 @@ for i in range(way):
 		axis1 = cross(vec, axis2)
 		
 		for mat in matrices[0:3]:
-			vec_axis_list.append((vec * mat, axis1 * mat, axis2 * mat))
+			vec_axis_list.append((vec * mat, axis1 * mat * j, axis2 * mat))
 
 curve = CubicBezierCurve(Vector2(0, 0), Vector2(0.9, 0.1), Vector2(0.1, 0.5), Vector2(1, 1))
 
@@ -23,7 +23,7 @@ def task():
 	for vec, axis1, axis2 in vec_axis_list:
 		spell(
 		vec = vec, upward = axis2,
-		prop = ("SCALE", 0xA000A0 if vec.z > 0 else 0x0000A0, 1),
+		prop = ("SCALE", 0xA000A0 if vec.z > 0 else 0xA0A0A0, 1),
 		distance = 1024,
 		wait_time = 60.0,
 		
@@ -33,7 +33,9 @@ def task():
 		get_vec_rot = lambda t, axis2 = axis2, begin = 0.0, end = 18: Quaternion.RotationAxis(axis2, RAD * (begin + (end - begin) * curve.SolveYFromX(t))),
 
 		init_mgc_rotate = Quaternion.Identity,
-		get_mgc_rotate = lambda i, a1 = axis1, a2 = axis2: Quaternion.RotationAxis(a1 * Matrix3.RotationAxis(a2, RAD * 1.3 * i), RAD * 2.65),
+		get_mgc_rotate = lambda r, i, a1 = axis1, a2 = axis2, a3 = vec: 
+		Quaternion.RotationAxis(a1, math.pi * 2 * cos(i * RAD * 0.2) * sin(i * RAD * 0.6)) * 
+		Quaternion.RotationAxis(a2, math.pi * 2 * sin(i * RAD * 0.2) * sin(i * RAD * 0.6)),
 		
 		num_shot = 6, interval_shot = 2,
 		num_task = 16, interval_task = 16,

@@ -39,7 +39,7 @@ for vec in veclist:
 		laser.AddMorphKeyFrame(morph, 0, 30)
 		laser.AddMorphKeyFrame(morph, 0, 120)
 		laser.AddMorphKeyFrame(morph, 1, 140)
-	parent.AddTask(shot_laser, 120, 6, 15, True)
+	parent.AddTask(shot_laser, 120, 0, 15, True)
 	parent.Spawn()
 
 	parent.SetMotionInterpolationCurve(Vector2(0.2, 0.8), Vector2(0.2, 0.8), 15)
@@ -51,13 +51,13 @@ def shot_star():
 		shot.Velocity = Vector3.UnitZ * Matrix3.RotationAxis(cross(Vector3.UnitZ, randomvec()), RAD * random() * 60) * HAND_BONE.WorldRot * uniform(4, 8)
 		shot.LifeSpan = 450
 		shot.Spawn()
-WORLD.AddTask(shot_star, 0, 400, 30)
+WORLD.AddTask(shot_star, 0, 0, 30)
 
 def shot_blue_scale():
 	for i in range(8):
 		shot = EntityShot(WORLD, "SCALE", 0x0000A0)
 		shot.Pos = HAND_BONE.WorldPos
-		shot.Velocity = normalize(REIMU_CNETR_BONE.WorldPos - shot.Pos) * (i * 0.8 + 6)
+		shot.Velocity = normalize(REIMU_CENTER_BONE.WorldPos - shot.Pos) * (i * 0.8 + 6)
 		shot.LifeSpan = 120
 		shot.Spawn()
-WORLD.AddTask(shot_blue_scale, 45, 30, 90)
+WORLD.AddTask(shot_blue_scale, 45, 0, 90)

@@ -62,13 +62,13 @@ def spell(
 	WORLD.AddTask(add_shot_task, interval_task, num_task, wait_time)
 	
 	def rotate(task):
-		parent.Rot = parent.Rot * get_mgc_rotate(task.ExecutedCount)
+		parent.Rot = get_mgc_rotate(parent.Rot, task.ExecutedCount)
 	WORLD.AddTask(rotate, 0, 1200, 1, True)
 	
 	def shot_amulet_outside():
 		shot = EntityShot(WORLD, *prop)
 		shot.Pos = circle.WorldPos
-		shot.Velocity = normalize(circle.WorldPos) * 2.0
+		shot.Velocity = normalize(circle.WorldPos) * 2
 		shot.Upward = upward
 		shot.LifeSpan = 1000
 		shot.Spawn()
